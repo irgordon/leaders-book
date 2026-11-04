@@ -1,0 +1,23 @@
+Application, 0x10a4acf00, pid: 81706, label: 'The Leaders Book' <App element pid: 81706>
+  Window (Main), 0x10a4ad2c0, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 81706, elementOrHash.elementID: 4410950656.4>
+    Other, 0x10a4ad040, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 81706, elementOrHash.elementID: 4455196672.5>
+      Other, 0x10a4ad400, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 81706, elementOrHash.elementID: 4455131136.6>
+        Other, 0x10a4ad900, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 81706, elementOrHash.elementID: 4410949632.7>
+          Other, 0x10a4ada40, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 81706, elementOrHash.elementID: 4458161376.8>
+            Other, 0x10a4adcc0, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 81706, elementOrHash.elementID: 4455200256.9>
+              NavigationBar, 0x10a4ade00, {{0.0, 62.0}, {402.0, 106.0}}, identifier: 'The Leaders Book' <AX element pid: 81706, elementOrHash.elementID: 4390276640.11>
+                StaticText, 0x10a4ae080, {{16.0, 119.7}, {282.7, 40.7}}, label: 'The Leaders Book' <AX element pid: 81706, elementOrHash.elementID: 4455208640.14>
+              Other, 0x10a4adf40, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 81706, elementOrHash.elementID: 4455209536.12>
+                Other, 0x10a4ae1c0, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 81706, elementOrHash.elementID: 4455218048.15>
+                  Other, 0x10a4ae440, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 81706, elementOrHash.elementID: 4412179328.17>
+                    Other, 0x10a4ae300, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 81706, elementOrHash.elementID: 4458162656.18>
+                      Image, 0x10a4ae580, {{187.3, 377.0}, {27.7, 33.7}}, identifier: 'lock.shield', label: 'Padlock In A Shield' <AX element pid: 81706, elementOrHash.elementID: 4458161536.19>
+                      StaticText, 0x10a4ae800, {{96.3, 433.5}, {209.3, 33.7}}, label: 'Records Locked' <AX element pid: 81706, elementOrHash.elementID: 4458161696.20>
+                      StaticText, 0x10a4ae940, {{78.3, 487.2}, {245.3, 20.3}}, identifier: 'lockedSummary', label: '5 Soldiers · 3 Saved AFT Results' <AX element pid: 81706, elementOrHash.elementID: 4458161856.21>
+                      StaticText, 0x10a4aebc0, {{34.0, 527.5}, {334.0, 42.3}}, label: 'Authenticate with device biometrics or your device passcode to view soldier details.' <AX element pid: 81706, elementOrHash.elementID: 4458162016.22>
+                      Button, 0x10a4aea80, {{104.0, 590.0}, {194.3, 44.3}}, identifier: 'unlockRecords', label: 'Unlock Records' <AX element pid: 81706, elementOrHash.elementID: 4458162496.23>
+                        StaticText, 0x10a4aed00, {{126.0, 601.8}, {152.2, 20.3}}, label: 'Unlock Records' <AX element pid: 81706, elementOrHash.elementID: 4458162336.24>
+                        Image, 0x10a4aee40, {{126.0, 603.3}, {17.3, 17.0}}, identifier: 'lock.open', label: 'Unlock' <AX element pid: 81706, elementOrHash.elementID: 4458162176.25>
+              Toolbar, 0x10a4af0c0, {{0.0, 0.0}, {402.0, 874.0}}, identifier: 'Toolbar', label: 'Toolbar' <AX element pid: 81706, elementOrHash.elementID: 4455200768.13>
+                Other, 0x10a4aef80, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 81706, elementOrHash.elementID: 4455201280.16>
+            Other, 0x10a4af200, {{0.0, 62.0}, {402.0, 778.0}} <AX element pid: 81706, elementOrHash.elementID: 4455211776.10>

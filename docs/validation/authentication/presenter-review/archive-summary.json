@@ -1,0 +1,16 @@
+{
+  "result": "Release archive succeeded (unsigned)",
+  "archive_properties": {
+    "ApplicationPath": "Applications/LeadersBook.app",
+    "Architectures": [
+      "arm64"
+    ],
+    "CFBundleIdentifier": "com.leadersbook.app",
+    "CFBundleShortVersionString": "1.0",
+    "CFBundleVersion": "1",
+    "SigningIdentity": "",
+    "Team": ""
+  },
+  "binary_sha256": "4f41139573aa59e343cdfb88fb8c22cc4cb85721fb1622f650bf4d75f2fee45d",
+  "test_authentication_literals_absent": true
+}

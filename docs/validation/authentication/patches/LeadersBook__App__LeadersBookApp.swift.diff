@@ -1,0 +1,15 @@
+--- a/LeadersBook/App/LeadersBookApp.swift
++++ b/LeadersBook/App/LeadersBookApp.swift
+@@ -6,7 +6,11 @@
+     let store: LeaderStore
+     init() throws {
+         scorer = try AFTScoring()
+-        store = LeaderStore(scorer: scorer)
++        #if AUTHENTICATION_TEST_DOUBLE
++        store = LeaderStore(scorer: scorer, authenticator: UITestAuthenticator())
++        #else
++        store = LeaderStore(scorer: scorer, authenticator: DeviceAuthenticator())
++        #endif
+     }
+ }
+ 

@@ -1,0 +1,23 @@
+Building for debugging...
+[Planning deferred tasks]
+[7 / 26] LeadersBookCore
+[9 / 28] LeadersBookCore
+[17 / 27] LeadersBookCoreTests-product
+[23 / 33] LeadersBookCoreTests-product
+[27 / 32] LeadersBookCoreTests-product
+[29 / 32] LeadersBookCoreTests-product
+Build complete! (2.02 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite RecordAccessTests started.
+◇ Test lockedRoutesRejectAccessAndPreserveRecords() started.
+◇ Test revokedLeasePreventsQueuedStorageAccess() started.
+◇ Test unavailableAuthenticationFailsClosed() started.
+◇ Test staleAuthenticationCannotUnlockAfterLock() started.
+✔ Test unavailableAuthenticationFailsClosed() passed after 0.015 seconds.
+✔ Test staleAuthenticationCannotUnlockAfterLock() passed after 0.015 seconds.
+✔ Test revokedLeasePreventsQueuedStorageAccess() passed after 0.015 seconds.
+✔ Test lockedRoutesRejectAccessAndPreserveRecords() passed after 0.017 seconds.
+✔ Suite RecordAccessTests passed after 0.017 seconds.
+✔ Test run with 4 tests in 1 suite passed after 0.017 seconds.

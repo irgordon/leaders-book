@@ -1,0 +1,22 @@
+--- a/Tests/LeadersBookCoreTests/TestSupport.swift
++++ b/Tests/LeadersBookCoreTests/TestSupport.swift
+@@ -11,8 +11,8 @@
+     catch { Issue.record(error) }
+ }
+ @MainActor func openStore(_ url: URL) async throws -> LeaderStore {
+-    let store = LeaderStore(fileURL: url, scorer: try AFTScoring())
+-    await store.reload()
++    let store = LeaderStore(fileURL: url, scorer: try AFTScoring(), authenticator: TestAuthenticator())
++    try await store.unlock()
+     if case .failed(let failure) = store.state { throw failure }
+     return store
+ }
+@@ -23,3 +23,8 @@
+ }
+ let jpegFixture = Data([255, 216, 255, 224, 0, 16])
+ let pdfFixture = Data("%PDF-1.4 fixture for opaque storage testing".utf8)
++
++@MainActor struct TestAuthenticator: RecordAuthenticating {
++    func authenticate() async throws {}
++    func cancel() {}
++}

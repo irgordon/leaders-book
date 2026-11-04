@@ -1,0 +1,14 @@
+Building for debugging...
+[2 / 12]
+[3 / 7] LeadersBookCoreTests-product
+[5 / 9] LeadersBookCoreTests-product
+[10 / 13] LeadersBookCoreTests-product
+Build complete! (1.14 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite RecordAccessTests started.
+◇ Test unavailableAuthenticationFailsClosed() started.
+✔ Test unavailableAuthenticationFailsClosed() passed after 0.008 seconds.
+✔ Suite RecordAccessTests passed after 0.008 seconds.
+✔ Test run with 1 test in 1 suite passed after 0.009 seconds.

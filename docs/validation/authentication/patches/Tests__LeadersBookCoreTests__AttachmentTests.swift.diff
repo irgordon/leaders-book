@@ -1,0 +1,54 @@
+--- a/Tests/LeadersBookCoreTests/AttachmentTests.swift
++++ b/Tests/LeadersBookCoreTests/AttachmentTests.swift
+@@ -46,14 +46,14 @@
+         #expect(saved.training.first?.completionDates == [.distantPast])
+         #expect(saved.training.first?.certificate == certificate)
+         #expect(saved.heightWeight?.map(\.dto) == soldier.heightWeight)
+-        #expect(try Data(contentsOf: loaded.attachmentURL(photo)) == jpegFixture)
+-        #expect(try Data(contentsOf: loaded.attachmentURL(certificate)) == pdfFixture)
++        #expect(try Data(contentsOf: (try loaded.attachmentURL(photo))) == jpegFixture)
++        #expect(try Data(contentsOf: (try loaded.attachmentURL(certificate))) == pdfFixture)
+         soldier = SoldierDraft(saved); soldier.photo = nil
+         try await loaded.saveSoldier(soldier)
+-        #expect(!FileManager.default.fileExists(atPath: loaded.attachmentURL(photo).path))
+-        #expect(FileManager.default.fileExists(atPath: loaded.attachmentURL(certificate).path))
++        #expect(!FileManager.default.fileExists(atPath: (try loaded.attachmentURL(photo)).path))
++        #expect(FileManager.default.fileExists(atPath: (try loaded.attachmentURL(certificate)).path))
+         try await loaded.deleteSoldier(id: soldier.id)
+-        #expect(!FileManager.default.fileExists(atPath: loaded.attachmentURL(certificate).path))
++        #expect(!FileManager.default.fileExists(atPath: (try loaded.attachmentURL(certificate)).path))
+     }
+     @Test func failedCommitRollsBackNewFilesAndPreservesOldPhoto() async throws {
+         let url = fixtureFile(); defer { cleanFixture(url) }
+@@ -67,8 +67,8 @@
+         try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
+         await #expect(throws: (any Error).self) { try await store.saveSoldier(soldier, importing: [try ImportedRecordFile(attachment: replacement, data: jpegFixture)]) }
+         #expect((try store.records).soldiers.first?.photo == old)
+-        #expect(FileManager.default.fileExists(atPath: store.attachmentURL(old).path))
+-        #expect(!FileManager.default.fileExists(atPath: store.attachmentURL(replacement).path))
++        #expect(FileManager.default.fileExists(atPath: (try store.attachmentURL(old)).path))
++        #expect(!FileManager.default.fileExists(atPath: (try store.attachmentURL(replacement)).path))
+     }
+     @Test func invalidDatesMeasurementsAndMissingAttachmentsAreRejected() async throws {
+         let url = fixtureFile(); defer { cleanFixture(url) }
+@@ -93,9 +93,9 @@
+         let loaded = try await openStore(url)
+         #expect((try loaded.records).soldiers.count == 2)
+         try await loaded.deleteSoldier(id: first.id)
+-        #expect(FileManager.default.fileExists(atPath: loaded.attachmentURL(photo).path))
++        #expect(FileManager.default.fileExists(atPath: (try loaded.attachmentURL(photo)).path))
+         try await loaded.deleteSoldier(id: second.id)
+-        #expect(!FileManager.default.fileExists(atPath: loaded.attachmentURL(photo).path))
++        #expect(!FileManager.default.fileExists(atPath: (try loaded.attachmentURL(photo)).path))
+     }
+ 
+     @Test func unavailablePhotoDoesNotBlockUnrelatedCalculatorWork() async throws {
+@@ -104,7 +104,7 @@
+         let photo = try RecordAttachment(name: "Unavailable.jpg", kind: .jpeg)
+         var soldier = SoldierDraft(name: "Example"); soldier.photo = photo
+         try await store.saveSoldier(soldier, importing: [try ImportedRecordFile(attachment: photo, data: jpegFixture)])
+-        try FileManager.default.removeItem(at: store.attachmentURL(photo))
++        try FileManager.default.removeItem(at: (try store.attachmentURL(photo)))
+         await #expect(throws: AppFailure.self) { try await store.readAttachment(photo) }
+         let draft = maximumDraft()
+         try await store.saveDraft(draft)

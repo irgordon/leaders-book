@@ -1,0 +1,398 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project LeadersBook.xcodeproj -scheme LeadersBook -destination "platform=iOS Simulator,id=FFA3FC7C-FB63-463A-B5A2-6EC56F99C9A1" -derivedDataPath /private/tmp/leaders-theme-adopted-build -resultBundlePath /private/tmp/leaders-theme-capture-expanded "-only-testing:LeadersBookUITests/LeadersBookUITests/testRankAndPlaceholderPreviews" CODE_SIGNING_ALLOWED=NO test-without-building
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+
+Writing result bundle at path:
+	/private/tmp/leaders-theme-capture-expanded
+
+2026-11-03 23:41:45.526614-0500 LeadersBookUITests-Runner[19148:11410155] [Default] Running tests...
+2026-11-03 23:41:45.564616-0500 LeadersBookUITests-Runner[19148:11410155] [UIKit App Config] Update the Info.plist: Launch screens will soon be required.
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-03 23:41:47.632.
+Test Suite 'LeadersBookUITests.xctest' started at 2026-11-03 23:41:47.633.
+Test Suite 'LeadersBookUITests' started at 2026-11-03 23:41:47.633.
+Test Case '-[LeadersBookUITests.LeadersBookUITests testRankAndPlaceholderPreviews]' started.
+    t =     0.00s Start Test at 2026-11-03 23:41:47.635
+    t =     0.02s Set Up
+    t =     0.02s Open com.leadersbook.app
+    t =     0.02s     Launch com.leadersbook.app
+2026-11-03 23:41:47.699 xcodebuild[19113:11409515] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-03 23:41:47.700 xcodebuild[19113:11409515] [MT] IDELaunchParametersSnapshot: no debugger version
+objc[19148]: Class UIAccessibilityLoaderWebShared is implemented in both /Library/Developer/CoreSimulator/Volumes/iOS_24A434/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x102f4c398) and /Library/Developer/CoreSimulator/Volumes/iOS_24A434/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x106428310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     0.47s         Setting up automation session
+    t =     2.15s         Wait for com.leadersbook.app to idle
+    t =     3.81s Checking existence of `"Soldiers" Button`
+    t =     3.95s Tap Any (First Match)
+    t =     3.95s     Wait for com.leadersbook.app to idle
+    t =     3.95s     Find the Any (First Match)
+    t =     3.96s     Check for interrupting elements affecting "person.2" Button
+    t =     4.00s         Wait for com.apple.springboard to idle
+    t =     4.01s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =     4.01s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =     4.02s     Synthesize event
+    t =     4.32s     Wait for com.leadersbook.app to idle
+    t =     5.64s Checking existence of `"BackButton" Button`
+    t =     5.69s Checking existence of `Any (First Match)`
+    t =     5.76s Checking existence of `"Soldiers" Button`
+    t =     5.79s Tap Any (First Match)
+    t =     5.79s     Wait for com.leadersbook.app to idle
+    t =     5.79s     Find the Any (First Match)
+    t =     5.81s     Check for interrupting elements affecting "person.2" Button
+    t =     5.84s         Wait for com.apple.springboard to idle
+    t =     5.86s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =     5.86s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =     5.87s     Synthesize event
+    t =     6.16s     Wait for com.leadersbook.app to idle
+    t =     7.40s Checking existence of `"BackButton" Button`
+    t =     7.44s Checking existence of `Any (First Match)`
+    t =     7.50s Checking existence of `"Soldiers" Button`
+    t =     7.54s Tap Any (First Match)
+    t =     7.54s     Wait for com.leadersbook.app to idle
+    t =     7.54s     Find the Any (First Match)
+    t =     7.55s     Check for interrupting elements affecting "person.2" Button
+    t =     7.59s         Wait for com.apple.springboard to idle
+    t =     7.61s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =     7.61s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =     7.62s     Synthesize event
+    t =     7.91s     Wait for com.leadersbook.app to idle
+    t =     9.15s Checking existence of `"BackButton" Button`
+    t =     9.19s Checking existence of `Any (First Match)`
+    t =     9.25s Checking existence of `"Soldiers" Button`
+    t =     9.29s Tap Any (First Match)
+    t =     9.29s     Wait for com.leadersbook.app to idle
+    t =     9.29s     Find the Any (First Match)
+    t =     9.31s     Check for interrupting elements affecting "person.2" Button
+    t =     9.34s         Wait for com.apple.springboard to idle
+    t =     9.36s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =     9.36s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =     9.37s     Synthesize event
+    t =     9.66s     Wait for com.leadersbook.app to idle
+    t =    10.89s Checking existence of `"BackButton" Button`
+    t =    10.94s Checking existence of `Any (First Match)`
+    t =    11.00s Checking existence of `"Soldiers" Button`
+    t =    11.03s Tap Any (First Match)
+    t =    11.03s     Wait for com.leadersbook.app to idle
+    t =    11.03s     Find the Any (First Match)
+    t =    11.05s     Check for interrupting elements affecting "person.2" Button
+    t =    11.08s         Wait for com.apple.springboard to idle
+    t =    11.09s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    11.09s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    11.10s     Synthesize event
+    t =    11.39s     Wait for com.leadersbook.app to idle
+    t =    12.73s Checking existence of `"BackButton" Button`
+    t =    12.85s Checking existence of `Any (First Match)`
+    t =    13.02s Checking existence of `"Today" Button`
+    t =    13.10s Tap Any (First Match)
+    t =    13.10s     Wait for com.leadersbook.app to idle
+    t =    13.10s     Find the Any (First Match)
+    t =    13.11s     Check for interrupting elements affecting "sun.max" Button
+    t =    13.17s         Wait for com.apple.springboard to idle
+    t =    13.19s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    13.19s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    13.20s     Synthesize event
+    t =    13.54s     Wait for com.leadersbook.app to idle
+    t =    14.79s Find the Target Application 'com.leadersbook.app'
+    t =    14.91s Added attachment named 'Front Cover — Layout Preview'
+    t =    14.91s Checking existence of `"Soldiers" Button`
+    t =    14.95s Tap Any (First Match)
+    t =    14.95s     Wait for com.leadersbook.app to idle
+    t =    14.95s     Find the Any (First Match)
+    t =    14.96s     Check for interrupting elements affecting "person.2" Button
+    t =    14.99s         Wait for com.apple.springboard to idle
+    t =    15.01s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    15.01s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    15.02s     Synthesize event
+    t =    15.31s     Wait for com.leadersbook.app to idle
+    t =    16.55s Checking existence of `"BackButton" Button`
+    t =    16.60s Tap Any (First Match)
+    t =    16.60s     Wait for com.leadersbook.app to idle
+    t =    16.60s     Find the Any (First Match)
+    t =    16.66s     Check for interrupting elements affecting "SGT Casey Turner" Button
+    t =    16.70s         Wait for com.apple.springboard to idle
+    t =    16.71s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    16.71s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    16.73s     Synthesize event
+    t =    17.03s     Wait for com.leadersbook.app to idle
+    t =    17.03s Waiting 5.0s for "SGT Casey Turner" StaticText to exist
+    t =    18.10s     Checking `Expect predicate `existsNoRetry == 1` for object "SGT Casey Turner" StaticText`
+    t =    18.11s         Checking existence of `"SGT Casey Turner" StaticText`
+    t =    18.18s Waiting 5.0s for "soldierHeaderName" Any to exist
+    t =    19.26s     Checking `Expect predicate `existsNoRetry == 1` for object "soldierHeaderName" Any`
+    t =    19.26s         Checking existence of `"soldierHeaderName" Any`
+    t =    19.46s Waiting 5.0s for "soldierHeaderRank" Any to exist
+    t =    20.53s     Checking `Expect predicate `existsNoRetry == 1` for object "soldierHeaderRank" Any`
+    t =    20.54s         Checking existence of `"soldierHeaderRank" Any`
+    t =    20.74s Find the "soldierHeaderRank" Any
+    t =    20.93s Find the "soldierHeaderName" Any
+    t =    21.13s Find the "soldierHeaderRank" StaticText
+    t =    21.32s Find the Target Application 'com.leadersbook.app'
+    t =    21.46s Added attachment named 'Open Record — Layout Preview'
+    t =    21.46s Checking existence of `"Unit Safety Training" StaticText`
+    t =    21.57s Swipe down Target Application 'com.leadersbook.app'
+    t =    21.57s     Wait for com.leadersbook.app to idle
+    t =    21.57s     Find the Target Application 'com.leadersbook.app'
+    t =    21.62s     Check for interrupting elements affecting "The Leaders Book" Application
+    t =    21.68s         Wait for com.apple.springboard to idle
+    t =    21.69s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    21.70s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    21.70s     Synthesize event
+    t =    22.12s     Wait for com.leadersbook.app to idle
+    t =    22.58s Swipe down Target Application 'com.leadersbook.app'
+    t =    22.58s     Wait for com.leadersbook.app to idle
+    t =    22.59s     Find the Target Application 'com.leadersbook.app'
+    t =    22.63s     Check for interrupting elements affecting "The Leaders Book" Application
+    t =    22.69s         Wait for com.apple.springboard to idle
+    t =    22.70s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    22.70s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    22.71s     Synthesize event
+    t =    23.13s     Wait for com.leadersbook.app to idle
+    t =    23.62s Swipe down Target Application 'com.leadersbook.app'
+    t =    23.62s     Wait for com.leadersbook.app to idle
+    t =    23.62s     Find the Target Application 'com.leadersbook.app'
+    t =    23.67s     Check for interrupting elements affecting "The Leaders Book" Application
+    t =    23.73s         Wait for com.apple.springboard to idle
+    t =    23.74s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    23.74s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    23.75s     Synthesize event
+    t =    24.17s     Wait for com.leadersbook.app to idle
+    t =    24.66s Swipe down Target Application 'com.leadersbook.app'
+    t =    24.66s     Wait for com.leadersbook.app to idle
+    t =    24.66s     Find the Target Application 'com.leadersbook.app'
+    t =    24.72s     Check for interrupting elements affecting "The Leaders Book" Application
+    t =    24.78s         Wait for com.apple.springboard to idle
+    t =    24.79s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    24.79s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    24.80s     Synthesize event
+    t =    25.22s     Wait for com.leadersbook.app to idle
+    t =    25.71s Swipe down Target Application 'com.leadersbook.app'
+    t =    25.71s     Wait for com.leadersbook.app to idle
+    t =    25.71s     Find the Target Application 'com.leadersbook.app'
+    t =    25.76s     Check for interrupting elements affecting "The Leaders Book" Application
+    t =    25.82s         Wait for com.apple.springboard to idle
+    t =    25.83s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    25.83s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    25.83s     Synthesize event
+    t =    26.26s     Wait for com.leadersbook.app to idle
+    t =    26.74s Checking existence of `"Unit Safety Training" StaticText`
+    t =    26.85s Find the "Unit Safety Training" StaticText
+    t =    26.97s Find the Target Application 'com.leadersbook.app'
+    t =    27.10s Added attachment named 'Training Rows — Layout Preview'
+    t =    27.10s Setting appearance mode to Light
+    t =    27.11s     Wait for com.leadersbook.app to idle
+    t =    27.11s     Wait for com.apple.springboard to idle
+    t =    27.11s Terminate com.leadersbook.app:19213
+    t =    28.19s Open com.leadersbook.app
+    t =    28.19s     Launch com.leadersbook.app
+2026-11-03 23:42:15.829 xcodebuild[19113:11409515] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-03 23:42:15.829 xcodebuild[19113:11409515] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    28.41s         Setting up automation session
+    t =    29.99s         Wait for com.leadersbook.app to idle
+    t =    31.62s Checking existence of `"Today" Button`
+    t =    31.73s Tap Any (First Match)
+    t =    31.73s     Wait for com.leadersbook.app to idle
+    t =    31.74s     Find the Any (First Match)
+    t =    31.75s     Check for interrupting elements affecting "sun.max" Button
+    t =    31.78s         Wait for com.apple.springboard to idle
+    t =    31.80s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    31.80s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    31.81s     Synthesize event
+    t =    32.10s     Wait for com.leadersbook.app to idle
+    t =    33.34s Find the Target Application 'com.leadersbook.app'
+    t =    33.47s Added attachment named 'Theme Front Cover — Light'
+    t =    33.47s Checking existence of `"Soldiers" Button`
+    t =    33.50s Tap Any (First Match)
+    t =    33.50s     Wait for com.leadersbook.app to idle
+    t =    33.50s     Find the Any (First Match)
+    t =    33.51s     Check for interrupting elements affecting "person.2" Button
+    t =    33.55s         Wait for com.apple.springboard to idle
+    t =    33.56s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    33.57s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    33.58s     Synthesize event
+    t =    33.87s     Wait for com.leadersbook.app to idle
+    t =    35.26s Checking existence of `"SGT Casey Turner" StaticText`
+    t =    35.31s Tap Any (First Match)
+    t =    35.31s     Wait for com.leadersbook.app to idle
+    t =    35.31s     Find the Any (First Match)
+    t =    35.37s     Check for interrupting elements affecting "SGT Casey Turner" Button
+    t =    35.41s         Wait for com.apple.springboard to idle
+    t =    35.42s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    35.42s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    35.45s     Synthesize event
+    t =    35.74s     Wait for com.leadersbook.app to idle
+    t =    35.74s Swipe down Target Application 'com.leadersbook.app'
+    t =    35.74s     Wait for com.leadersbook.app to idle
+    t =    35.75s     Find the Target Application 'com.leadersbook.app'
+    t =    35.81s     Check for interrupting elements affecting "The Leaders Book" Application
+    t =    35.87s         Wait for com.apple.springboard to idle
+    t =    35.88s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    35.89s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    35.89s     Synthesize event
+    t =    36.31s     Wait for com.leadersbook.app to idle
+    t =    36.79s Swipe down Target Application 'com.leadersbook.app'
+    t =    36.79s     Wait for com.leadersbook.app to idle
+    t =    36.79s     Find the Target Application 'com.leadersbook.app'
+    t =    36.85s     Check for interrupting elements affecting "The Leaders Book" Application
+    t =    36.90s         Wait for com.apple.springboard to idle
+    t =    36.92s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    36.92s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    36.92s     Synthesize event
+    t =    37.35s     Wait for com.leadersbook.app to idle
+    t =    37.84s Swipe down Target Application 'com.leadersbook.app'
+    t =    37.84s     Wait for com.leadersbook.app to idle
+    t =    37.85s     Find the Target Application 'com.leadersbook.app'
+    t =    37.92s     Check for interrupting elements affecting "The Leaders Book" Application
+    t =    37.97s         Wait for com.apple.springboard to idle
+    t =    37.99s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    37.99s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    37.99s     Synthesize event
+    t =    38.41s     Wait for com.leadersbook.app to idle
+    t =    38.91s Swipe down Target Application 'com.leadersbook.app'
+    t =    38.91s     Wait for com.leadersbook.app to idle
+    t =    38.91s     Find the Target Application 'com.leadersbook.app'
+    t =    38.98s     Check for interrupting elements affecting "The Leaders Book" Application
+    t =    39.03s         Wait for com.apple.springboard to idle
+    t =    39.05s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    39.05s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    39.05s     Synthesize event
+    t =    39.48s     Wait for com.leadersbook.app to idle
+    t =    39.95s Swipe down Target Application 'com.leadersbook.app'
+    t =    39.95s     Wait for com.leadersbook.app to idle
+    t =    39.95s     Find the Target Application 'com.leadersbook.app'
+    t =    40.01s     Check for interrupting elements affecting "The Leaders Book" Application
+    t =    40.06s         Wait for com.apple.springboard to idle
+    t =    40.07s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    40.07s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    40.08s     Synthesize event
+    t =    40.50s     Wait for com.leadersbook.app to idle
+    t =    40.99s Waiting 5.0s for "soldierHeaderName" Any to exist
+    t =    42.03s     Checking `Expect predicate `existsNoRetry == 1` for object "soldierHeaderName" Any`
+    t =    42.03s         Checking existence of `"soldierHeaderName" Any`
+    t =    42.24s Waiting 5.0s for "soldierHeaderRank" Any to exist
+    t =    43.29s     Checking `Expect predicate `existsNoRetry == 1` for object "soldierHeaderRank" Any`
+    t =    43.29s         Checking existence of `"soldierHeaderRank" Any`
+    t =    43.51s Find the "soldierHeaderRank" Any
+    t =    43.71s Find the "soldierHeaderName" Any
+    t =    43.90s Find the "soldierHeaderRank" StaticText
+    t =    44.08s Find the Target Application 'com.leadersbook.app'
+    t =    44.21s Added attachment named 'Theme Soldier Profile — Light'
+    t =    44.21s Setting appearance mode to Dark
+    t =    46.23s     Wait for com.leadersbook.app to idle
+    t =    46.23s     Wait for com.apple.springboard to idle
+    t =    46.23s Terminate com.leadersbook.app:19332
+    t =    47.30s Open com.leadersbook.app
+    t =    47.30s     Launch com.leadersbook.app
+2026-11-03 23:42:34.932 xcodebuild[19113:11409515] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-03 23:42:34.932 xcodebuild[19113:11409515] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    47.50s         Setting up automation session
+    t =    49.10s         Wait for com.leadersbook.app to idle
+    t =    50.75s Checking existence of `"Today" Button`
+    t =    50.88s Tap Any (First Match)
+    t =    50.88s     Wait for com.leadersbook.app to idle
+    t =    50.88s     Find the Any (First Match)
+    t =    50.89s     Check for interrupting elements affecting "sun.max" Button
+    t =    50.92s         Wait for com.apple.springboard to idle
+    t =    50.94s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    50.94s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    50.95s     Synthesize event
+    t =    51.24s     Wait for com.leadersbook.app to idle
+    t =    52.49s Find the Target Application 'com.leadersbook.app'
+    t =    52.62s Added attachment named 'Theme Front Cover — Dark'
+    t =    52.62s Checking existence of `"Soldiers" Button`
+    t =    52.65s Tap Any (First Match)
+    t =    52.65s     Wait for com.leadersbook.app to idle
+    t =    52.66s     Find the Any (First Match)
+    t =    52.67s     Check for interrupting elements affecting "person.2" Button
+    t =    52.70s         Wait for com.apple.springboard to idle
+    t =    52.71s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    52.71s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    52.72s     Synthesize event
+    t =    53.01s     Wait for com.leadersbook.app to idle
+    t =    54.43s Checking existence of `"SGT Casey Turner" StaticText`
+    t =    54.50s Tap Any (First Match)
+    t =    54.50s     Wait for com.leadersbook.app to idle
+    t =    54.50s     Find the Any (First Match)
+    t =    54.56s     Check for interrupting elements affecting "SGT Casey Turner" Button
+    t =    54.59s         Wait for com.apple.springboard to idle
+    t =    54.61s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    54.61s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    54.63s     Synthesize event
+    t =    54.92s     Wait for com.leadersbook.app to idle
+    t =    54.93s Swipe down Target Application 'com.leadersbook.app'
+    t =    54.93s     Wait for com.leadersbook.app to idle
+    t =    54.93s     Find the Target Application 'com.leadersbook.app'
+    t =    55.00s     Check for interrupting elements affecting "The Leaders Book" Application
+    t =    55.05s         Wait for com.apple.springboard to idle
+    t =    55.06s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    55.06s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    55.06s     Synthesize event
+    t =    55.48s     Wait for com.leadersbook.app to idle
+    t =    55.96s Swipe down Target Application 'com.leadersbook.app'
+    t =    55.96s     Wait for com.leadersbook.app to idle
+    t =    55.96s     Find the Target Application 'com.leadersbook.app'
+    t =    56.00s     Check for interrupting elements affecting "The Leaders Book" Application
+    t =    56.06s         Wait for com.apple.springboard to idle
+    t =    56.08s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    56.08s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    56.08s     Synthesize event
+    t =    56.50s     Wait for com.leadersbook.app to idle
+    t =    56.99s Swipe down Target Application 'com.leadersbook.app'
+    t =    56.99s     Wait for com.leadersbook.app to idle
+    t =    56.99s     Find the Target Application 'com.leadersbook.app'
+    t =    57.05s     Check for interrupting elements affecting "The Leaders Book" Application
+    t =    57.11s         Wait for com.apple.springboard to idle
+    t =    57.12s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    57.12s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    57.13s     Synthesize event
+    t =    57.55s     Wait for com.leadersbook.app to idle
+    t =    58.04s Swipe down Target Application 'com.leadersbook.app'
+    t =    58.04s     Wait for com.leadersbook.app to idle
+    t =    58.04s     Find the Target Application 'com.leadersbook.app'
+    t =    58.10s     Check for interrupting elements affecting "The Leaders Book" Application
+    t =    58.17s         Wait for com.apple.springboard to idle
+    t =    58.18s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    58.18s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    58.18s     Synthesize event
+    t =    58.61s     Wait for com.leadersbook.app to idle
+    t =    59.09s Swipe down Target Application 'com.leadersbook.app'
+    t =    59.09s     Wait for com.leadersbook.app to idle
+    t =    59.10s     Find the Target Application 'com.leadersbook.app'
+    t =    59.16s     Check for interrupting elements affecting "The Leaders Book" Application
+    t =    59.22s         Wait for com.apple.springboard to idle
+    t =    59.23s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    59.23s Ignoring failure to get hierarchy for remote element in process 16885 (Error getting main window kAXErrorServerNotFound)
+    t =    59.23s     Synthesize event
+    t =    59.65s     Wait for com.leadersbook.app to idle
+    t =    60.14s Waiting 5.0s for "soldierHeaderName" Any to exist
+    t =    61.19s     Checking `Expect predicate `existsNoRetry == 1` for object "soldierHeaderName" Any`
+    t =    61.19s         Checking existence of `"soldierHeaderName" Any`
+    t =    61.41s Waiting 5.0s for "soldierHeaderRank" Any to exist
+    t =    62.46s     Checking `Expect predicate `existsNoRetry == 1` for object "soldierHeaderRank" Any`
+    t =    62.46s         Checking existence of `"soldierHeaderRank" Any`
+    t =    62.68s Find the "soldierHeaderRank" Any
+    t =    62.87s Find the "soldierHeaderName" Any
+    t =    63.07s Find the "soldierHeaderRank" StaticText
+    t =    63.27s Find the Target Application 'com.leadersbook.app'
+    t =    63.41s Added attachment named 'Theme Soldier Profile — Dark'
+    t =    63.41s Setting appearance mode to Light
+    t =    65.43s     Wait for com.leadersbook.app to idle
+    t =    65.43s     Wait for com.apple.springboard to idle
+    t =    65.44s Tear Down
+Test Case '-[LeadersBookUITests.LeadersBookUITests testRankAndPlaceholderPreviews]' passed (65.732 seconds).
+Test Suite 'LeadersBookUITests' passed at 2026-11-03 23:42:53.368.
+	 Executed 1 test, with 0 failures (0 unexpected) in 65.732 (65.735) seconds
+Test Suite 'LeadersBookUITests.xctest' passed at 2026-11-03 23:42:53.369.
+	 Executed 1 test, with 0 failures (0 unexpected) in 65.732 (65.736) seconds
+Test Suite 'Selected tests' passed at 2026-11-03 23:42:53.369.
+	 Executed 1 test, with 0 failures (0 unexpected) in 65.732 (65.737) seconds
+2026-11-03 23:42:53.669 xcodebuild[19113:11409515] [MT] IDETestOperationsObserverDebug: 71.133 elapsed -- Testing started completed.
+2026-11-03 23:42:53.669 xcodebuild[19113:11409515] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-03 23:42:53.669 xcodebuild[19113:11409515] [MT] IDETestOperationsObserverDebug: 71.133 sec, +71.133 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/leaders-theme-capture-expanded
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

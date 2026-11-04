@@ -1,0 +1,1 @@
+light-standard-selected-true-enabled-true: nontransparent=5184/5184, maxAlpha=255, drawHierarchy=true, sceneAttached=true, connectedScenes=1, actualStyle=1, actualContrast=0

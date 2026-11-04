@@ -1,0 +1,11 @@
+--- a/LeadersBook/Views/SoldiersView.swift
++++ b/LeadersBook/Views/SoldiersView.swift
+@@ -82,7 +82,7 @@
+                                           previewOperation.start("Open Certificate") {
+                                               _ = try await store.readAttachment(attachment)
+                                               try Task.checkCancellation()
+-                                              previewURL = store.attachmentURL(attachment)
++                                              previewURL = try store.attachmentURL(attachment)
+                                           }
+                                       })
+                 } else {

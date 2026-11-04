@@ -1,0 +1,3 @@
+PASS: Release executable does not contain the test denial flag or UITestAuthenticator name.
+SHA-256: 35a8fdaf87b250412af891d9df1a961f6d5bb02e4e6b8eb04573ca6486cff0ff
+This is a build-isolation check, not hardware authentication validation.

@@ -1,0 +1,214 @@
+--- a/LeadersBook/Core/LeaderStore.swift
++++ b/LeadersBook/Core/LeaderStore.swift
+@@ -2,6 +2,7 @@
+ import Observation
+ 
+ enum BookLoadState {
++    case locked(LockedSummary?)
+     case loading(UUID)
+     case ready(LoadedBook)
+     case failed(AppFailure)
+@@ -9,13 +10,24 @@
+ 
+ @MainActor @Observable
+ final class LeaderStore {
+-    private(set) var state: BookLoadState = .loading(UUID())
++    private(set) var state: BookLoadState = .locked(nil)
++    private enum Access { case locked, authenticating(UUID), unlocked(UUID) }
++    private var access: Access = .locked
++    private enum InitialSummary { case pending, consumed }
++    private var initialSummary: InitialSummary = .pending
++    private var summary: LockedSummary?
++    private let authenticator: any RecordAuthenticating
++    private var epoch = UUID()
++    private var lease: RecordAccessLease?
++    var isUnlocked: Bool { if case .unlocked = access { true } else { false } }
++    var isAuthenticating: Bool { if case .authenticating = access { true } else { false } }
+     private(set) var draft = FitnessDraft()
+     var operationFailure: AppFailure?
+     let draftSave = OwnedOperation()
+     private let repository: BookRepository
+     private var operations: [UUID: Task<Void, Never>] = [:]
+-    init(fileURL: URL = URL.applicationSupportDirectory.appending(path: "LeadersBook/records.json"), scorer: AFTScoring) {
++    init(fileURL: URL = URL.applicationSupportDirectory.appending(path: "LeadersBook/records.json"), scorer: AFTScoring, authenticator: any RecordAuthenticating = UnavailableRecordAuthenticator()) {
++        self.authenticator = authenticator
+         repository = BookRepository(fileURL: fileURL, scorer: scorer)
+     }
+     var records: BookSnapshot {
+@@ -23,7 +35,8 @@
+             switch state {
+             case .ready(let book): book.snapshot
+             case .failed(let failure): throw failure
+-            case .loading: throw RecordError.recoveryRequired
++            case .locked: throw RecordAccessError.locked
++        case .loading: throw RecordError.recoveryRequired
+             }
+         }
+     }
+@@ -32,43 +45,115 @@
+     var cleanupIssue: RecoveryIssue? {
+         if case .ready(let book) = state, case .pending(let issue) = book.cleanup { issue } else { nil }
+     }
++    func unlock() async throws {
++        guard case .locked = access else { throw RecordAccessError.superseded }
++        let request = UUID()
++        access = .authenticating(request)
++        do {
++            try await authenticator.authenticate()
++            try Task.checkCancellation()
++            guard case .authenticating(let active) = access, active == request else { throw RecordAccessError.superseded }
++            let book = try await repository.load()
++            try Task.checkCancellation()
++            guard case .authenticating(let active) = access, active == request else { throw RecordAccessError.superseded }
++            epoch = UUID()
++            lease = RecordAccessLease()
++            access = .unlocked(epoch)
++            summary = LockedSummary(soldiers: book.snapshot.soldiers.count, results: book.snapshot.results.count)
++            draft = book.snapshot.fitnessDraft
++            state = .ready(book)
++        } catch {
++            if case .authenticating(let active) = access, active == request {
++                lock()
++                operationFailure = AppFailure("Unlock Records", underlying: error)
++            }
++            throw error
++        }
++    }
++    func lock() {
++        epoch = UUID()
++        lease?.revoke(); lease = nil
++        access = .locked
++        authenticator.cancel()
++        draftSave.cancel()
++        for task in operations.values { task.cancel() }
++        draft = FitnessDraft()
++        operationFailure = nil
++        state = .locked(summary)
++    }
++    private func requireAccess() throws {
++        guard case .unlocked = access else { throw RecordAccessError.locked }
++    }
++    /// Shared by all windows; presentation must not reload an active editing session.
++    func prepareForPresentation() async {
++        guard case .pending = initialSummary, case .locked(nil) = state, case .locked = access else { return }
++        initialSummary = .consumed
++        await reload()
++    }
+     func reload() async {
+         draftSave.cancel()
+         let request = UUID()
+-        state = .loading(request)
++        let generation = epoch
++        let unlocked: Bool
++        if case .unlocked = access { unlocked = true; state = .loading(request) } else { unlocked = false }
+         do {
+             let book = try await repository.load()
++            guard generation == epoch else { return }
++            summary = LockedSummary(soldiers: book.snapshot.soldiers.count, results: book.snapshot.results.count)
++            guard unlocked else { state = .locked(summary); return }
+             guard case .loading(let active) = state, active == request else { return }
+             state = .ready(book); draft = book.snapshot.fitnessDraft
+         } catch is CancellationError {
++            guard generation == epoch else { return }
+             guard case .loading(let active) = state, active == request else { return }
+             state = .loading(UUID())
+         } catch {
++            guard generation == epoch else { return }
++            if !unlocked { state = .locked(summary); operationFailure = AppFailure("Load Summary", underlying: error); return }
+             guard case .loading(let active) = state, active == request else { return }
+             state = .failed(AppFailure("Open Records", underlying: error))
+         }
+     }
+     private func publish(_ book: LoadedBook) {
+         guard case .ready(let current) = state, current.snapshot.generation <= book.snapshot.generation else { return }
++        summary = LockedSummary(soldiers: book.snapshot.soldiers.count, results: book.snapshot.results.count)
+         state = .ready(book)
+     }
+-    func attachmentURL(_ attachment: RecordAttachment) -> URL { repository.attachmentURL(attachment) }
+-    func readAttachment(_ attachment: RecordAttachment) async throws -> ImportedRecordFile { try await repository.readAttachment(attachment) }
++    func attachmentURL(_ attachment: RecordAttachment) throws -> URL { try requireAccess(); return repository.attachmentURL(attachment) }
++    func readAttachment(_ attachment: RecordAttachment) async throws -> ImportedRecordFile {
++        try requireAccess()
++        let generation = epoch
++        let file = try await repository.readAttachment(attachment, permit: accessLease())
++        try requireAccess()
++        guard generation == epoch else { throw RecordAccessError.superseded }
++        return file
++    }
+     private func requireReady() throws {
++        try requireAccess()
+         switch state {
+         case .ready: return
+         case .failed(let failure): throw failure
++        case .locked: throw RecordAccessError.locked
+         case .loading: throw RecordError.recoveryRequired
+         }
+     }
++    private func accessLease() throws -> RecordAccessLease {
++        try requireAccess()
++        guard let lease else { preconditionFailure("Unlocked session must own a lease") }
++        return lease
++    }
+     private func execute(_ mutation: BookMutation) async throws -> LoadedBook {
+-        do {
+-            let result = try await repository.apply(mutation)
++        try requireAccess()
++        let generation = epoch
++        do {
++            let result = try await repository.apply(mutation, permit: accessLease())
++            try requireAccess()
++            guard generation == epoch else { throw RecordAccessError.superseded }
+             publish(result)
+             return result
+         } catch {
+             let status = await repository.currentStatus()
+-            if case .ready = state {
++            if generation == epoch, case .ready = state {
+                 switch status {
+                 case .ready(let book): publish(book)
+                 case .failed(let failure): state = .failed(failure)
+@@ -94,7 +179,7 @@
+         _ = try await execute(.saveDraft(input))
+     }
+     func updateDraft(_ input: FitnessDraft) {
+-        do { try input.validateStructure() }
++        do { try requireAccess(); try input.validateStructure() }
+         catch { operationFailure = AppFailure("Validate Calculator Draft", underlying: error); return }
+         draft = input
+         draftSave.start("Save Calculator Draft") { [self] in
+@@ -115,23 +200,31 @@
+     }
+     func deleteResults(ids: Set<UUID>) async throws { try requireReady(); _ = try await execute(.deleteResults(ids)) }
+     func recoverAttachments() async throws {
+-        do { publish(try await repository.recoverPending()) }
++        try requireAccess()
++        let generation = epoch
++        do {
++            let book = try await repository.recoverPending()
++            try requireAccess()
++            guard generation == epoch else { throw RecordAccessError.superseded }
++            publish(book)
++        }
+         catch is CancellationError { throw CancellationError() }
+         catch {
+-            state = .failed(AppFailure("Recover Attachments", underlying: error))
++            if generation == epoch { state = .failed(AppFailure("Recover Attachments", underlying: error)) }
+             throw error
+         }
+     }
+     /// App-lifetime UI mutation owner. These operations are not automatically retried.
+     func submit(_ operation: String, work: @escaping @MainActor () async throws -> Void) {
+         let id = UUID()
++        let generation = epoch
+         operations[id] = Task { [self] in
+             defer { operations[id] = nil }
+-            do { try Task.checkCancellation(); try await work() }
++            do { try requireAccess(); try Task.checkCancellation(); try await work() }
+             catch is CancellationError { /* App-lifetime shutdown owns this cancellation. */ }
+             catch {
+                 let failure = AppFailure(operation, underlying: error)
+-                operationFailure = failure
++                if generation == epoch { operationFailure = failure }
+                 // execute() already synchronized the authoritative repository outcome.
+             }
+         }

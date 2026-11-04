@@ -1,0 +1,612 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project LeadersBook.xcodeproj -scheme LeadersBook -configuration Release -destination generic/platform=iOS -derivedDataPath /private/tmp/leaders-auth-release CODE_SIGNING_ALLOWED=NO build
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (1 target)
+    Target 'LeadersBook' in project 'LeadersBook' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --print-asset-tag-combinations --output-format xml1 /Users/godzilla/Documents/ChatGPT/Army App - Leaders Book/LeadersBook/Resources/Assets.xcassets
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+Build description signature: 6b138fbe6c00d17aaebc1eea9285ce47
+Build description path: /tmp/leaders-auth-release/Build/Intermediates.noindex/XCBuildData/6b138fbe6c00d17aaebc1eea9285ce47.xcbuilddata
+CreateBuildDirectory /tmp/leaders-auth-release/SDKExplicitPrecompiledModules
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook.xcodeproj
+    builtin-create-build-directory /tmp/leaders-auth-release/SDKExplicitPrecompiledModules
+
+CreateBuildDirectory /tmp/leaders-auth-release/ModuleCache.noindex
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook.xcodeproj
+    builtin-create-build-directory /tmp/leaders-auth-release/ModuleCache.noindex
+
+CreateBuildDirectory /tmp/leaders-auth-release/CompilationCache.noindex
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook.xcodeproj
+    builtin-create-build-directory /tmp/leaders-auth-release/CompilationCache.noindex
+
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk /tmp/leaders-auth-release/SDKStatCaches.noindex/iphoneos27.0-24A430-6c78b3cbc238196c85e1bf6c792c5915.sdkstatcache
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk -o /tmp/leaders-auth-release/SDKStatCaches.noindex/iphoneos27.0-24A430-6c78b3cbc238196c85e1bf6c792c5915.sdkstatcache
+
+CreateBuildDirectory /tmp/leaders-auth-release/Build/Products
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook.xcodeproj
+    builtin-create-build-directory /tmp/leaders-auth-release/Build/Products
+
+CreateBuildDirectory /tmp/leaders-auth-release/Build/Intermediates.noindex
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook.xcodeproj
+    builtin-create-build-directory /tmp/leaders-auth-release/Build/Intermediates.noindex
+
+CreateBuildDirectory /tmp/leaders-auth-release/Build/Products/Release-iphoneos
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook.xcodeproj
+    builtin-create-build-directory /tmp/leaders-auth-release/Build/Products/Release-iphoneos
+
+CreateBuildDirectory /tmp/leaders-auth-release/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook.xcodeproj
+    builtin-create-build-directory /tmp/leaders-auth-release/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+CreateBuildDirectory /tmp/leaders-auth-release/Build/Intermediates.noindex/PrecompiledHeaders
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook.xcodeproj
+    builtin-create-build-directory /tmp/leaders-auth-release/Build/Intermediates.noindex/PrecompiledHeaders
+
+CreateBuildDirectory /tmp/leaders-auth-release/Build/Intermediates.noindex/EagerLinkingTBDs/Release-iphoneos
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook.xcodeproj
+    builtin-create-build-directory /tmp/leaders-auth-release/Build/Intermediates.noindex/EagerLinkingTBDs/Release-iphoneos
+
+CreateBuildDirectory /tmp/leaders-auth-release/Build/Intermediates.noindex/ExplicitPrecompiledModules
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook.xcodeproj
+    builtin-create-build-directory /tmp/leaders-auth-release/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+WriteAuxiliaryFile /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook-39832066d97290b3669011c4c622165a-VFS-iphoneos/all-product-headers.yaml
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook.xcodeproj
+    write-file /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook-39832066d97290b3669011c4c622165a-VFS-iphoneos/all-product-headers.yaml
+
+WriteAuxiliaryFile /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/LeadersBook.hmap (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    write-file /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/LeadersBook.hmap
+
+WriteAuxiliaryFile /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/empty-LeadersBook.plist (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    write-file /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/empty-LeadersBook.plist
+
+WriteAuxiliaryFile /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/LeadersBook-project-headers.hmap (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    write-file /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/LeadersBook-project-headers.hmap
+
+WriteAuxiliaryFile /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/LeadersBook-own-target-headers.hmap (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    write-file /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/LeadersBook-own-target-headers.hmap
+
+WriteAuxiliaryFile /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/LeadersBook-generated-files.hmap (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    write-file /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/LeadersBook-generated-files.hmap
+
+WriteAuxiliaryFile /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/LeadersBook-all-target-headers.hmap (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    write-file /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/LeadersBook-all-target-headers.hmap
+
+WriteAuxiliaryFile /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/LeadersBook.DependencyStaticMetadataFileList (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    write-file /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/LeadersBook.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook.SwiftConstValuesFileList (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    write-file /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/LeadersBook.DependencyMetadataFileList (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    write-file /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/LeadersBook.DependencyMetadataFileList
+
+WriteAuxiliaryFile /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook.SwiftFileList (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    write-file /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook.SwiftFileList
+
+WriteAuxiliaryFile /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook-OutputFileMap.json (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    write-file /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook-OutputFileMap.json
+
+WriteAuxiliaryFile /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook.LinkFileList (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    write-file /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook.LinkFileList
+
+WriteAuxiliaryFile /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook_const_extract_protocols.json (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    write-file /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook_const_extract_protocols.json
+
+WriteAuxiliaryFile /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/LeadersBook-all-non-framework-target-headers.hmap (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    write-file /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/LeadersBook-all-non-framework-target-headers.hmap
+
+MkDir /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    /bin/mkdir -p /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app
+
+CpResource /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app/aft-scales.json /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Resources/aft-scales.json (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Resources/aft-scales.json /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app
+
+CpResource /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app/PrivacyInfo.xcprivacy /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Resources/PrivacyInfo.xcprivacy (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Resources/PrivacyInfo.xcprivacy /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app
+
+MkDir /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/assetcatalog_output/thinned (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    /bin/mkdir -p /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/assetcatalog_output/thinned
+
+MkDir /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/assetcatalog_output/unthinned (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    /bin/mkdir -p /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/assetcatalog_output/unthinned
+
+GenerateAssetSymbols /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Resources/Assets.xcassets (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    /Applications/Xcode.app/Contents/Developer/usr/bin/actool /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Resources/Assets.xcassets --compile /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app --output-format human-readable-text --notices --warnings --export-dependency-info /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/assetcatalog_dependencies --output-partial-info-plist /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/assetcatalog_generated_info.plist --app-icon AppIcon --accent-color AccentColor --compress-pngs --enable-on-demand-resources YES --development-region en --target-device iphone --target-device ipad --minimum-deployment-target 27.0 --platform iphoneos --bundle-identifier com.leadersbook.app --generate-swift-asset-symbol-extensions NO --generate-swift-asset-symbols /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/DerivedSources/GeneratedAssetSymbols.swift --generate-objc-asset-symbols /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/DerivedSources/GeneratedAssetSymbols.h --generate-asset-symbol-index /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/DerivedSources/GeneratedAssetSymbols-Index.plist
+/* com.apple.actool.compilation-results */
+/tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/DerivedSources/GeneratedAssetSymbols-Index.plist
+/tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/DerivedSources/GeneratedAssetSymbols.h
+/tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/DerivedSources/GeneratedAssetSymbols.swift
+
+
+CompileAssetCatalogVariant thinned /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Resources/Assets.xcassets (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    /Applications/Xcode.app/Contents/Developer/usr/bin/actool /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Resources/Assets.xcassets --compile /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/assetcatalog_output/thinned --output-format human-readable-text --notices --warnings --export-dependency-info /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/assetcatalog_dependencies_thinned --output-partial-info-plist /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/assetcatalog_generated_info.plist_thinned --app-icon AppIcon --accent-color AccentColor --compress-pngs --enable-on-demand-resources YES --development-region en --target-device iphone --target-device ipad --minimum-deployment-target 27.0 --platform iphoneos
+/* com.apple.actool.compilation-results */
+/tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/assetcatalog_generated_info.plist_thinned
+/tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/assetcatalog_output/thinned/AppIcon60x60@2x.png
+/tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/assetcatalog_output/thinned/AppIcon76x76@2x~ipad.png
+/tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/assetcatalog_output/thinned/Assets.car
+
+
+SwiftDriver LeadersBook normal arm64 com.apple.xcode.tools.swift.compiler (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name LeadersBook -O @/tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook.SwiftFileList -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk -target arm64-apple-ios27.0 -g -module-cache-path /tmp/leaders-auth-release/ModuleCache.noindex -Xfrontend -serialize-debugging-options -swift-version 6 -I /tmp/leaders-auth-release/Build/Products/Release-iphoneos -F /tmp/leaders-auth-release/Build/Products/Release-iphoneos -emit-localized-strings -emit-localized-strings-path /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64 -c -j16 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/leaders-auth-release/SDKStatCaches.noindex/iphoneos27.0-24A430-6c78b3cbc238196c85e1bf6c792c5915.sdkstatcache -output-file-map /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/leaders-auth-release/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/leaders-auth-release/ModuleCache.noindex -sdk-module-cache-path /tmp/leaders-auth-release/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /tmp/leaders-auth-release/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/LeadersBook-generated-files.hmap -Xcc -I/tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/LeadersBook-own-target-headers.hmap -Xcc -I/tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/LeadersBook-all-target-headers.hmap -Xcc -iquote -Xcc /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/LeadersBook-project-headers.hmap -Xcc -I/tmp/leaders-auth-release/Build/Products/Release-iphoneos/include -Xcc -I/tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/DerivedSources-normal/arm64 -Xcc -I/tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/DerivedSources/arm64 -Xcc -I/tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook-Swift.h -working-directory /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book -experimental-emit-module-separately -disable-cmo
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/_AvailabilityInternal-64L4R5W7XZF1ZWP922GL4XSB0.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/_Builtin_float-B4PZYJF39HIF1O4DLQUDLYIFP.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/_Builtin_stdbool-4PCNLQVTOW4P0GFDXGZ3G9U7U.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/ptrcheck-371VMEED1DKMREYE320GB6EVQ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/_Builtin_stdarg-9XCF66WE9IE80J5EQ7SMPA4HX.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/_SwiftConcurrencyShims-9ISPK1YW8GDWXFLQDDW7P0ERR.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/SwiftShims-4GC06A0FRPK9A00Y9YCLR38XZ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/ptrauth-4PWL9AJ9J5H06JJNXM86BEUKL.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/DeveloperToolsSupport-DS64ET5NRHXX045M3GS4AQXHD.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/_Builtin_stddef-2LCL4H34T8MQBY93RPTMM5MUA.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/_DarwinFoundation1-3QJ9Z5026Y2BUJ4ON3YLCH9E8.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/_DarwinFoundation2-B4EPWRUBHF43D59LR6ZSB5B96.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/_Builtin_limits-1IWBLSS4BWPCALFHHMMBIKJ7F.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/ExtensionFoundation-46RTXSATYM6IE8V41E63FD0ZL.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/_Builtin_tgmath-7QLL98CN36ENBP2WZZZTRETP7.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/_Builtin_stdint-5D1PSM95PDPBOY2GFNQUOARL3.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/sys_types-8U7OJJAHR6IGCJK7QR61DJX9F.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/string_h-2V8SZIA7D9K0NI9ZGV2CU3M0M.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/_Builtin_intrinsics-8SG0PETWSL41RWXXF04PVYRLH.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/_DarwinFoundation3-16D3YIGNUOK02E03149HNQ8KM.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/_Builtin_stdatomic-QN6UJEFYFSO5DHYKI4HZXGZX.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/_Builtin_inttypes-EJKCEK32MHVFEBDYWXHOM6CF6.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/Darwin-A3ZM2SQT8Z63CMU5L5HQGDJEZ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/simd-CJELRNL0MLOHZ7QZRUH8DSV9X.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/ObjectiveC-5AY6K2BL24KXR7IPRVA59QCB7.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/MachO-7FPUM90V2DYLVXSBHAXEVY99D.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/os_object-DI9OUXHO38TLB659YC8BL5JOZ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/os_workgroup-D18F01I559B71SBNREVU91KDZ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/Spatial-F03867CWDQLUOC4C0XTHG46VR.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/Dispatch-DWSKV2OU55IGTUKO57GPGOSL9.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/CoreFoundation-9MLBWUJMXOK6NMLIP1EQ3GXZS.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/dnssd-DX94MO7QA0ILLEUGPFIPVDBKL.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/XPC-DQBQ3XXFMR22O1VI81B9VQQ41.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/os-6L1ROX0HJIRW3I4W2JD2PM4HU.pcm
+
+LinkAssetCatalog /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Resources/Assets.xcassets (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-linkAssetCatalog --thinned /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/assetcatalog_output/thinned --thinned-dependencies /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/assetcatalog_dependencies_thinned --thinned-info-plist-content /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/assetcatalog_generated_info.plist_thinned --unthinned /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/assetcatalog_output/unthinned --unthinned-dependencies /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/assetcatalog_dependencies_unthinned --unthinned-info-plist-content /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/assetcatalog_generated_info.plist_unthinned --output /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app --plist-output /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/assetcatalog_generated_info.plist
+note: Emplaced /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app/Assets.car (in target 'LeadersBook' from project 'LeadersBook')
+note: Emplaced /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app/AppIcon76x76@2x~ipad.png (in target 'LeadersBook' from project 'LeadersBook')
+note: Emplaced /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app/AppIcon60x60@2x.png (in target 'LeadersBook' from project 'LeadersBook')
+
+ProcessInfoPlistFile /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app/Info.plist /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/empty-LeadersBook.plist (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-infoPlistUtility /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/empty-LeadersBook.plist -producttype com.apple.product-type.application -genpkginfo /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app/PkgInfo -expandbuildsettings -format binary -platform iphoneos -additionalcontentfile /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/assetcatalog_generated_info.plist -requiredArchitecture arm64 -o /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app/Info.plist
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/CFNetwork-EDVUQDFMQUTULR3J0KHPFZ3K6.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/CoreAudioTypes-2AO4OB57SG6AIZUOQKZ5DSNE2.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/CoreGraphics-E5BR1UGQIP3IRFEUP5G8ZD8FC.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/Security-4OJOSG3ATY0WBA45DQBP19NZZ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/CoreAudio-A3BNFJOTJFUG0TT47A9YVBLID.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/Foundation-ANNC7XWIX9US7K5LRNY84LFBS.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/ImageIO-28W09UAKETI0ORVV3HXCLP573.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/CoreText-BYESKBMUFDAK8PXJ1R9SLBF83.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/RelevanceKit-DLL452ON1JZ41JX86P9K6S16E.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/_LocationEssentials-2062ARE7A38HMMDT1XS5ZULUH.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/UIUtilities-FIMGOLMDIZ0XGI2CBJPNGLIU.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/IOSurface-5JR0LCRWMQN65M08DRCMGHISS.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/AppIntentsTypeSupport-4BBB6UN7GXFLVHJ1B56IL1C5U.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/Symbols-Z6ZC3FXQBR74L41FNWFHXKRN.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/CoreData-BRA3MP5TBGOGCFEBY46446QQ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/UniformTypeIdentifiers-8RVVJID02JWG8B8RBQT5QZBWO.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/UserNotifications-CCO1VASGPWPDLLQNT0FXKYRS8.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/Accessibility-C1XUQ5EJ2IYZN8U59CPAD5BF7.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/LocalAuthentication-DLHIUV3OKGT4VVQ5G73C24O6P.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/FileProvider-8OFMAW9T1CGBJHR81VXQOZWDI.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/DataDetection-BRCY4Z4FA1KH54B4YE3PVX8AA.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/CoreTransferable-3DFJKFKQWXRLQB43RL1P1CKVA.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/Network-10CV14OUH1JIYKWSCU46DW882.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/OSLog-3IS39CONUAZPRSRV1MK4DHC72.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/AppIntents-94M8W37RHU639YE1XNRRSFX1J.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/CoreMIDI-6ZN3NEBF1LDGHIO61X6FKQ88M.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/CoreLocation-7ZCILKQB634YWJ5GTPCU6SQEE.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/Metal-B5UDF3LRJQSM9G089GI813FMH.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/OpenGLES-9E3EJO24TVDCMMCRCIC4JLA8Z.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/QuickLookThumbnailing-1NYQ05A16JV1JKPXMKZDQR5L.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/CoreSpotlight-E0II8Q8LUOCAOPHN4E3ZCZ4O3.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/AVRouting-DYCCZNSBZNKIDO7M8OFJNTJI3.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/AudioToolbox-7DIUEWZ2QUWKDIS5MH578SMUF.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/CloudKit-6LMLY7XKJ8NODG9ZFR722F5XO.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/CoreMotion-ACQCIFJ1EZCIBOKVCPLC7OFWL.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/CoreVideo-4UNHWRPD78DC561M2EBHFDW4I.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/CoreImage-8F5I7LNVDR9NMV2UXD8H9XPRP.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/CoreMedia-7GHD4NHCVV0XTEOEROW0QKLJ1.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/QuartzCore-AXZVH0MZ69BMTFL6P4GW10OT7.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/SwiftUICore-8B9RKCGO2ODF7O0UELCET1Q51.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/UIKit-1C57MXSOSICXO8AREW5IL8HS4.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/AVFAudio-EXXL3X76PXRMR1S49W2264ACE.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/MediaToolbox-EH31EVCU4QIZ2K1R264YQWF6Z.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/VideoToolbox-ERC5A7MM57GWDMVZ4UDE3P0TZ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/AVFoundation-9O6XMUJS74FVYH44D7O259HET.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/Photos-5YZN0UEXGALUQKF7LZHSV3QC8.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/SwiftUI-5BQQ44QRODTAQP2VOYS4P1FKQ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/PDFKit-4HY5DFEAZK829TDCJDZSUTPGS.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/ExtensionKit-9KPIJ8NPSR8J8MW0U55K8O7TE.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/PhotosUI-4XD2HIQTU2NQ7YQY6TJF0X5ZP.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/leaders-auth-release/SDKExplicitPrecompiledModules/QuickLook-6NLHQM4M263I79W9SJ2JY7MWG.pcm
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ LeadersBook (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftCompile normal arm64 (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    
+
+SwiftCompile normal arm64 Compiling\ GuidesView.swift /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Views/GuidesView.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftCompile normal arm64 /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Views/GuidesView.swift (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-SwiftPerFileCompile GuidesView.swift
+
+SwiftCompile normal arm64 Compiling\ TodayView.swift /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Views/TodayView.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftCompile normal arm64 /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Views/TodayView.swift (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-SwiftPerFileCompile TodayView.swift
+
+SwiftCompile normal arm64 Compiling\ SoldiersView.swift /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Views/SoldiersView.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftCompile normal arm64 /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Views/SoldiersView.swift (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-SwiftPerFileCompile SoldiersView.swift
+
+SwiftCompile normal arm64 Compiling\ Soldier.swift,\ AFTResultView.swift /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Core/Soldier.swift /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Views/AFTResultView.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftCompile normal arm64 /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Core/Soldier.swift (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-SwiftPerFileCompile Soldier.swift
+
+SwiftCompile normal arm64 /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Views/AFTResultView.swift (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-SwiftPerFileCompile AFTResultView.swift
+
+SwiftCompile normal arm64 Compiling\ FitnessView.swift /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Views/FitnessView.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftCompile normal arm64 /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Views/FitnessView.swift (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-SwiftPerFileCompile FitnessView.swift
+
+SwiftCompile normal arm64 Compiling\ GeneratedAssetSymbols.swift /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/DerivedSources/GeneratedAssetSymbols.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftCompile normal arm64 /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/DerivedSources/GeneratedAssetSymbols.swift (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-SwiftPerFileCompile GeneratedAssetSymbols.swift
+
+SwiftCompile normal arm64 Compiling\ LeaderStore.swift,\ ReferenceContent.swift /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Core/LeaderStore.swift /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Core/ReferenceContent.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftCompile normal arm64 /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Core/LeaderStore.swift (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-SwiftPerFileCompile LeaderStore.swift
+
+SwiftCompile normal arm64 /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Core/ReferenceContent.swift (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-SwiftPerFileCompile ReferenceContent.swift
+
+SwiftCompile normal arm64 Compiling\ LeadersBookApp.swift,\ Fitness.swift /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/App/LeadersBookApp.swift /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Core/Fitness.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftCompile normal arm64 /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/App/LeadersBookApp.swift (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-SwiftPerFileCompile LeadersBookApp.swift
+
+SwiftCompile normal arm64 /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Core/Fitness.swift (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-SwiftPerFileCompile Fitness.swift
+
+SwiftCompile normal arm64 Compiling\ SoldierEditor.swift /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Views/SoldierEditor.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftCompile normal arm64 /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Views/SoldierEditor.swift (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-SwiftPerFileCompile SoldierEditor.swift
+
+SwiftCompile normal arm64 Compiling\ TrainingRecordEditor.swift,\ TrainingRecordSection.swift /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Views/TrainingRecordEditor.swift /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Views/TrainingRecordSection.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftCompile normal arm64 /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Views/TrainingRecordEditor.swift (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-SwiftPerFileCompile TrainingRecordEditor.swift
+
+SwiftCompile normal arm64 /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Views/TrainingRecordSection.swift (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-SwiftPerFileCompile TrainingRecordSection.swift
+
+SwiftCompile normal arm64 Compiling\ ThemePalette.swift,\ Theme.swift /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Core/ThemePalette.swift /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Views/Theme.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftCompile normal arm64 /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Core/ThemePalette.swift (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-SwiftPerFileCompile ThemePalette.swift
+
+SwiftCompile normal arm64 /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Views/Theme.swift (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-SwiftPerFileCompile Theme.swift
+
+SwiftCompile normal arm64 Compiling\ RecordAccess.swift,\ DeviceAuthenticator.swift /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Core/RecordAccess.swift /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/App/DeviceAuthenticator.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftCompile normal arm64 /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Core/RecordAccess.swift (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-SwiftPerFileCompile RecordAccess.swift
+
+SwiftCompile normal arm64 /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/App/DeviceAuthenticator.swift (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-SwiftPerFileCompile DeviceAuthenticator.swift
+
+SwiftCompile normal arm64 Compiling\ LockedRecordsView.swift,\ PrivacyShield.swift /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Views/LockedRecordsView.swift /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Views/PrivacyShield.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftCompile normal arm64 /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Views/LockedRecordsView.swift (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-SwiftPerFileCompile LockedRecordsView.swift
+
+SwiftCompile normal arm64 /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Views/PrivacyShield.swift (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-SwiftPerFileCompile PrivacyShield.swift
+
+SwiftCompile normal arm64 Compiling\ BookRepository.swift,\ AppFailure.swift /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Core/BookRepository.swift /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Core/AppFailure.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftCompile normal arm64 /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Core/BookRepository.swift (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-SwiftPerFileCompile BookRepository.swift
+
+SwiftCompile normal arm64 /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Core/AppFailure.swift (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-SwiftPerFileCompile AppFailure.swift
+
+SwiftCompile normal arm64 Compiling\ ContentView.swift /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Views/ContentView.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftCompile normal arm64 /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Views/ContentView.swift (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-SwiftPerFileCompile ContentView.swift
+
+SwiftCompile normal arm64 Compiling\ RecordAttachment.swift,\ RecordFileImport.swift /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Core/RecordAttachment.swift /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Views/RecordFileImport.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftCompile normal arm64 /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Core/RecordAttachment.swift (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-SwiftPerFileCompile RecordAttachment.swift
+
+SwiftCompile normal arm64 /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook/Views/RecordFileImport.swift (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-SwiftPerFileCompile RecordFileImport.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling GeneratedAssetSymbols.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftDriverJobDiscovery normal arm64 Compiling RecordAccess.swift, DeviceAuthenticator.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftDriverJobDiscovery normal arm64 Compiling LockedRecordsView.swift, PrivacyShield.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftDriverJobDiscovery normal arm64 Compiling TodayView.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftDriverJobDiscovery normal arm64 Compiling GuidesView.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ContentView.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for LeadersBook (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftDriver\ Compilation\ Requirements LeadersBook normal arm64 com.apple.xcode.tools.swift.compiler (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name LeadersBook -O @/tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook.SwiftFileList -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk -target arm64-apple-ios27.0 -g -module-cache-path /tmp/leaders-auth-release/ModuleCache.noindex -Xfrontend -serialize-debugging-options -swift-version 6 -I /tmp/leaders-auth-release/Build/Products/Release-iphoneos -F /tmp/leaders-auth-release/Build/Products/Release-iphoneos -emit-localized-strings -emit-localized-strings-path /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64 -c -j16 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/leaders-auth-release/SDKStatCaches.noindex/iphoneos27.0-24A430-6c78b3cbc238196c85e1bf6c792c5915.sdkstatcache -output-file-map /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/leaders-auth-release/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/leaders-auth-release/ModuleCache.noindex -sdk-module-cache-path /tmp/leaders-auth-release/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /tmp/leaders-auth-release/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/LeadersBook-generated-files.hmap -Xcc -I/tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/LeadersBook-own-target-headers.hmap -Xcc -I/tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/LeadersBook-all-target-headers.hmap -Xcc -iquote -Xcc /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/LeadersBook-project-headers.hmap -Xcc -I/tmp/leaders-auth-release/Build/Products/Release-iphoneos/include -Xcc -I/tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/DerivedSources-normal/arm64 -Xcc -I/tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/DerivedSources/arm64 -Xcc -I/tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook-Swift.h -working-directory /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book -experimental-emit-module-separately -disable-cmo
+
+SwiftMergeGeneratedHeaders /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/DerivedSources/LeadersBook-Swift.h /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook-Swift.h (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-swiftHeaderTool -arch arm64 /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook-Swift.h -o /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/DerivedSources/LeadersBook-Swift.h
+
+Copy /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.swiftmodule/arm64-apple-ios.swiftmodule /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook.swiftmodule (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook.swiftmodule /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.swiftmodule/arm64-apple-ios.swiftmodule
+
+Copy /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.swiftmodule/arm64-apple-ios.swiftdoc /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook.swiftdoc (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook.swiftdoc /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.swiftmodule/arm64-apple-ios.swiftdoc
+
+Copy /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.swiftmodule/arm64-apple-ios.abi.json /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook.abi.json (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook.abi.json /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.swiftmodule/arm64-apple-ios.abi.json
+
+Copy /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook.swiftsourceinfo (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook.swiftsourceinfo /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo
+
+SwiftDriverJobDiscovery normal arm64 Compiling ThemePalette.swift, Theme.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftDriverJobDiscovery normal arm64 Compiling SoldierEditor.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftDriverJobDiscovery normal arm64 Compiling LeaderStore.swift, ReferenceContent.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftDriverJobDiscovery normal arm64 Compiling Soldier.swift, AFTResultView.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftDriverJobDiscovery normal arm64 Compiling FitnessView.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftDriverJobDiscovery normal arm64 Compiling SoldiersView.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftDriverJobDiscovery normal arm64 Compiling BookRepository.swift, AppFailure.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftDriverJobDiscovery normal arm64 Compiling LeadersBookApp.swift, Fitness.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftDriverJobDiscovery normal arm64 Compiling RecordAttachment.swift, RecordFileImport.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftDriverJobDiscovery normal arm64 Compiling TrainingRecordEditor.swift, TrainingRecordSection.swift (in target 'LeadersBook' from project 'LeadersBook')
+
+SwiftDriver\ Compilation LeadersBook normal arm64 com.apple.xcode.tools.swift.compiler (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name LeadersBook -O @/tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook.SwiftFileList -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk -target arm64-apple-ios27.0 -g -module-cache-path /tmp/leaders-auth-release/ModuleCache.noindex -Xfrontend -serialize-debugging-options -swift-version 6 -I /tmp/leaders-auth-release/Build/Products/Release-iphoneos -F /tmp/leaders-auth-release/Build/Products/Release-iphoneos -emit-localized-strings -emit-localized-strings-path /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64 -c -j16 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/leaders-auth-release/SDKStatCaches.noindex/iphoneos27.0-24A430-6c78b3cbc238196c85e1bf6c792c5915.sdkstatcache -output-file-map /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/leaders-auth-release/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/leaders-auth-release/ModuleCache.noindex -sdk-module-cache-path /tmp/leaders-auth-release/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /tmp/leaders-auth-release/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/LeadersBook-generated-files.hmap -Xcc -I/tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/LeadersBook-own-target-headers.hmap -Xcc -I/tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/LeadersBook-all-target-headers.hmap -Xcc -iquote -Xcc /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/LeadersBook-project-headers.hmap -Xcc -I/tmp/leaders-auth-release/Build/Products/Release-iphoneos/include -Xcc -I/tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/DerivedSources-normal/arm64 -Xcc -I/tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/DerivedSources/arm64 -Xcc -I/tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook-Swift.h -working-directory /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book -experimental-emit-module-separately -disable-cmo
+
+Ld /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app/LeadersBook normal (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios27.0 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk -Os -Xlinker -no_warn_duplicate_libraries -L/tmp/leaders-auth-release/Build/Intermediates.noindex/EagerLinkingTBDs/Release-iphoneos -L/tmp/leaders-auth-release/Build/Products/Release-iphoneos -F/tmp/leaders-auth-release/Build/Intermediates.noindex/EagerLinkingTBDs/Release-iphoneos -F/tmp/leaders-auth-release/Build/Products/Release-iphoneos -filelist /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook.LinkFileList -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -dead_strip -Xlinker -object_path_lto -Xlinker /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook_lto.o -Xlinker -dependency_info -Xlinker /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook.swiftmodule -o /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app/LeadersBook
+
+CopySwiftLibs /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app/LeadersBook --scan-folder /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app/Frameworks --scan-folder /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app/PlugIns --scan-folder /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app/SystemExtensions --scan-folder /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app/Extensions --platform iphoneos --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+Ignoring --strip-bitcode because --sign was not passed
+
+ExtractAppIntentsMetadata (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name LeadersBook --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk --xcode-version 27A266a --platform-family iOS --deployment-target 27.0 --bundle-identifier com.leadersbook.app --output /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app --target-triple arm64-apple-ios27.0 --binary-file /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app/LeadersBook --dependency-file /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook_dependency_info.dat --stringsdata-file /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook.SwiftFileList --metadata-file-list /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/LeadersBook.DependencyMetadataFileList --static-metadata-file-list /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/LeadersBook.DependencyStaticMetadataFileList --swift-const-vals-list /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/Objects-normal/arm64/LeadersBook.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --no-app-shortcuts-localization
+2026-11-04 16:51:10.508 appintentsmetadataprocessor[82257:13652940] Starting appintentsmetadataprocessor export
+2026-11-04 16:51:10.542 appintentsmetadataprocessor[82257:13652940] Extracted no relevant App Intents symbols, skipping writing output
+
+GenerateDSYMFile /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app.dSYM /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app/LeadersBook (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    export PATH\=/Applications/Xcode.app/Contents/SharedFrameworks/SwiftBuild.framework/Versions/A/PlugIns/SWBBuildService.bundle/Contents/PlugIns/SWBUniversalPlatformPlugin.bundle/Contents/Frameworks/SWBUniversalPlatform.framework/Resources:/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/local/bin:/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/libexec:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/usr/bin:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/usr/local/bin:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/local/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/local/bin:/Applications/ChatGPT.app/Contents/Resources/codex-cli/codex-path:/Users/godzilla/.rustup/toolchains/stable-aarch64-apple-darwin/bin:/Users/godzilla/.cargo/bin:/Users/godzilla/.antigravity/antigravity/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/godzilla/.local/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/Library/Apple/usr/bin:/Users/godzilla/.codex/tmp/arg0-macos/codex-arg0l4PkaG:/Users/godzilla/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/Users/godzilla/.lmstudio/bin:/Users/godzilla/go/bin:/Users/godzilla/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/Applications/ChatGPT.app/Contents/Resources:/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/dsymutil /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app/LeadersBook -o /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app.dSYM
+
+AppIntentsSSUTraining (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsnltrainingprocessor --infoplist-path /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app/Info.plist --temp-dir-path /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/ssu --bundle-id com.leadersbook.app --product-path /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app --extracted-metadata-path /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app/Metadata.appintents --metadata-file-list /tmp/leaders-auth-release/Build/Intermediates.noindex/LeadersBook.build/Release-iphoneos/LeadersBook.build/LeadersBook.DependencyMetadataFileList --source-file /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app/Info.plist --archive-ssu-assets
+2026-11-04 16:51:10.563 appintentsnltrainingprocessor[82259:13652949] Parsing options for appintentsnltrainingprocessor
+2026-11-04 16:51:10.563 appintentsnltrainingprocessor[82259:13652949] Starting AppIntents SSU YAML Generation
+2026-11-04 16:51:10.563 appintentsnltrainingprocessor[82259:13652949] No AppShortcuts found - Skipping.
+
+RegisterExecutionPolicyException /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-RegisterExecutionPolicyException /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app
+
+Validate /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-validationUtility /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app -shallow-bundle -infoplist-subpath Info.plist
+
+Touch /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    /usr/bin/touch -c /tmp/leaders-auth-release/Build/Products/Release-iphoneos/LeadersBook.app
+
+PruneExplicitPrecompiledModules /tmp/leaders-auth-release/SDKExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /tmp/leaders-auth-release/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /tmp/leaders-auth-release/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+** BUILD SUCCEEDED **
+

@@ -1,0 +1,78 @@
+# Authentication Implementation Findings
+
+Date: November 4, 2026. **Status: implemented, partially verified; not complete.** The native denied-authentication alert remains failing. Changes stopped under the AGENTS.md circuit breaker after two consecutive failures of that assertion with the presentation cause unresolved.
+
+## Implemented Boundary
+
+- Normal Debug and Release use `LAContext.evaluatePolicy(.deviceOwnerAuthentication)` with an explanatory Face ID purpose string. The system owns biometrics and device-passcode fallback; the app stores no PIN or biometric data.
+- The store starts locked. A locked reload exposes aggregate soldier/result counts only. Names, photos, notes, measurements, certificates, saved-result details, and all tabs remain behind authentication. Restored tab/record selection cannot open the protected UI before unlock.
+- Record access, attachment URLs/bytes, edits, saves, deletes, draft updates, and explicit recovery check the authenticated store boundary. Actor-queued writes and attachment reads additionally check a revocable lease. Work already admitted to an atomic transaction can finish; stale results cannot republish after locking.
+- Authentication requests have identities; cancellation/relocking invalidates them. A late successful callback cannot unlock a later session. Errors retain underlying diagnostics while exposing sanitized messages.
+- Background/device-lock notifications and manual lock clear the public detail state and draft, cancel owned work, and revoke the lease. All windows share the session. Unsaved editor state is discarded when protected views are removed; already committed data is retained.
+- A window-level opaque privacy cover is intended to sit above sheets/Quick Look while inactive; lock transitions also dismiss presentations. The summary is explicitly nonsensitive. Authentication's temporary inactive state does not itself revoke the request.
+
+## Verification Results
+
+| Check | Result | Evidence |
+| --- | --- | --- |
+| Core suite | PASS: 41 tests | [core.log](validation/authentication/core.log) |
+| Access boundaries | PASS: 4 focused tests covering unavailable auth, locked routes/data preservation, stale callbacks, revoked storage leases | [boundaries.log](validation/authentication/boundaries.log) |
+| Locked summary / rejected authentication / relock UI test | FAIL: rejected-authentication alert is not found | [ui-summary.json](validation/authentication/ui-summary.json), [ui.log](validation/authentication/ui.log) |
+| Release compilation | PASS: unsigned physical-device build | [release.log](validation/authentication/release.log) |
+| Release test-driver isolation | PASS: no test denial flag or UITestAuthenticator name in executable strings | [release-isolation.txt](validation/authentication/release-isolation.txt) |
+| Real Face ID/passcode interaction and protected-data lock behavior | NOT VERIFIED on hardware | Simulator/source validation does not establish this |
+| Full functional UI regression suite with the new gate | NOT RUN after the circuit breaker | Existing tests now explicitly unlock through their shared helper |
+| Quick Look/editor snapshots, multi-window lock, and VoiceOver privacy | NOT VERIFIED end to end | Cover implementation requires further native checks |
+
+The first lock-screen test exposed a blank/redacted summary and unconditional presentation dismissal. The implementation now marks only unlocked content as privacy-sensitive and dismisses presentations on a transition to locked. The summary then became visible. The remaining failure is alert presentation, not permission to access records: the test still finds no unlocked controls after denial. No failing assertion was removed, skipped, or weakened.
+
+### Current Failure
+
+`Tests/LeadersBookUITests/LeadersBookUITests.swift:13`: `XCTAssertTrue(app.alerts["Records Remain Locked"].waitForExistence(timeout: 5))` fails. The exact latest command was:
+
+```sh
+xcodebuild -project LeadersBook.xcodeproj -scheme LeadersBook \
+  -destination 'platform=iOS Simulator,id=042F1B65-E9EF-413F-B09B-9B6E3F191ABC' \
+  -derivedDataPath /private/tmp/leaders-auth-build \
+  -resultBundlePath /private/tmp/leaders-auth-ui-errors \
+  -only-testing:LeadersBookUITests/LeadersBookUITests/testLockedSummaryAndRejectedAuthentication \
+  -collect-test-diagnostics never CODE_SIGNING_ALLOWED=NO test
+```
+
+Current hypothesis: competing SwiftUI alert presenters or presentation-state updates suppress the root authentication failure alert. `ContentView` still has separate operation-failure and draft-failure alert modifiers. This is not confirmed; the next step should inspect presenter/state behavior before another implementation change. [Native attachments](validation/authentication/ui-attachments/manifest.json) preserve the failing run.
+
+## Test Configuration and Remaining Limits
+
+A separate **Testing** build configuration substitutes only the external OS authentication provider. The real store, repository, filesystem, lock/revocation state, and UI remain under test. It is not a test bypass compiled into normal Debug or Release. Do not distribute Testing builds. The normal run/archive configurations remain Debug/Release respectively. The public OS policy call compiles, but a successful simulator test-double unlock is not evidence of a successful real biometric/passcode challenge.
+
+Locked summary generation still loads data into the private repository and can perform existing journal recovery. This is an app-service access boundary, not a cryptographic vault or a guarantee that all decrypted bytes are erased from memory. Previously returned values cannot be retroactively revoked; protected UI is removed and future service calls are blocked. Backup/sharing policy and actual hardware capture/lock behavior remain open from the privacy audit.
+
+## Every Edited File and Its Diff
+
+Diffs compare the session-start snapshot with the current files. The repository had untracked project files, so these are **not Git HEAD diffs**. The snapshot was captured before this task. Generated logs, screenshots, manifests, and patch files are evidence artifacts; they are indexed under `validation/authentication`.
+
+[Complete unified patch](validation/authentication/authentication.patch)
+
+| File | Diff |
+| --- | --- |
+| `LeadersBook/App/DeviceAuthenticator.swift` | [Unified diff](validation/authentication/patches/LeadersBook__App__DeviceAuthenticator.swift.diff) |
+| `LeadersBook/App/LeadersBookApp.swift` | [Unified diff](validation/authentication/patches/LeadersBook__App__LeadersBookApp.swift.diff) |
+| `LeadersBook/Core/BookRepository.swift` | [Unified diff](validation/authentication/patches/LeadersBook__Core__BookRepository.swift.diff) |
+| `LeadersBook/Core/LeaderStore.swift` | [Unified diff](validation/authentication/patches/LeadersBook__Core__LeaderStore.swift.diff) |
+| `LeadersBook/Core/RecordAccess.swift` | [Unified diff](validation/authentication/patches/LeadersBook__Core__RecordAccess.swift.diff) |
+| `LeadersBook/Views/ContentView.swift` | [Unified diff](validation/authentication/patches/LeadersBook__Views__ContentView.swift.diff) |
+| `LeadersBook/Views/LockedRecordsView.swift` | [Unified diff](validation/authentication/patches/LeadersBook__Views__LockedRecordsView.swift.diff) |
+| `LeadersBook/Views/PrivacyShield.swift` | [Unified diff](validation/authentication/patches/LeadersBook__Views__PrivacyShield.swift.diff) |
+| `LeadersBook/Views/SoldiersView.swift` | [Unified diff](validation/authentication/patches/LeadersBook__Views__SoldiersView.swift.diff) |
+| `LeadersBook.xcodeproj/project.pbxproj` | [Unified diff](validation/authentication/patches/LeadersBook.xcodeproj__project.pbxproj.diff) |
+| `LeadersBook.xcodeproj/xcshareddata/xcschemes/LeadersBook.xcscheme` | [Unified diff](validation/authentication/patches/LeadersBook.xcodeproj__xcshareddata__xcschemes__LeadersBook.xcscheme.diff) |
+| `Tests/LeadersBookCoreTests/AttachmentTests.swift` | [Unified diff](validation/authentication/patches/Tests__LeadersBookCoreTests__AttachmentTests.swift.diff) |
+| `Tests/LeadersBookCoreTests/GovernanceTests.swift` | [Unified diff](validation/authentication/patches/Tests__LeadersBookCoreTests__GovernanceTests.swift.diff) |
+| `Tests/LeadersBookCoreTests/LeaderStoreTests.swift` | [Unified diff](validation/authentication/patches/Tests__LeadersBookCoreTests__LeaderStoreTests.swift.diff) |
+| `Tests/LeadersBookCoreTests/RecordAccessTests.swift` | [Unified diff](validation/authentication/patches/Tests__LeadersBookCoreTests__RecordAccessTests.swift.diff) |
+| `Tests/LeadersBookCoreTests/RecoveryTests.swift` | [Unified diff](validation/authentication/patches/Tests__LeadersBookCoreTests__RecoveryTests.swift.diff) |
+| `Tests/LeadersBookCoreTests/TestSupport.swift` | [Unified diff](validation/authentication/patches/Tests__LeadersBookCoreTests__TestSupport.swift.diff) |
+| `Tests/LeadersBookUITests/LeadersBookUITests.swift` | [Unified diff](validation/authentication/patches/Tests__LeadersBookUITests__LeadersBookUITests.swift.diff) |
+| `docs/ARCHITECTURE-AUDIT.md` | [Unified diff](validation/authentication/patches/docs__ARCHITECTURE-AUDIT.md.diff) |
+| `docs/AUTHENTICATION-FINDINGS.md` | [Unified diff](validation/authentication/patches/docs__AUTHENTICATION-FINDINGS.md.diff) |
+| `docs/PRIVACY-HIG-AUDIT.md` | [Unified diff](validation/authentication/patches/docs__PRIVACY-HIG-AUDIT.md.diff) |

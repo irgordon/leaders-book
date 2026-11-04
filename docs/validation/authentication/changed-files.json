@@ -1,0 +1,112 @@
+[
+  {
+    "path": "LeadersBook/App/DeviceAuthenticator.swift",
+    "before_sha256": null,
+    "after_sha256": "ca8f5e61fcc8ba08d67e2f6958163710ee021a2fb4199d002606b9d458156264"
+  },
+  {
+    "path": "LeadersBook/App/LeadersBookApp.swift",
+    "before_sha256": "3db273a51fdef0dc9314cd7e3e1ceaebcf73d60d4492851db093de40f1ecd8a5",
+    "after_sha256": "ec07f74d61c6756a15c62ca1323152ada0d9ec38cbdd4f1c7d19dfca3a0fdc0c"
+  },
+  {
+    "path": "LeadersBook/Core/BookRepository.swift",
+    "before_sha256": "fe1087de92c124ee1f09267e14b9589b5b22a75d9b191a9a64efb46b8eb33ba2",
+    "after_sha256": "eb6d26c5a02e9ed1779a9d54f3ef29a44d4d2d6d9fc1b13f7a01da17535f1b10"
+  },
+  {
+    "path": "LeadersBook/Core/LeaderStore.swift",
+    "before_sha256": "c25769a6b366882031ce7ded0c8d551b867ed25378f0ebb8bbd034006f967a15",
+    "after_sha256": "8aa0b782ef41d8ecd5c19533ca05c0f6d070a60766ef83c4022065f535b0c44d"
+  },
+  {
+    "path": "LeadersBook/Core/RecordAccess.swift",
+    "before_sha256": null,
+    "after_sha256": "4f90a7d0879a46b7aeba12671d9499b1d30d7edc7322f84c7fd0a063d4c8aa5d"
+  },
+  {
+    "path": "LeadersBook/Views/ContentView.swift",
+    "before_sha256": "03ffd8e438c3ced17085152959dacacb13fd26c4e09825b8a92dd8babdb2293c",
+    "after_sha256": "d42e09f1727d2b24c2da20f609aaa2c401149f53be10d7e0aa3ff808831d369d"
+  },
+  {
+    "path": "LeadersBook/Views/LockedRecordsView.swift",
+    "before_sha256": null,
+    "after_sha256": "4a52b3afaf13e3d56cb28c22cacf2a1fa3d4f5cf25013dfa5ddece261b1d8f49"
+  },
+  {
+    "path": "LeadersBook/Views/PrivacyShield.swift",
+    "before_sha256": null,
+    "after_sha256": "51d067be5f5207530b63db34b313d0e0adaa70032bc6132d5264b63069ede72c"
+  },
+  {
+    "path": "LeadersBook/Views/SoldiersView.swift",
+    "before_sha256": "5c1a1db92a9f7e58071d93b60098ddf517fbdc590ea86829f8d48bac29e7bc69",
+    "after_sha256": "c7825245cd3d64c82b9844fd920a4c616c3545ae27fc01428df91804feae0097"
+  },
+  {
+    "path": "LeadersBook.xcodeproj/project.pbxproj",
+    "before_sha256": "1302b55a96d20dfa6e11d8db808592ed7c9717d898fbf27fe25c6b2011fb43ac",
+    "after_sha256": "2b439ea117cdf0dd2cd344bc2e02e6e44c68be34ed46d479da28792461e9d5f6"
+  },
+  {
+    "path": "LeadersBook.xcodeproj/xcshareddata/xcschemes/LeadersBook.xcscheme",
+    "before_sha256": "796e4d536c37a2109f9e00654219dd9e4de515d338fa6e229968e6e9a76e7116",
+    "after_sha256": "a53e1fee5b3096e365e376cac0928d33b8a0d21eb853d108cdfdddd5e41d4b5e"
+  },
+  {
+    "path": "Tests/LeadersBookCoreTests/AttachmentTests.swift",
+    "before_sha256": "4e09a8a6d030706ef6dccf1984e204e4de611178fe9449d3466d8565538710da",
+    "after_sha256": "659c24159100397188422a72ddb2eff21da8827fa55dc7c1b530a6903c8c20be"
+  },
+  {
+    "path": "Tests/LeadersBookCoreTests/GovernanceTests.swift",
+    "before_sha256": "65740a0afe8e787e888f5c0be267f597069e2181f086550a5356b779cf031a0c",
+    "after_sha256": "901da7768005e08846f3e7b87c8205394d456d3faa6986232400b8512ad5a575"
+  },
+  {
+    "path": "Tests/LeadersBookCoreTests/LeaderStoreTests.swift",
+    "before_sha256": "4d6c264b33cac0f475ed5d94077cd6e7b8000c6a3858f9c0b0f50129ddb5a041",
+    "after_sha256": "3224094cc2e1c2a56c16c7e2f808d2a3873e4d4714287102e6a9dc61ef89090d"
+  },
+  {
+    "path": "Tests/LeadersBookCoreTests/RecordAccessTests.swift",
+    "before_sha256": null,
+    "after_sha256": "6dd6d2b2dc7747c5451aa2565986012b810515a50c11728581a1a14018692375"
+  },
+  {
+    "path": "Tests/LeadersBookCoreTests/RecoveryTests.swift",
+    "before_sha256": "f51df87ac55661a4a5b617e28fd2248aad0b729da9cae530c9cdf6182e462389",
+    "after_sha256": "996d70ebd8ba8baf74d5664449c7cee8369a5bc9dc86ff350bfa4157f800ac3f"
+  },
+  {
+    "path": "Tests/LeadersBookCoreTests/TestSupport.swift",
+    "before_sha256": "1046d302c422d0478e07d7c237583ae2847c3a90970f14d5605e62559b560eda",
+    "after_sha256": "fa5f27b8640dec11cfec688c8d9d01f99447579a7d813717f42603a0c3e84124"
+  },
+  {
+    "path": "Tests/LeadersBookUITests/LeadersBookUITests.swift",
+    "before_sha256": "42f0318c2e34613c9b503c639975ef602501bd338bef25bdd168444317134173",
+    "after_sha256": "2ae8f770f64313e17edc4cb557298abc086742dffe58661bc2a86dcf9ac0488d"
+  },
+  {
+    "path": "Tests/ThemeAdapterTests/ThemeAdapterTests.swift",
+    "before_sha256": "f258f9f0ab13e396a2b7d2e95e0eb7ec7afde8945ed9a5f1c337a3e000c5de7d",
+    "after_sha256": "2fa0cece8fd0e97b6cc8d7b69faf014af4877486ac217a4e29a3f16ce295f4fa"
+  },
+  {
+    "path": "docs/ARCHITECTURE-AUDIT.md",
+    "before_sha256": "a0c0511e386a58cc69d5fa470f54029a205672e5b1d55b918671a6ccb3ace694",
+    "after_sha256": "fb33b9d82a2b72453810ebdea3e86bf75821ad746d42b31691663c70c235b9a3"
+  },
+  {
+    "path": "docs/AUTHENTICATION-FINDINGS.md",
+    "before_sha256": null,
+    "after_sha256": "1dcfbf3af1d3580f3cdc06361e46f34ae68d27f07ed9f7166d6991e65c7c631c"
+  },
+  {
+    "path": "docs/PRIVACY-HIG-AUDIT.md",
+    "before_sha256": "ed9e4ca3533ea089d62b5c76d9d65e727578b636b0e26b1e274dab52fb7fab95",
+    "after_sha256": "9bfe22ed8bc72436aa6fdc9b141c70ff8d24439f6fac10d6967228d580c2c69d"
+  }
+]

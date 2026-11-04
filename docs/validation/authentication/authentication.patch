@@ -1,0 +1,1271 @@
+--- /dev/null
++++ b/LeadersBook/App/DeviceAuthenticator.swift
+@@ -0,0 +1,51 @@
++import LocalAuthentication
++
++@MainActor
++final class DeviceAuthenticator: RecordAuthenticating {
++    private var context: LAContext?
++    func authenticate() async throws {
++        let context = LAContext()
++        self.context = context
++        defer { if self.context === context { self.context = nil }; context.invalidate() }
++        context.localizedCancelTitle = "Keep Records Locked"
++        var cause: NSError?
++        guard context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &cause) else {
++            throw DeviceAuthenticationFailure(underlying: cause ?? RecordAccessError.unavailable as NSError)
++        }
++        try Task.checkCancellation()
++        let accepted: Bool
++        do {
++            accepted = try await context.evaluatePolicy(.deviceOwnerAuthentication,
++                localizedReason: "Unlock soldier records, photos, and certificates.")
++        } catch { throw DeviceAuthenticationFailure(underlying: error) }
++        try Task.checkCancellation()
++        guard accepted else { throw RecordAccessError.locked }
++    }
++    func cancel() { context?.invalidate(); context = nil }
++}
++
++struct DeviceAuthenticationFailure: UserPresentableError {
++    let underlying: any Error
++    var userMessage: String {
++        guard let error = underlying as? LAError else { return RecordAccessError.unavailable.userMessage }
++        switch error.code {
++        case .passcodeNotSet: return "Set a device passcode in Settings before unlocking records."
++        case .userCancel, .systemCancel, .appCancel: return "Authentication was cancelled. Records remain locked."
++        default: return "Authentication did not finish. Try again using device biometrics or your device passcode."
++        }
++    }
++}
++
++#if AUTHENTICATION_TEST_DOUBLE
++/// Only the explicit Testing build configuration substitutes the external OS authenticator.
++@MainActor
++struct UITestAuthenticator: RecordAuthenticating {
++    func authenticate() async throws {
++        try Task.checkCancellation()
++        if ProcessInfo.processInfo.arguments.contains("--authentication-test-denied") {
++            throw RecordAccessError.cancelled
++        }
++    }
++    func cancel() {}
++}
++#endif
+--- a/LeadersBook/App/LeadersBookApp.swift
++++ b/LeadersBook/App/LeadersBookApp.swift
+@@ -6,7 +6,11 @@
+     let store: LeaderStore
+     init() throws {
+         scorer = try AFTScoring()
+-        store = LeaderStore(scorer: scorer)
++        #if AUTHENTICATION_TEST_DOUBLE
++        store = LeaderStore(scorer: scorer, authenticator: UITestAuthenticator())
++        #else
++        store = LeaderStore(scorer: scorer, authenticator: DeviceAuthenticator())
++        #endif
+     }
+ }
+ 
+--- a/LeadersBook/Core/BookRepository.swift
++++ b/LeadersBook/Core/BookRepository.swift
+@@ -180,11 +180,17 @@
+         case .unopened: throw RecordError.recoveryRequired
+         }
+     }
+-    func readAttachment(_ attachment: RecordAttachment) throws -> ImportedRecordFile {
+-        do { return try ImportedRecordFile(attachment: attachment, data: Data(contentsOf: attachmentURL(attachment))) }
++    func readAttachment(_ attachment: RecordAttachment, permit: RecordAccessLease) throws -> ImportedRecordFile {
++        try permit.check()
++        do {
++            let file = try ImportedRecordFile(attachment: attachment, data: Data(contentsOf: attachmentURL(attachment)))
++            try permit.check()
++            return file
++        }
+         catch { throw AppFailure("Read Attachment \(attachment.id)", underlying: error) }
+     }
+-    func apply(_ mutation: BookMutation) throws -> LoadedBook {
++    func apply(_ mutation: BookMutation, permit: RecordAccessLease) throws -> LoadedBook {
++        try permit.check()
+         try Task.checkCancellation()
+         let (current, persistedData) = try currentBook()
+         guard case .clean = current.cleanup else { throw RecordError.recoveryRequired }
+@@ -237,6 +243,7 @@
+         let nextDTO = BookDTO(candidate, transaction: id)
+         let nextData = try JSONEncoder().encode(nextDTO)
+         try Task.checkCancellation()
++        try permit.check()
+         try write(JSONEncoder().encode(journal), to: journalURL)
+         do {
+             for file in uploads { try write(file.data, to: attachmentURL(file.attachment)) }
+--- a/LeadersBook/Core/LeaderStore.swift
++++ b/LeadersBook/Core/LeaderStore.swift
+@@ -2,6 +2,7 @@
+ import Observation
+ 
+ enum BookLoadState {
++    case locked(LockedSummary?)
+     case loading(UUID)
+     case ready(LoadedBook)
+     case failed(AppFailure)
+@@ -9,13 +10,24 @@
+ 
+ @MainActor @Observable
+ final class LeaderStore {
+-    private(set) var state: BookLoadState = .loading(UUID())
++    private(set) var state: BookLoadState = .locked(nil)
++    private enum Access { case locked, authenticating(UUID), unlocked(UUID) }
++    private var access: Access = .locked
++    private enum InitialSummary { case pending, consumed }
++    private var initialSummary: InitialSummary = .pending
++    private var summary: LockedSummary?
++    private let authenticator: any RecordAuthenticating
++    private var epoch = UUID()
++    private var lease: RecordAccessLease?
++    var isUnlocked: Bool { if case .unlocked = access { true } else { false } }
++    var isAuthenticating: Bool { if case .authenticating = access { true } else { false } }
+     private(set) var draft = FitnessDraft()
+     var operationFailure: AppFailure?
+     let draftSave = OwnedOperation()
+     private let repository: BookRepository
+     private var operations: [UUID: Task<Void, Never>] = [:]
+-    init(fileURL: URL = URL.applicationSupportDirectory.appending(path: "LeadersBook/records.json"), scorer: AFTScoring) {
++    init(fileURL: URL = URL.applicationSupportDirectory.appending(path: "LeadersBook/records.json"), scorer: AFTScoring, authenticator: any RecordAuthenticating = UnavailableRecordAuthenticator()) {
++        self.authenticator = authenticator
+         repository = BookRepository(fileURL: fileURL, scorer: scorer)
+     }
+     var records: BookSnapshot {
+@@ -23,7 +35,8 @@
+             switch state {
+             case .ready(let book): book.snapshot
+             case .failed(let failure): throw failure
+-            case .loading: throw RecordError.recoveryRequired
++            case .locked: throw RecordAccessError.locked
++        case .loading: throw RecordError.recoveryRequired
+             }
+         }
+     }
+@@ -32,43 +45,115 @@
+     var cleanupIssue: RecoveryIssue? {
+         if case .ready(let book) = state, case .pending(let issue) = book.cleanup { issue } else { nil }
+     }
++    func unlock() async throws {
++        guard case .locked = access else { throw RecordAccessError.superseded }
++        let request = UUID()
++        access = .authenticating(request)
++        do {
++            try await authenticator.authenticate()
++            try Task.checkCancellation()
++            guard case .authenticating(let active) = access, active == request else { throw RecordAccessError.superseded }
++            let book = try await repository.load()
++            try Task.checkCancellation()
++            guard case .authenticating(let active) = access, active == request else { throw RecordAccessError.superseded }
++            epoch = UUID()
++            lease = RecordAccessLease()
++            access = .unlocked(epoch)
++            summary = LockedSummary(soldiers: book.snapshot.soldiers.count, results: book.snapshot.results.count)
++            draft = book.snapshot.fitnessDraft
++            state = .ready(book)
++        } catch {
++            if case .authenticating(let active) = access, active == request {
++                lock()
++                operationFailure = AppFailure("Unlock Records", underlying: error)
++            }
++            throw error
++        }
++    }
++    func lock() {
++        epoch = UUID()
++        lease?.revoke(); lease = nil
++        access = .locked
++        authenticator.cancel()
++        draftSave.cancel()
++        for task in operations.values { task.cancel() }
++        draft = FitnessDraft()
++        operationFailure = nil
++        state = .locked(summary)
++    }
++    private func requireAccess() throws {
++        guard case .unlocked = access else { throw RecordAccessError.locked }
++    }
++    /// Shared by all windows; presentation must not reload an active editing session.
++    func prepareForPresentation() async {
++        guard case .pending = initialSummary, case .locked(nil) = state, case .locked = access else { return }
++        initialSummary = .consumed
++        await reload()
++    }
+     func reload() async {
+         draftSave.cancel()
+         let request = UUID()
+-        state = .loading(request)
++        let generation = epoch
++        let unlocked: Bool
++        if case .unlocked = access { unlocked = true; state = .loading(request) } else { unlocked = false }
+         do {
+             let book = try await repository.load()
++            guard generation == epoch else { return }
++            summary = LockedSummary(soldiers: book.snapshot.soldiers.count, results: book.snapshot.results.count)
++            guard unlocked else { state = .locked(summary); return }
+             guard case .loading(let active) = state, active == request else { return }
+             state = .ready(book); draft = book.snapshot.fitnessDraft
+         } catch is CancellationError {
++            guard generation == epoch else { return }
+             guard case .loading(let active) = state, active == request else { return }
+             state = .loading(UUID())
+         } catch {
++            guard generation == epoch else { return }
++            if !unlocked { state = .locked(summary); operationFailure = AppFailure("Load Summary", underlying: error); return }
+             guard case .loading(let active) = state, active == request else { return }
+             state = .failed(AppFailure("Open Records", underlying: error))
+         }
+     }
+     private func publish(_ book: LoadedBook) {
+         guard case .ready(let current) = state, current.snapshot.generation <= book.snapshot.generation else { return }
++        summary = LockedSummary(soldiers: book.snapshot.soldiers.count, results: book.snapshot.results.count)
+         state = .ready(book)
+     }
+-    func attachmentURL(_ attachment: RecordAttachment) -> URL { repository.attachmentURL(attachment) }
+-    func readAttachment(_ attachment: RecordAttachment) async throws -> ImportedRecordFile { try await repository.readAttachment(attachment) }
++    func attachmentURL(_ attachment: RecordAttachment) throws -> URL { try requireAccess(); return repository.attachmentURL(attachment) }
++    func readAttachment(_ attachment: RecordAttachment) async throws -> ImportedRecordFile {
++        try requireAccess()
++        let generation = epoch
++        let file = try await repository.readAttachment(attachment, permit: accessLease())
++        try requireAccess()
++        guard generation == epoch else { throw RecordAccessError.superseded }
++        return file
++    }
+     private func requireReady() throws {
++        try requireAccess()
+         switch state {
+         case .ready: return
+         case .failed(let failure): throw failure
++        case .locked: throw RecordAccessError.locked
+         case .loading: throw RecordError.recoveryRequired
+         }
+     }
++    private func accessLease() throws -> RecordAccessLease {
++        try requireAccess()
++        guard let lease else { preconditionFailure("Unlocked session must own a lease") }
++        return lease
++    }
+     private func execute(_ mutation: BookMutation) async throws -> LoadedBook {
+-        do {
+-            let result = try await repository.apply(mutation)
++        try requireAccess()
++        let generation = epoch
++        do {
++            let result = try await repository.apply(mutation, permit: accessLease())
++            try requireAccess()
++            guard generation == epoch else { throw RecordAccessError.superseded }
+             publish(result)
+             return result
+         } catch {
+             let status = await repository.currentStatus()
+-            if case .ready = state {
++            if generation == epoch, case .ready = state {
+                 switch status {
+                 case .ready(let book): publish(book)
+                 case .failed(let failure): state = .failed(failure)
+@@ -94,7 +179,7 @@
+         _ = try await execute(.saveDraft(input))
+     }
+     func updateDraft(_ input: FitnessDraft) {
+-        do { try input.validateStructure() }
++        do { try requireAccess(); try input.validateStructure() }
+         catch { operationFailure = AppFailure("Validate Calculator Draft", underlying: error); return }
+         draft = input
+         draftSave.start("Save Calculator Draft") { [self] in
+@@ -115,23 +200,31 @@
+     }
+     func deleteResults(ids: Set<UUID>) async throws { try requireReady(); _ = try await execute(.deleteResults(ids)) }
+     func recoverAttachments() async throws {
+-        do { publish(try await repository.recoverPending()) }
++        try requireAccess()
++        let generation = epoch
++        do {
++            let book = try await repository.recoverPending()
++            try requireAccess()
++            guard generation == epoch else { throw RecordAccessError.superseded }
++            publish(book)
++        }
+         catch is CancellationError { throw CancellationError() }
+         catch {
+-            state = .failed(AppFailure("Recover Attachments", underlying: error))
++            if generation == epoch { state = .failed(AppFailure("Recover Attachments", underlying: error)) }
+             throw error
+         }
+     }
+     /// App-lifetime UI mutation owner. These operations are not automatically retried.
+     func submit(_ operation: String, work: @escaping @MainActor () async throws -> Void) {
+         let id = UUID()
++        let generation = epoch
+         operations[id] = Task { [self] in
+             defer { operations[id] = nil }
+-            do { try Task.checkCancellation(); try await work() }
++            do { try requireAccess(); try Task.checkCancellation(); try await work() }
+             catch is CancellationError { /* App-lifetime shutdown owns this cancellation. */ }
+             catch {
+                 let failure = AppFailure(operation, underlying: error)
+-                operationFailure = failure
++                if generation == epoch { operationFailure = failure }
+                 // execute() already synchronized the authoritative repository outcome.
+             }
+         }
+--- /dev/null
++++ b/LeadersBook/Core/RecordAccess.swift
+@@ -0,0 +1,38 @@
++import Foundation
++import os
++
++struct LockedSummary: Equatable, Sendable {
++    let soldiers: Int
++    let results: Int
++}
++
++enum RecordAccessError: UserPresentableError {
++    case locked, unavailable, cancelled, superseded
++    var userMessage: String {
++        switch self {
++        case .locked: "Unlock records to continue."
++        case .unavailable: "Device authentication is unavailable. Set a device passcode in Settings."
++        case .cancelled: "Authentication was cancelled. Records remain locked."
++        case .superseded: "The unlock request expired. Try again."
++        }
++    }
++}
++
++@MainActor
++protocol RecordAuthenticating {
++    func authenticate() async throws
++    func cancel()
++}
++
++@MainActor
++struct UnavailableRecordAuthenticator: RecordAuthenticating {
++    func authenticate() async throws { throw RecordAccessError.unavailable }
++    func cancel() {}
++}
++
++/// Revocation is synchronous; actor-queued work checks the same protected lease.
++final class RecordAccessLease: Sendable {
++    private let valid = OSAllocatedUnfairLock(initialState: true)
++    func revoke() { valid.withLock { $0 = false } }
++    func check() throws { try valid.withLock { guard $0 else { throw RecordAccessError.locked } } }
++}
+--- a/LeadersBook/Views/ContentView.swift
++++ b/LeadersBook/Views/ContentView.swift
+@@ -7,9 +7,32 @@
+     @State private var recoveryOperation = OwnedOperation()
+     @Environment(\.scenePhase) private var scenePhase
+ 
++    enum PresentedFailure: Identifiable {
++        case operation(AppFailure), draft(AppFailure)
++        var id: UUID { failure.id }
++        var failure: AppFailure { switch self { case .operation(let value), .draft(let value): value } }
++        var title: String {
++            switch self {
++            case .draft: "Draft Not Saved"
++            case .operation(let failure): failure.operation == "Unlock Records" ? "Records Remain Locked" : failure.operation + " Couldn’t Finish"
++            }
++        }
++    }
++    var presentedFailure: Binding<PresentedFailure?> {
++        Binding(get: {
++            if let failure = store.operationFailure { return .operation(failure) }
++            return store.draftSave.phase.failure.map(PresentedFailure.draft)
++        }, set: { value in
++            guard value == nil else { return }
++            if store.operationFailure != nil { store.operationFailure = nil }
++            else { store.draftSave.dismissFailure() }
++        })
++    }
++
+     var body: some View {
+         Group {
+             switch store.state {
++            case .locked(let summary): LockedRecordsView(store: store, summary: summary)
+             case .loading:
+                 ProgressView("Opening Records…")
+             case .failed(let error):
+@@ -38,9 +61,24 @@
+                 }
+             }
+         }
+-        .task { if case .loading = store.state { await store.reload() } }
++         .task {
++            await store.prepareForPresentation()
++            #if AUTHENTICATION_TEST_DOUBLE
++            if ProcessInfo.processInfo.arguments.contains("--authentication-test-simultaneous-errors") {
++                store.draftSave.start("Test Draft") { throw CocoaError(.fileWriteNoPermission) }
++                store.operationFailure = AppFailure("Unlock Records", underlying: RecordAccessError.cancelled)
++            }
++            #endif
++        }
++        .background(PrivacyShield(locked: !store.isUnlocked, active: scenePhase == .active))
++        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in store.lock() }
++        .onReceive(NotificationCenter.default.publisher(for: UIApplication.protectedDataWillBecomeUnavailableNotification)) { _ in store.lock() }
+         .safeAreaInset(edge: .top) {
+             VStack(spacing: 0) {
++            if case .ready = store.state {
++                Button("Lock Records", systemImage: "lock") { store.lock() }
++                    .buttonStyle(LBActionButtonStyle()).padding(8).accessibilityIdentifier("lockRecords")
++            }
+             if let warning = store.storageWarning {
+                 Button("Changes Saved With a Storage Warning") { store.operationFailure = warning }.buttonStyle(LBActionButtonStyle())
+                     .padding().frame(maxWidth: .infinity).background(Color.lbSurfaceRaised)
+@@ -58,7 +96,7 @@
+         }
+         }
+         .onDisappear { recoveryOperation.cancel() }
+-        .privacySensitive()
++        .privacySensitive(store.isUnlocked)
+         .overlay {
+             if scenePhase != .active {
+                 ZStack {
+@@ -70,11 +108,8 @@
+                 .accessibilityHidden(true)
+             }
+         }
+-        .alert(item: $store.operationFailure) { failure in
+-            Alert(title: Text("Operation Couldn’t Finish"), message: Text(failure.localizedDescription), dismissButton: .default(Text("OK")))
+-        }
+-        .alert(item: Binding(get: { store.draftSave.phase.failure }, set: { if $0 == nil { store.draftSave.dismissFailure() } })) { failure in
+-            Alert(title: Text("Draft Not Saved"), message: Text(failure.localizedDescription), dismissButton: .default(Text("OK")))
++        .alert(item: presentedFailure) { presented in
++            Alert(title: Text(presented.title), message: Text(presented.failure.localizedDescription), dismissButton: .default(Text("OK")))
+         }
+     }
+ }
+--- /dev/null
++++ b/LeadersBook/Views/LockedRecordsView.swift
+@@ -0,0 +1,29 @@
++import SwiftUI
++
++struct LockedRecordsView: View {
++    let store: LeaderStore
++    let summary: LockedSummary?
++    @State private var unlock = OwnedOperation()
++    var body: some View {
++        NavigationStack {
++            VStack(spacing: 20) {
++                Image(systemName: "lock.shield").font(.largeTitle).accessibilityHidden(true)
++                Text("Records Locked").font(.title.bold())
++                if let summary {
++                    Text("\(summary.soldiers) Soldiers · \(summary.results) Saved AFT Results")
++                        .accessibilityIdentifier("lockedSummary")
++                }
++                Text("Authenticate with device biometrics or your device passcode to view soldier details.")
++                    .multilineTextAlignment(.center)
++                Button("Unlock Records", systemImage: "lock.open") {
++                    unlock.start("Unlock Records") { try await store.unlock() }
++                }.buttonStyle(LBPrimaryButtonStyle())
++                    .disabled(store.isAuthenticating).accessibilityIdentifier("unlockRecords")
++                if store.isAuthenticating { ProgressView("Authenticating…") }
++            }.padding().frame(maxWidth: .infinity, maxHeight: .infinity)
++                .background(Color.lbBackground)
++                .navigationTitle("The Leaders Book")
++        }
++        .onDisappear { unlock.cancel() }
++    }
++}
+--- /dev/null
++++ b/LeadersBook/Views/PrivacyShield.swift
+@@ -0,0 +1,58 @@
++import SwiftUI
++import UIKit
++
++/// A window-level cover also sits above sheets and Quick Look while the app is inactive.
++struct PrivacyShield: UIViewRepresentable {
++    let locked: Bool
++    let active: Bool
++    func makeUIView(context: Context) -> ShieldAnchor { ShieldAnchor() }
++    func updateUIView(_ view: ShieldAnchor, context: Context) {
++        view.updateActive(active)
++        view.updateLock(locked)
++    }
++    static func dismantleUIView(_ view: ShieldAnchor, coordinator: ()) { view.removeCover() }
++}
++
++@MainActor
++final class ShieldAnchor: UIView {
++    private var cover: UIView?
++    private var wasLocked = true
++    private var active = UIApplication.shared.applicationState == .active
++    func updateActive(_ active: Bool) {
++        self.active = active
++        cover?.isHidden = active
++    }
++    func updateLock(_ locked: Bool) {
++        if locked && !wasLocked { window?.rootViewController?.dismiss(animated: false) }
++        wasLocked = locked
++    }
++    override init(frame: CGRect) {
++        super.init(frame: frame)
++        NotificationCenter.default.addObserver(self, selector: #selector(hideContent), name: UIApplication.willResignActiveNotification, object: nil)
++        NotificationCenter.default.addObserver(self, selector: #selector(showContent), name: UIApplication.didBecomeActiveNotification, object: nil)
++    }
++    required init?(coder: NSCoder) { fatalError("Programmatic view only") }
++    override func didMoveToWindow() {
++        super.didMoveToWindow()
++        removeCover()
++        guard let window else { return }
++        let cover = UIView(frame: window.bounds)
++        cover.backgroundColor = UIColor(Color.theme(.privacyCover))
++        cover.autoresizingMask = [.flexibleWidth, .flexibleHeight]
++        cover.isAccessibilityElement = true
++        cover.accessibilityLabel = "Records Hidden"
++        cover.accessibilityViewIsModal = true
++        cover.isHidden = active
++        window.addSubview(cover)
++        self.cover = cover
++    }
++    @objc private func hideContent() {
++        active = false
++        guard let cover else { return }
++        cover.superview?.bringSubviewToFront(cover)
++        cover.isHidden = false
++    }
++    @objc private func showContent() { updateActive(true) }
++    func removeCover() { cover?.removeFromSuperview(); cover = nil }
++    isolated deinit { NotificationCenter.default.removeObserver(self) }
++}
+--- a/LeadersBook/Views/SoldiersView.swift
++++ b/LeadersBook/Views/SoldiersView.swift
+@@ -82,7 +82,7 @@
+                                           previewOperation.start("Open Certificate") {
+                                               _ = try await store.readAttachment(attachment)
+                                               try Task.checkCancellation()
+-                                              previewURL = store.attachmentURL(attachment)
++                                              previewURL = try store.attachmentURL(attachment)
+                                           }
+                                       })
+                 } else {
+--- a/LeadersBook.xcodeproj/project.pbxproj
++++ b/LeadersBook.xcodeproj/project.pbxproj
+@@ -32,8 +32,8 @@
+ 34278B7F7D9DDD6F0E8E0775 = { isa = PBXBuildFile; fileRef = E0B227FC1EFC3E7F2B08A758; };
+ 38A007151ABE87CC01A5B6E9 = { isa = PBXFileReference; explicitFileType = wrapper.application; path = LeadersBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
+ FBDC4F23F93125BBEEAE800C = { isa = PBXGroup; children = (D5379EB4B754A4196CC43E92,9D3AD977850B7EAC0E4F6585,38A007151ABE87CC01A5B6E9,); name = Products; sourceTree = "<group>"; };
+-B28B7AF69320201D1CF206EB = { isa = PBXGroup; children = (5002B392BAF8DFECE64787A0,E07AE933A8F0B96A64B79954,D1901F83263DF6E8E2B8065B,337F9F6A54F396DF6AE43E56,6A2FD8E92F4DC1CB0D1528D6,AB47D718DC8A8C1874EF0C2E,65CEB14F8AA8FE85E88D6EDD,7CD1E9B8D07CBC9F49D34A06,57951BF245E87C6A1F9C3E47,4DDE1B02B46FB05CF1955EC0,42DDE13F4ADDF7C7B706005A,783E66044DED70EF09A3F910,0B86FC64DBA4CF52B4B28086,CD690099F02B4BA11EB858C1,9D205BE85742BAA9FD34F1EB,4C3A645AD05A22EFC5050D93,6CC795776B333465FE5175EC,5E4423043B2CADA337252854,54DC4E41BE491068816F3E5F,951BCFF6112CD861A4FC68C6,8671BBCEB1C912FBBE17DF86,E3C7D6A147592D54AC2393FF,FF9DC822CCE02F06A7FF962F,44F99F0B30A4675ED38E76B9,E0B227FC1EFC3E7F2B08A758,FBDC4F23F93125BBEEAE800C,); sourceTree = "<group>"; };
+-BCE16DD0260827ECF338C787 = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (4C1AB48829E913E4BA8D6762,B6570B576A1E8889CFC03209,45463BD0778D26AB147E8526,913557893E58643457F7A87A,289111C77CFA37AD04A84A18,8E6DC83FD7E4648E7C1FC9B6,E74E70A1ADF2E71403328F54,3E5BBB6E43B099AB295EF01D,BDFF218D1B00907FE316819B,D7D4BAA1BACEC343368A15FA,821CA36E85D124E49205A7E4,B68D85F617887EAF05CA37B2,5C202F50A131FF1EFD9EAD59,9B98E4FD5486969C6320FF4D,8408BAAA2AE336DD809BD722,D57F07E03C75B1479582EB81,4F7F6F69188F49B119EB80C6,C5C18604708873D40627B1FD,E85E96DAECE3410222A5E68F,E37278499B960148B2DD4592,); runOnlyForDeploymentPostprocessing = 0; };
++B28B7AF69320201D1CF206EB = { isa = PBXGroup; children = (FE27ADEDBF2843F4844D1CE0,D8D5C14772EE04259FF9C5B8,A1EA2D2D4A9DA5259198D22A,940471BD022801B630D94F8C,5002B392BAF8DFECE64787A0,E07AE933A8F0B96A64B79954,D1901F83263DF6E8E2B8065B,337F9F6A54F396DF6AE43E56,6A2FD8E92F4DC1CB0D1528D6,AB47D718DC8A8C1874EF0C2E,65CEB14F8AA8FE85E88D6EDD,7CD1E9B8D07CBC9F49D34A06,57951BF245E87C6A1F9C3E47,4DDE1B02B46FB05CF1955EC0,42DDE13F4ADDF7C7B706005A,783E66044DED70EF09A3F910,0B86FC64DBA4CF52B4B28086,CD690099F02B4BA11EB858C1,9D205BE85742BAA9FD34F1EB,4C3A645AD05A22EFC5050D93,6CC795776B333465FE5175EC,5E4423043B2CADA337252854,54DC4E41BE491068816F3E5F,951BCFF6112CD861A4FC68C6,8671BBCEB1C912FBBE17DF86,E3C7D6A147592D54AC2393FF,FF9DC822CCE02F06A7FF962F,44F99F0B30A4675ED38E76B9,E0B227FC1EFC3E7F2B08A758,FBDC4F23F93125BBEEAE800C,); sourceTree = "<group>"; };
++BCE16DD0260827ECF338C787 = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A9711BE78673898B1E2559ED,22816E5446FCF5E150029D52,5412969F527FD52A102FD49B,2363AE08BE3276C8EB38FD19,4C1AB48829E913E4BA8D6762,B6570B576A1E8889CFC03209,45463BD0778D26AB147E8526,913557893E58643457F7A87A,289111C77CFA37AD04A84A18,8E6DC83FD7E4648E7C1FC9B6,E74E70A1ADF2E71403328F54,3E5BBB6E43B099AB295EF01D,BDFF218D1B00907FE316819B,D7D4BAA1BACEC343368A15FA,821CA36E85D124E49205A7E4,B68D85F617887EAF05CA37B2,5C202F50A131FF1EFD9EAD59,9B98E4FD5486969C6320FF4D,8408BAAA2AE336DD809BD722,D57F07E03C75B1479582EB81,4F7F6F69188F49B119EB80C6,C5C18604708873D40627B1FD,E85E96DAECE3410222A5E68F,E37278499B960148B2DD4592,); runOnlyForDeploymentPostprocessing = 0; };
+ 0189424A5A60FED329FA868E = { isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (3D139655066D7AB9EC938DA0,CCD5B0F735FCC38C3DDFF5AE,34278B7F7D9DDD6F0E8E0775,); runOnlyForDeploymentPostprocessing = 0; };
+ 7561BFB015D8F536760CB671 = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+ 89E1FD6268CC0F221A2BE178 = { isa = XCBuildConfiguration; name = Debug; buildSettings = {
+@@ -55,6 +55,7 @@
+  INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+  INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
+  INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
++ INFOPLIST_KEY_NSFaceIDUsageDescription = "Unlock private soldier records and attachments.";
+  INFOPLIST_KEY_NSCameraUsageDescription = "Take a soldier photo for a local leader record.";
+  ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+  ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+@@ -81,6 +82,7 @@
+  INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+  INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
+  INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
++ INFOPLIST_KEY_NSFaceIDUsageDescription = "Unlock private soldier records and attachments.";
+  INFOPLIST_KEY_NSCameraUsageDescription = "Take a soldier photo for a local leader record.";
+  ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+  ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+@@ -88,9 +90,9 @@
+  LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+  SWIFT_EMIT_LOC_STRINGS = YES;
+  }; };
+-862894B703A6DEDF96A9DD6C = { isa = XCConfigurationList; buildConfigurations = (89E1FD6268CC0F221A2BE178,E6DE6C99132752C914FEF632,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+-C57128001CE614BF8549D6BB = { isa = XCConfigurationList; buildConfigurations = (7082CC0B6FC1282FCEABD07A,639A7CA24D39909E713B47F7,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+-0E8A3AD980EC179856012B7E = { isa = PBXNativeTarget; buildConfigurationList = C57128001CE614BF8549D6BB; buildPhases = (BCE16DD0260827ECF338C787,7561BFB015D8F536760CB671,0189424A5A60FED329FA868E,); buildRules = (); dependencies = (); name = LeadersBook; productName = LeadersBook; productReference = 38A007151ABE87CC01A5B6E9; productType = "com.apple.product-type.application"; };
++862894B703A6DEDF96A9DD6C = { isa = XCConfigurationList; buildConfigurations = (CC147B4A8A4B0B9B26D92386,89E1FD6268CC0F221A2BE178,E6DE6C99132752C914FEF632,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
++C57128001CE614BF8549D6BB = { isa = XCConfigurationList; buildConfigurations = (8E445BC63C59C5962220F016,7082CC0B6FC1282FCEABD07A,639A7CA24D39909E713B47F7,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
++0E8A3AD980EC179856012B7E = { isa = PBXNativeTarget; buildConfigurationList = C57128001CE614BF8549D6BB; buildPhases = (16176F017385A5B4FC49A4C6,BCE16DD0260827ECF338C787,7561BFB015D8F536760CB671,0189424A5A60FED329FA868E,); buildRules = (); dependencies = (); name = LeadersBook; productName = LeadersBook; productReference = 38A007151ABE87CC01A5B6E9; productType = "com.apple.product-type.application"; };
+ 98F54143AB4E86B28C3AFEE0 = { isa = PBXProject; attributes = { BuildIndependentTargetsInParallel = YES; LastSwiftUpdateCheck = 2720; LastUpgradeCheck = 2720; TargetAttributes = { 0E8A3AD980EC179856012B7E = { CreatedOnToolsVersion = 27.0; }; }; }; buildConfigurationList = 862894B703A6DEDF96A9DD6C; compatibilityVersion = "Xcode 15.0"; developmentRegion = en; hasScannedForEncodings = 0; knownRegions = (en, Base,); mainGroup = B28B7AF69320201D1CF206EB; productRefGroup = FBDC4F23F93125BBEEAE800C; projectDirPath = ""; projectRoot = ""; targets = (F3C88D20E72B1B16A9F06DC8,0E8A3AD980EC179856012B7E,D24B997AF00C71C20D86BE4D,); };
+ 4DDE1B02B46FB05CF1955EC0 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests/LeadersBookUITests/LeadersBookUITests.swift; sourceTree = "<group>"; };
+ 9D3AD977850B7EAC0E4F6585 = { isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = LeadersBookUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+@@ -99,7 +101,7 @@
+ B340C895C431F5A95712E217 = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+ 59CE1A55E3C0DC7EDB1A684D = { isa = XCBuildConfiguration; name = Debug; buildSettings = { GENERATE_INFOPLIST_FILE = YES; PRODUCT_BUNDLE_IDENTIFIER = com.leadersbook.app.uitests; PRODUCT_NAME = "$(TARGET_NAME)"; TARGETED_DEVICE_FAMILY = "1,2"; CODE_SIGN_STYLE = Automatic; TEST_TARGET_NAME = LeadersBook; }; };
+ 003254340176A76C2BC8F6D4 = { isa = XCBuildConfiguration; name = Release; buildSettings = { GENERATE_INFOPLIST_FILE = YES; PRODUCT_BUNDLE_IDENTIFIER = com.leadersbook.app.uitests; PRODUCT_NAME = "$(TARGET_NAME)"; TARGETED_DEVICE_FAMILY = "1,2"; CODE_SIGN_STYLE = Automatic; TEST_TARGET_NAME = LeadersBook; }; };
+-3646145E0A90C6FF41610EFE = { isa = XCConfigurationList; buildConfigurations = (59CE1A55E3C0DC7EDB1A684D,003254340176A76C2BC8F6D4,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
++3646145E0A90C6FF41610EFE = { isa = XCConfigurationList; buildConfigurations = (7D2F8483F4F51AD1F903B97C,59CE1A55E3C0DC7EDB1A684D,003254340176A76C2BC8F6D4,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+ 5538D6C94541880BC3B9A168 = { isa = PBXContainerItemProxy; containerPortal = 98F54143AB4E86B28C3AFEE0; proxyType = 1; remoteGlobalIDString = 0E8A3AD980EC179856012B7E; remoteInfo = LeadersBook; };
+ B1FB45770585B0E6C098AB54 = { isa = PBXTargetDependency; target = 0E8A3AD980EC179856012B7E; targetProxy = 5538D6C94541880BC3B9A168; };
+ D24B997AF00C71C20D86BE4D = { isa = PBXNativeTarget; buildConfigurationList = 3646145E0A90C6FF41610EFE; buildPhases = (95FC400A54C228DD62344224,B340C895C431F5A95712E217,); buildRules = (); dependencies = (B1FB45770585B0E6C098AB54,); name = LeadersBookUITests; productName = LeadersBookUITests; productReference = 9D3AD977850B7EAC0E4F6585; productType = "com.apple.product-type.bundle.ui-testing"; };
+@@ -127,8 +129,48 @@
+ DE6DD74E6B4CAD67F0532A02 = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+ DCAEE4D600C167391F78FDAC = { isa = XCBuildConfiguration; name = Debug; buildSettings = { GENERATE_INFOPLIST_FILE = YES; PRODUCT_BUNDLE_IDENTIFIER = com.leadersbook.app.themeadaptertests; PRODUCT_NAME = "$(TARGET_NAME)"; CODE_SIGN_STYLE = Automatic; TARGETED_DEVICE_FAMILY = "1,2"; TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LeadersBook.app/LeadersBook"; BUNDLE_LOADER = "$(TEST_HOST)"; }; };
+ A9ABC5D13337AD5B38185A17 = { isa = XCBuildConfiguration; name = Release; buildSettings = { GENERATE_INFOPLIST_FILE = YES; PRODUCT_BUNDLE_IDENTIFIER = com.leadersbook.app.themeadaptertests; PRODUCT_NAME = "$(TARGET_NAME)"; CODE_SIGN_STYLE = Automatic; TARGETED_DEVICE_FAMILY = "1,2"; TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LeadersBook.app/LeadersBook"; BUNDLE_LOADER = "$(TEST_HOST)"; }; };
+-094A1649A73223F07775A24E = { isa = XCConfigurationList; buildConfigurations = (DCAEE4D600C167391F78FDAC,A9ABC5D13337AD5B38185A17,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
++094A1649A73223F07775A24E = { isa = XCConfigurationList; buildConfigurations = (254A293FC7BBA9E73D9426C3,DCAEE4D600C167391F78FDAC,A9ABC5D13337AD5B38185A17,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+ B361D7EE6198C37698A00F72 = { isa = PBXContainerItemProxy; containerPortal = 98F54143AB4E86B28C3AFEE0; proxyType = 1; remoteGlobalIDString = 0E8A3AD980EC179856012B7E; remoteInfo = LeadersBook; };
+ F3AC628285CEF87C57481332 = { isa = PBXTargetDependency; target = 0E8A3AD980EC179856012B7E; targetProxy = B361D7EE6198C37698A00F72; };
+ F3C88D20E72B1B16A9F06DC8 = { isa = PBXNativeTarget; buildConfigurationList = 094A1649A73223F07775A24E; buildPhases = (ADAFF005452F05B38853E2C7,DE6DD74E6B4CAD67F0532A02,); buildRules = (); dependencies = (F3AC628285CEF87C57481332,); name = ThemeAdapterTests; productName = ThemeAdapterTests; productReference = D5379EB4B754A4196CC43E92; productType = "com.apple.product-type.bundle.unit-test"; };
++
++FE27ADEDBF2843F4844D1CE0 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LeadersBook/Core/RecordAccess.swift"; sourceTree = "<group>"; };
++A9711BE78673898B1E2559ED = { isa = PBXBuildFile; fileRef = FE27ADEDBF2843F4844D1CE0; };
++D8D5C14772EE04259FF9C5B8 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LeadersBook/App/DeviceAuthenticator.swift"; sourceTree = "<group>"; };
++22816E5446FCF5E150029D52 = { isa = PBXBuildFile; fileRef = D8D5C14772EE04259FF9C5B8; };
++A1EA2D2D4A9DA5259198D22A = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LeadersBook/Views/LockedRecordsView.swift"; sourceTree = "<group>"; };
++5412969F527FD52A102FD49B = { isa = PBXBuildFile; fileRef = A1EA2D2D4A9DA5259198D22A; };
++940471BD022801B630D94F8C = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LeadersBook/Views/PrivacyShield.swift"; sourceTree = "<group>"; };
++2363AE08BE3276C8EB38FD19 = { isa = PBXBuildFile; fileRef = 940471BD022801B630D94F8C; };
++
++CC147B4A8A4B0B9B26D92386 = { isa = XCBuildConfiguration; name = Testing; buildSettings = {
++ ALWAYS_SEARCH_USER_PATHS = NO; CLANG_ENABLE_MODULES = YES; CLANG_ENABLE_OBJC_ARC = YES;
++ IPHONEOS_DEPLOYMENT_TARGET = 27.0; SDKROOT = iphoneos;
++ SWIFT_VERSION = 6.0; SWIFT_STRICT_CONCURRENCY = complete;
++ SWIFT_OPTIMIZATION_LEVEL = "-Onone";
++ DEBUG_INFORMATION_FORMAT = "dwarf";
++ ENABLE_TESTABILITY = YES;
++ SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG AUTHENTICATION_TEST_DOUBLE $(inherited)";
++ }; };
++8E445BC63C59C5962220F016 = { isa = XCBuildConfiguration; name = Testing; buildSettings = {
++ PRODUCT_NAME = LeadersBook; PRODUCT_BUNDLE_IDENTIFIER = com.leadersbook.app;
++ PRODUCT_MODULE_NAME = LeadersBook; TARGETED_DEVICE_FAMILY = "1,2";
++ SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; SUPPORTS_MACCATALYST = NO;
++ GENERATE_INFOPLIST_FILE = YES; CODE_SIGN_STYLE = Automatic;
++ INFOPLIST_KEY_CFBundleDisplayName = "The Leaders Book";
++ INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
++ INFOPLIST_KEY_UILaunchScreen_Generation = YES;
++ INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
++ INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
++ INFOPLIST_KEY_NSFaceIDUsageDescription = "Unlock private soldier records and attachments.";
++ INFOPLIST_KEY_NSCameraUsageDescription = "Take a soldier photo for a local leader record.";
++ ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
++ ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
++ MARKETING_VERSION = 1.0; CURRENT_PROJECT_VERSION = 1;
++ LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
++ SWIFT_EMIT_LOC_STRINGS = YES;
++ }; };
++7D2F8483F4F51AD1F903B97C = { isa = XCBuildConfiguration; name = Testing; buildSettings = { GENERATE_INFOPLIST_FILE = YES; PRODUCT_BUNDLE_IDENTIFIER = com.leadersbook.app.uitests; PRODUCT_NAME = "$(TARGET_NAME)"; TARGETED_DEVICE_FAMILY = "1,2"; CODE_SIGN_STYLE = Automatic; TEST_TARGET_NAME = LeadersBook; }; };
++254A293FC7BBA9E73D9426C3 = { isa = XCBuildConfiguration; name = Testing; buildSettings = { GENERATE_INFOPLIST_FILE = YES; PRODUCT_BUNDLE_IDENTIFIER = com.leadersbook.app.themeadaptertests; PRODUCT_NAME = "$(TARGET_NAME)"; CODE_SIGN_STYLE = Automatic; TARGETED_DEVICE_FAMILY = "1,2"; TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LeadersBook.app/LeadersBook"; BUNDLE_LOADER = "$(TEST_HOST)"; }; };
++16176F017385A5B4FC49A4C6 = { isa = PBXShellScriptBuildPhase; alwaysOutOfDate = 1; buildActionMask = 2147483647; files = (); inputPaths = (); outputPaths = (); runOnlyForDeploymentPostprocessing = 0; shellPath = /bin/sh; shellScript = "if [ \"$CONFIGURATION\" = \"Testing\" ] && [ \"$ACTION\" = \"install\" ]; then\n  echo \"error: Testing authentication cannot be archived. Use Release.\"\n  exit 1\nfi\n"; };
+ }; rootObject = 98F54143AB4E86B28C3AFEE0; }
+--- a/LeadersBook.xcodeproj/xcshareddata/xcschemes/LeadersBook.xcscheme
++++ b/LeadersBook.xcodeproj/xcshareddata/xcschemes/LeadersBook.xcscheme
+@@ -1,7 +1,7 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <Scheme LastUpgradeVersion="2720" version="1.3">
+ <BuildAction parallelizeBuildables="YES" buildImplicitDependencies="YES"><BuildActionEntries><BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="YES" buildForArchiving="YES" buildForAnalyzing="YES"><BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="0E8A3AD980EC179856012B7E" BuildableName="LeadersBook.app" BlueprintName="LeadersBook" ReferencedContainer="container:LeadersBook.xcodeproj"/></BuildActionEntry></BuildActionEntries></BuildAction>
+-<TestAction buildConfiguration="Debug" selectedDebuggerIdentifier="Xcode.DebuggerFoundation.Debugger.LLDB" selectedLauncherIdentifier="Xcode.IDEFoundation.Launcher.LLDB" shouldUseLaunchSchemeArgsEnv="YES"><Testables><TestableReference skipped="NO"><BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="F3C88D20E72B1B16A9F06DC8" BuildableName="ThemeAdapterTests.xctest" BlueprintName="ThemeAdapterTests" ReferencedContainer="container:LeadersBook.xcodeproj"/></TestableReference><TestableReference skipped="NO"><BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="D24B997AF00C71C20D86BE4D" BuildableName="LeadersBookUITests.xctest" BlueprintName="LeadersBookUITests" ReferencedContainer="container:LeadersBook.xcodeproj"/></TestableReference></Testables></TestAction>
++<TestAction buildConfiguration="Testing" selectedDebuggerIdentifier="Xcode.DebuggerFoundation.Debugger.LLDB" selectedLauncherIdentifier="Xcode.IDEFoundation.Launcher.LLDB" shouldUseLaunchSchemeArgsEnv="YES"><Testables><TestableReference skipped="NO"><BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="F3C88D20E72B1B16A9F06DC8" BuildableName="ThemeAdapterTests.xctest" BlueprintName="ThemeAdapterTests" ReferencedContainer="container:LeadersBook.xcodeproj"/></TestableReference><TestableReference skipped="NO"><BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="D24B997AF00C71C20D86BE4D" BuildableName="LeadersBookUITests.xctest" BlueprintName="LeadersBookUITests" ReferencedContainer="container:LeadersBook.xcodeproj"/></TestableReference></Testables></TestAction>
+ <LaunchAction buildConfiguration="Debug" selectedDebuggerIdentifier="Xcode.DebuggerFoundation.Debugger.LLDB" selectedLauncherIdentifier="Xcode.IDEFoundation.Launcher.LLDB" launchStyle="0" useCustomWorkingDirectory="NO" ignoresPersistentStateOnLaunch="NO" debugDocumentVersioning="YES" debugServiceExtension="internal" allowLocationSimulation="YES"><BuildableProductRunnable runnableDebuggingMode="0"><BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="0E8A3AD980EC179856012B7E" BuildableName="LeadersBook.app" BlueprintName="LeadersBook" ReferencedContainer="container:LeadersBook.xcodeproj"/></BuildableProductRunnable></LaunchAction>
+ <ProfileAction buildConfiguration="Release" shouldUseLaunchSchemeArgsEnv="YES" savedToolIdentifier="" useCustomWorkingDirectory="NO" debugDocumentVersioning="YES"><BuildableProductRunnable runnableDebuggingMode="0"><BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="0E8A3AD980EC179856012B7E" BuildableName="LeadersBook.app" BlueprintName="LeadersBook" ReferencedContainer="container:LeadersBook.xcodeproj"/></BuildableProductRunnable></ProfileAction>
+ <AnalyzeAction buildConfiguration="Debug"/><ArchiveAction buildConfiguration="Release" revealArchiveInOrganizer="YES"/>
+--- a/Tests/LeadersBookCoreTests/AttachmentTests.swift
++++ b/Tests/LeadersBookCoreTests/AttachmentTests.swift
+@@ -46,14 +46,14 @@
+         #expect(saved.training.first?.completionDates == [.distantPast])
+         #expect(saved.training.first?.certificate == certificate)
+         #expect(saved.heightWeight?.map(\.dto) == soldier.heightWeight)
+-        #expect(try Data(contentsOf: loaded.attachmentURL(photo)) == jpegFixture)
+-        #expect(try Data(contentsOf: loaded.attachmentURL(certificate)) == pdfFixture)
++        #expect(try Data(contentsOf: (try loaded.attachmentURL(photo))) == jpegFixture)
++        #expect(try Data(contentsOf: (try loaded.attachmentURL(certificate))) == pdfFixture)
+         soldier = SoldierDraft(saved); soldier.photo = nil
+         try await loaded.saveSoldier(soldier)
+-        #expect(!FileManager.default.fileExists(atPath: loaded.attachmentURL(photo).path))
+-        #expect(FileManager.default.fileExists(atPath: loaded.attachmentURL(certificate).path))
++        #expect(!FileManager.default.fileExists(atPath: (try loaded.attachmentURL(photo)).path))
++        #expect(FileManager.default.fileExists(atPath: (try loaded.attachmentURL(certificate)).path))
+         try await loaded.deleteSoldier(id: soldier.id)
+-        #expect(!FileManager.default.fileExists(atPath: loaded.attachmentURL(certificate).path))
++        #expect(!FileManager.default.fileExists(atPath: (try loaded.attachmentURL(certificate)).path))
+     }
+     @Test func failedCommitRollsBackNewFilesAndPreservesOldPhoto() async throws {
+         let url = fixtureFile(); defer { cleanFixture(url) }
+@@ -67,8 +67,8 @@
+         try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
+         await #expect(throws: (any Error).self) { try await store.saveSoldier(soldier, importing: [try ImportedRecordFile(attachment: replacement, data: jpegFixture)]) }
+         #expect((try store.records).soldiers.first?.photo == old)
+-        #expect(FileManager.default.fileExists(atPath: store.attachmentURL(old).path))
+-        #expect(!FileManager.default.fileExists(atPath: store.attachmentURL(replacement).path))
++        #expect(FileManager.default.fileExists(atPath: (try store.attachmentURL(old)).path))
++        #expect(!FileManager.default.fileExists(atPath: (try store.attachmentURL(replacement)).path))
+     }
+     @Test func invalidDatesMeasurementsAndMissingAttachmentsAreRejected() async throws {
+         let url = fixtureFile(); defer { cleanFixture(url) }
+@@ -93,9 +93,9 @@
+         let loaded = try await openStore(url)
+         #expect((try loaded.records).soldiers.count == 2)
+         try await loaded.deleteSoldier(id: first.id)
+-        #expect(FileManager.default.fileExists(atPath: loaded.attachmentURL(photo).path))
++        #expect(FileManager.default.fileExists(atPath: (try loaded.attachmentURL(photo)).path))
+         try await loaded.deleteSoldier(id: second.id)
+-        #expect(!FileManager.default.fileExists(atPath: loaded.attachmentURL(photo).path))
++        #expect(!FileManager.default.fileExists(atPath: (try loaded.attachmentURL(photo)).path))
+     }
+ 
+     @Test func unavailablePhotoDoesNotBlockUnrelatedCalculatorWork() async throws {
+@@ -104,7 +104,7 @@
+         let photo = try RecordAttachment(name: "Unavailable.jpg", kind: .jpeg)
+         var soldier = SoldierDraft(name: "Example"); soldier.photo = photo
+         try await store.saveSoldier(soldier, importing: [try ImportedRecordFile(attachment: photo, data: jpegFixture)])
+-        try FileManager.default.removeItem(at: store.attachmentURL(photo))
++        try FileManager.default.removeItem(at: (try store.attachmentURL(photo)))
+         await #expect(throws: AppFailure.self) { try await store.readAttachment(photo) }
+         let draft = maximumDraft()
+         try await store.saveDraft(draft)
+--- a/Tests/LeadersBookCoreTests/GovernanceTests.swift
++++ b/Tests/LeadersBookCoreTests/GovernanceTests.swift
+@@ -44,8 +44,11 @@
+     @Test func filesystemCausesRemainAvailableBehindPresentation() async throws {
+         let url = fixtureFile(); defer { cleanFixture(url) }
+         try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
+-        let store = LeaderStore(fileURL: url, scorer: try AFTScoring()); await store.reload()
+-        guard case .failed(let failure) = store.state else { Issue.record("Expected load failure"); return }
++        let store = LeaderStore(fileURL: url, scorer: try AFTScoring(), authenticator: TestAuthenticator())
++        let failure: AppFailure
++        do { try await store.unlock(); Issue.record("Expected load failure"); return }
++        catch let cause as AppFailure { failure = cause }
++        guard case .locked = store.state else { Issue.record("Failed load exposed records"); return }
+         #expect((failure.rootCause as NSError).domain == NSCocoaErrorDomain)
+         #expect(!failure.localizedDescription.contains(url.path))
+         let secondary = AppFailure("Cleanup", underlying: CocoaError(.fileWriteNoPermission))
+@@ -89,8 +92,8 @@
+         let repository = BookRepository(fileURL: url, scorer: try AFTScoring())
+         _ = try await repository.load()
+         let id = UUID(), input = maximumDraft()
+-        _ = try await repository.apply(.saveResult(input, id))
+-        await #expect(throws: RecordError.conflict) { try await repository.apply(.saveResult(input, id)) }
++        _ = try await repository.apply(.saveResult(input, id), permit: RecordAccessLease())
++        await #expect(throws: RecordError.conflict) { try await repository.apply(.saveResult(input, id), permit: RecordAccessLease()) }
+         let loaded = try await repository.load()
+         #expect(loaded.snapshot.results.count == 1)
+         #expect(loaded.snapshot.results.first?.id == id)
+--- a/Tests/LeadersBookCoreTests/LeaderStoreTests.swift
++++ b/Tests/LeadersBookCoreTests/LeaderStoreTests.swift
+@@ -55,11 +55,10 @@
+             let url = fixtureFile(); defer { cleanFixture(url) }
+             try FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
+             try data.write(to: url)
+-            let store = LeaderStore(fileURL: url, scorer: try AFTScoring())
+-            await store.reload()
+-            guard case .failed(let failure) = store.state else { Issue.record("Invalid data was accepted"); continue }
+-            #expect(failure.operation == "Open Records")
+-            await #expect(throws: AppFailure.self) { try await store.saveSoldier(SoldierDraft(name: "Example")) }
++            let store = LeaderStore(fileURL: url, scorer: try AFTScoring(), authenticator: TestAuthenticator())
++            await #expect(throws: AppFailure.self) { try await store.unlock() }
++            guard case .locked = store.state else { Issue.record("Invalid data unlocked records"); continue }
++            await #expect(throws: RecordAccessError.locked) { try await store.saveSoldier(SoldierDraft(name: "Example")) }
+             #expect(try Data(contentsOf: url) == data)
+         }
+     }
+--- /dev/null
++++ b/Tests/LeadersBookCoreTests/RecordAccessTests.swift
+@@ -0,0 +1,118 @@
++import Foundation
++import Testing
++@testable import LeadersBookCore
++
++@MainActor
++private final class DeferredAuthenticator: RecordAuthenticating {
++    var continuation: CheckedContinuation<Void, Error>?
++    var cancelled = false
++    func authenticate() async throws {
++        try await withCheckedThrowingContinuation { continuation = $0 }
++    }
++    func cancel() { cancelled = true }
++}
++
++@MainActor
++struct RecordAccessTests {
++    @Test func unavailableAuthenticationFailsClosed() async throws {
++        let store = LeaderStore(fileURL: fixtureFile(), scorer: try AFTScoring())
++        await #expect(throws: RecordAccessError.unavailable) { try await store.unlock() }
++        #expect(!store.isUnlocked)
++        let failure = try #require(store.operationFailure)
++        #expect(failure.operation == "Unlock Records")
++        #expect(failure.underlying as? RecordAccessError == .unavailable)
++        guard case .locked = store.state else { Issue.record("Denied authentication changed lock state"); return }
++        #expect(throws: RecordAccessError.locked) { try store.records }
++    }
++
++    @Test func twoPresentersDoNotReloadAnUnlockedSession() async throws {
++        let url = fixtureFile(); defer { cleanFixture(url) }
++        let store = LeaderStore(fileURL: url, scorer: try AFTScoring(), authenticator: TestAuthenticator())
++        async let first: Void = store.prepareForPresentation()
++        async let second: Void = store.prepareForPresentation()
++        _ = await (first, second)
++        try await store.unlock()
++        let before = try store.records
++        store.updateDraft(maximumDraft())
++        await store.prepareForPresentation()
++        await store.prepareForPresentation()
++        #expect(store.isUnlocked)
++        #expect((try store.records).generation == before.generation)
++        #expect(before.generation == 2)
++        #expect(store.draft.values == maximumDraft().values)
++        store.draftSave.cancel()
++    }
++
++    @Test func archiveConfigurationExcludesTestAuthentication() throws {
++        let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
++        let scheme = try String(contentsOf: root.appending(path: "LeadersBook.xcodeproj/xcshareddata/xcschemes/LeadersBook.xcscheme"), encoding: .utf8)
++        #expect(scheme.contains("<ArchiveAction buildConfiguration=\"Release\""))
++    }
++
++    @Test func lockedRoutesRejectAccessAndPreserveRecords() async throws {
++        let url = fixtureFile(); defer { cleanFixture(url) }
++        let store = try await openStore(url)
++        let attachment = try RecordAttachment(name: "Private.jpg", kind: .jpeg)
++        var soldier = SoldierDraft(name: "Private Identity")
++        soldier.photo = attachment
++        try await store.saveSoldier(soldier, importing: [try ImportedRecordFile(attachment: attachment, data: jpegFixture)])
++        let before = try Data(contentsOf: url)
++        store.lock()
++        guard case .locked(let summary) = store.state else { Issue.record("Expected locked summary"); return }
++        #expect(summary == LockedSummary(soldiers: 1, results: 0))
++        #expect(throws: RecordAccessError.locked) { try store.records }
++        #expect(throws: RecordAccessError.locked) { try store.attachmentURL(attachment) }
++        await #expect(throws: RecordAccessError.locked) { try await store.readAttachment(attachment) }
++        await #expect(throws: RecordAccessError.locked) { try await store.saveSoldier(soldier) }
++        await #expect(throws: RecordAccessError.locked) { try await store.deleteSoldier(id: soldier.id) }
++        await #expect(throws: RecordAccessError.locked) { try await store.saveDraft(maximumDraft()) }
++        await #expect(throws: RecordAccessError.locked) { try await store.saveResult() }
++        await #expect(throws: RecordAccessError.locked) { try await store.deleteResults(ids: []) }
++        await #expect(throws: RecordAccessError.locked) { try await store.recoverAttachments() }
++        store.updateDraft(maximumDraft())
++        #expect(store.draft.values.isEmpty)
++        await store.reload()
++        guard case .locked = store.state else { Issue.record("Reload bypassed authentication"); return }
++        #expect(try Data(contentsOf: url) == before)
++        try await store.unlock()
++        #expect((try store.records).soldiers.first?.name == "Private Identity")
++        #expect(try Data(contentsOf: url) == before)
++    }
++
++    @Test func staleAuthenticationCannotUnlockAfterLock() async throws {
++        let url = fixtureFile(); defer { cleanFixture(url) }
++        let authenticator = DeferredAuthenticator()
++        let store = LeaderStore(fileURL: url, scorer: try AFTScoring(), authenticator: authenticator)
++        let task = Task { try await store.unlock() }
++        defer {
++            task.cancel()
++            if let pending = authenticator.continuation {
++                authenticator.continuation = nil
++                pending.resume(throwing: CancellationError())
++            }
++        }
++        for _ in 0..<100 where authenticator.continuation == nil { await Task.yield() }
++        let completion = try #require(authenticator.continuation)
++        store.lock()
++        authenticator.continuation = nil
++        completion.resume()
++        await #expect(throws: RecordAccessError.superseded) { try await task.value }
++        #expect(authenticator.cancelled)
++        #expect(!store.isUnlocked)
++    }
++
++    @Test func revokedLeasePreventsQueuedStorageAccess() async throws {
++        let url = fixtureFile(); defer { cleanFixture(url) }
++        let repository = BookRepository(fileURL: url, scorer: try AFTScoring())
++        _ = try await repository.load()
++        let lease = RecordAccessLease()
++        lease.revoke()
++        let soldier = try Soldier(draft: SoldierDraft(name: "Blocked"))
++        await #expect(throws: RecordAccessError.locked) {
++            try await repository.apply(.saveSoldier(soldier, expectedRevision: nil, []), permit: lease)
++        }
++        let attachment = try RecordAttachment(name: "Blocked.jpg", kind: .jpeg)
++        await #expect(throws: RecordAccessError.locked) { try await repository.readAttachment(attachment, permit: lease) }
++        #expect(!FileManager.default.fileExists(atPath: url.path))
++    }
++}
+--- a/Tests/LeadersBookCoreTests/RecoveryTests.swift
++++ b/Tests/LeadersBookCoreTests/RecoveryTests.swift
+@@ -59,7 +59,7 @@
+         _ = try await repository.load()
+         let photo = try RecordAttachment(name: "Referenced.jpg", kind: .jpeg)
+         var draft = SoldierDraft(name: "Example"); draft.photo = photo
+-        _ = try await repository.apply(.saveSoldier(try Soldier(draft: draft), expectedRevision: draft.revision, [try ImportedRecordFile(attachment: photo, data: jpegFixture)]))
++        _ = try await repository.apply(.saveSoldier(try Soldier(draft: draft), expectedRevision: draft.revision, [try ImportedRecordFile(attachment: photo, data: jpegFixture)]), permit: RecordAccessLease())
+         try journal(at: url, id: UUID(), new: [photo], removed: [])
+         let fresh = BookRepository(fileURL: url, scorer: scorer)
+         await #expect(throws: AppFailure.self) { try await fresh.load() }
+--- a/Tests/LeadersBookCoreTests/TestSupport.swift
++++ b/Tests/LeadersBookCoreTests/TestSupport.swift
+@@ -11,8 +11,8 @@
+     catch { Issue.record(error) }
+ }
+ @MainActor func openStore(_ url: URL) async throws -> LeaderStore {
+-    let store = LeaderStore(fileURL: url, scorer: try AFTScoring())
+-    await store.reload()
++    let store = LeaderStore(fileURL: url, scorer: try AFTScoring(), authenticator: TestAuthenticator())
++    try await store.unlock()
+     if case .failed(let failure) = store.state { throw failure }
+     return store
+ }
+@@ -23,3 +23,8 @@
+ }
+ let jpegFixture = Data([255, 216, 255, 224, 0, 16])
+ let pdfFixture = Data("%PDF-1.4 fixture for opaque storage testing".utf8)
++
++@MainActor struct TestAuthenticator: RecordAuthenticating {
++    func authenticate() async throws {}
++    func cancel() {}
++}
+--- a/Tests/LeadersBookUITests/LeadersBookUITests.swift
++++ b/Tests/LeadersBookUITests/LeadersBookUITests.swift
+@@ -2,10 +2,49 @@
+ 
+ @MainActor
+ final class LeadersBookUITests: XCTestCase {
++    func testSimultaneousFailuresAreBothPresented() {
++        let app = XCUIApplication()
++        app.launchArguments = ["--authentication-test-simultaneous-errors"]
++        app.launch()
++        let operation = app.alerts["Records Remain Locked"]
++        XCTAssertTrue(operation.waitForExistence(timeout: 5))
++        operation.buttons["OK"].tap()
++        let draft = app.alerts["Draft Not Saved"]
++        XCTAssertTrue(draft.waitForExistence(timeout: 5))
++        draft.buttons["OK"].tap()
++        XCTAssertTrue(app.buttons["unlockRecords"].waitForExistence(timeout: 5))
++        XCTAssertFalse(app.alerts.firstMatch.exists)
++    }
++
++    func testLockedSummaryAndRejectedAuthentication() {
++        let app = XCUIApplication()
++        app.launchArguments = ["--authentication-test-denied"]
++        app.launch()
++        XCTAssertTrue(app.buttons["unlockRecords"].waitForExistence(timeout: 5))
++        XCTAssertFalse(app.buttons["lockRecords"].exists)
++        XCTAssertFalse(app.tabBars.buttons["Soldiers"].exists)
++        app.buttons["unlockRecords"].tap()
++        XCTAssertTrue(app.alerts["Records Remain Locked"].waitForExistence(timeout: 5))
++        XCTAssertFalse(app.buttons["lockRecords"].exists)
++        capture("Locked Summary — Denied Authentication", app: app)
++        app.terminate()
++        app.launchArguments = []
++        launchUnlocked(app)
++        XCUIDevice.shared.press(.home)
++        app.activate()
++        XCTAssertTrue(app.buttons["unlockRecords"].waitForExistence(timeout: 5))
++        app.buttons["unlockRecords"].tap()
++        XCTAssertTrue(app.buttons["lockRecords"].waitForExistence(timeout: 5))
++        app.buttons["lockRecords"].tap()
++        XCTAssertTrue(app.buttons["unlockRecords"].waitForExistence(timeout: 5))
++        XCTAssertFalse(app.tabBars.buttons["Soldiers"].exists)
++        capture("Locked Summary — Manual Lock", app: app)
++    }
++
+     func testAFTEventFailureExplanation() throws {
+         let app = XCUIApplication()
+         app.launchArguments = ["--preview-light"]
+-        app.launch()
++        launchUnlocked(app)
+         selectTab("Today", in: app)
+         app.buttons["Score an AFT"].tap()
+         enterMaximumAFT(in: app)
+@@ -25,7 +64,7 @@
+     func testRankAndPlaceholderPreviews() throws {
+         continueAfterFailure = false
+         let app = XCUIApplication()
+-        app.launch()
++        launchUnlocked(app)
+         let team = [("PFC", "Jordan Morgan"), ("SPC", "Alex Chen"), ("CPL", "Taylor Brooks"), ("SGT", "Casey Turner"), ("PV2", "Riley Davis")]
+         for (rank, name) in team {
+             selectTab("Soldiers", in: app)
+@@ -73,7 +112,7 @@
+             XCUIDevice.shared.appearance = appearance
+             app.terminate()
+             app.launchArguments = [name == "Dark" ? "--preview-dark" : "--preview-light"]
+-            app.launch()
++            launchUnlocked(app)
+             selectTab("Today", in: app)
+             capture("Theme Front Cover — \(name)", app: app)
+             selectTab("Soldiers", in: app)
+@@ -91,7 +130,7 @@
+         continueAfterFailure = false
+         let app = XCUIApplication()
+         app.launchArguments = ["-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+-        app.launch()
++        launchUnlocked(app)
+         selectTab("Soldiers", in: app)
+         if app.buttons["BackButton"].exists { app.buttons["BackButton"].tap() }
+         let soldier = app.descendants(matching: .any).matching(NSPredicate(format: "label == %@", "SGT Casey Turner")).firstMatch
+@@ -113,7 +152,7 @@
+     func testPhotoTrainingAndHeightWeightWorkflow() throws {
+         continueAfterFailure = false
+         let app = XCUIApplication()
+-        app.launch()
++        launchUnlocked(app)
+         selectTab("Today", in: app)
+         capture("Front Cover — Layout Preview", app: app)
+         selectTab("Soldiers", in: app)
+@@ -159,7 +198,7 @@
+         reveal(saveResult, in: app)
+         saveResult.tap()
+         app.terminate()
+-        app.launch()
++        launchUnlocked(app)
+         selectTab("Soldiers", in: app)
+         if !app.navigationBars.staticTexts["PVT \(name)"].exists {
+             app.descendants(matching: .any).matching(NSPredicate(format: "label == %@", "PVT \(name)")).firstMatch.tap()
+@@ -189,7 +228,7 @@
+     func testSoldierCreationEditingRelaunchAndDeletion() throws {
+         continueAfterFailure = false
+         let app = XCUIApplication()
+-        app.launch()
++        launchUnlocked(app)
+         let name = "Alex Turner"
+         let editedName = "Alex Taylor"
+         selectTab("Soldiers", in: app)
+@@ -210,7 +249,7 @@
+         app.buttons["saveSoldier"].tap()
+         XCTAssertTrue(app.navigationBars.staticTexts["PVT \(editedName)"].waitForExistence(timeout: 5))
+         app.terminate()
+-        app.launch()
++        launchUnlocked(app)
+         selectTab("Soldiers", in: app)
+         if !app.navigationBars.staticTexts["PVT \(editedName)"].exists {
+             app.descendants(matching: .any).matching(NSPredicate(format: "label == %@", "PVT \(editedName)")).firstMatch.tap()
+@@ -226,7 +265,7 @@
+         app.buttons["Delete Soldier and Results"].tap()
+         XCTAssertTrue(app.navigationBars.staticTexts["PVT \(editedName)"].waitForNonExistence(timeout: 5))
+         app.terminate()
+-        app.launch()
++        launchUnlocked(app)
+         selectTab("Soldiers", in: app)
+         XCTAssertFalse(app.descendants(matching: .any).matching(NSPredicate(format: "label == %@", "PVT \(editedName)")).firstMatch.exists)
+     }
+@@ -234,7 +273,7 @@
+     func testRatioShortcutCalculationAndRelaunch() throws {
+         continueAfterFailure = false
+         let app = XCUIApplication()
+-        app.launch()
++        launchUnlocked(app)
+         selectTab("Today", in: app)
+         app.buttons["HT/WT Calculator"].tap()
+         let height = app.textFields["ratioHeight"]
+@@ -253,7 +292,7 @@
+         selectTab("Fitness", in: app)
+         XCTAssertEqual(height.value as? String, "70")
+         app.terminate()
+-        app.launch()
++        launchUnlocked(app)
+         selectTab("Fitness", in: app)
+         XCTAssertTrue(height.waitForExistence(timeout: 5))
+         XCTAssertEqual(height.value as? String, "70")
+@@ -268,7 +307,7 @@
+     func testAFTCalculationSavingAndHistory() throws {
+         continueAfterFailure = false
+         let app = XCUIApplication()
+-        app.launch()
++        launchUnlocked(app)
+         selectTab("Today", in: app)
+         app.buttons["Score an AFT"].tap()
+         enterMaximumAFT(in: app)
+@@ -283,7 +322,7 @@
+         result.tap()
+         XCTAssertEqual(app.staticTexts["savedAFTTotal"].label, "500 / 500")
+         app.terminate()
+-        app.launch()
++        launchUnlocked(app)
+         selectTab("Fitness", in: app)
+         XCTAssertTrue(result.waitForExistence(timeout: 5))
+         result.tap()
+@@ -294,6 +333,13 @@
+         add(screenshot)
+     }
+ 
++    private func launchUnlocked(_ app: XCUIApplication) {
++        app.launch()
++        XCTAssertTrue(app.buttons["unlockRecords"].waitForExistence(timeout: 5))
++        app.buttons["unlockRecords"].tap()
++        XCTAssertTrue(app.buttons["lockRecords"].waitForExistence(timeout: 5))
++    }
++
+     private func selectTab(_ title: String, in app: XCUIApplication) {
+         // iPadOS floating tabs need not expose a TabBar ancestor.
+         if app.tabBars.buttons[title].exists {
+--- a/Tests/ThemeAdapterTests/ThemeAdapterTests.swift
++++ b/Tests/ThemeAdapterTests/ThemeAdapterTests.swift
+@@ -4,6 +4,61 @@
+ 
+ @MainActor
+ final class ThemeAdapterTests: XCTestCase {
++ func testSimultaneousFailuresRetainDraftUntilAcknowledged() async throws {
++  let scorer = try AFTScoring()
++  let store = LeaderStore(scorer: scorer)
++  store.draftSave.start("Test Draft") { throw CocoaError(.fileWriteNoPermission) }
++  for _ in 0..<100 where store.draftSave.phase.isRunning { await Task.yield() }
++  let draft = try XCTUnwrap(store.draftSave.phase.failure)
++  let operation = AppFailure("Unlock Records", underlying: RecordAccessError.cancelled)
++  store.operationFailure = operation
++  let binding = ContentView(store: store, scorer: scorer).presentedFailure
++  XCTAssertEqual(binding.wrappedValue?.id, operation.id)
++  XCTAssertEqual(binding.wrappedValue?.title, "Records Remain Locked")
++  binding.wrappedValue = nil
++  XCTAssertNil(store.operationFailure)
++  XCTAssertEqual(store.draftSave.phase.failure?.id, draft.id)
++  XCTAssertEqual(binding.wrappedValue?.id, draft.id)
++  XCTAssertEqual(binding.wrappedValue?.title, "Draft Not Saved")
++  binding.wrappedValue = nil
++  XCTAssertNil(binding.wrappedValue)
++ }
++
++ func testPrivacyCoverThemeAndInactiveAttachment() throws {
++  let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
++  let previous = scene.windows.first(where: \.isKeyWindow)
++  let window = UIWindow(windowScene: scene)
++  let controller = UIViewController()
++  window.rootViewController = controller
++  window.makeKeyAndVisible()
++  defer { window.isHidden = true; previous?.makeKey() }
++  let anchor = ShieldAnchor(frame: window.bounds)
++  anchor.updateActive(false)
++  controller.view.addSubview(anchor)
++  let cover = try XCTUnwrap(window.subviews.last)
++  XCTAssertEqual(cover.accessibilityLabel, "Records Hidden")
++  XCTAssertFalse(cover.isHidden)
++  XCTAssertTrue(cover.accessibilityViewIsModal)
++  for mode in ThemeMode.allCases {
++   let traits = UITraitCollection(userInterfaceStyle: mode == .dark ? .dark : .light)
++   let color = try XCTUnwrap(cover.backgroundColor?.resolvedColor(with: traits))
++   var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
++   XCTAssertTrue(color.getRed(&r, green: &g, blue: &b, alpha: &a))
++   let expected = ThemeRole.privacyCover.rgb(in: mode)
++   XCTAssertEqual(r, CGFloat(expected.red)/255, accuracy: 0.00001)
++   XCTAssertEqual(g, CGFloat(expected.green)/255, accuracy: 0.00001)
++   XCTAssertEqual(b, CGFloat(expected.blue)/255, accuracy: 0.00001)
++   XCTAssertEqual(a, 1)
++  }
++  anchor.updateActive(true)
++  XCTAssertTrue(cover.isHidden)
++  NotificationCenter.default.post(name: UIApplication.willResignActiveNotification, object: nil)
++  XCTAssertFalse(cover.isHidden)
++  NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
++  XCTAssertTrue(cover.isHidden)
++  anchor.removeCover()
++ }
++
+  func testOverdueTrainingBoundaries() throws {
+   let today = Calendar.current.startOfDay(for: .now)
+   var draft = TrainingDraft()
+--- a/docs/ARCHITECTURE-AUDIT.md
++++ b/docs/ARCHITECTURE-AUDIT.md
+@@ -126,3 +126,15 @@
+ ## Privacy and Duo Audit — November 4, 2026
+ 
+ [Privacy, data controls, accessibility, and Duo audit](PRIVACY-HIG-AUDIT.md) records the new P1–P9 findings. The summary/detail authentication boundary is missing; backup policy and presentation privacy are incomplete; no tracking implementation was found within static scope. These are additional findings, not a reopening of the earlier six data-integrity fixes. No application code changed during the audit.
++
++## Authentication Implementation — Partial Verification
++
++The approved authentication work adds a fail-closed store boundary, revocable storage permits, a system LocalAuthentication adapter, aggregate-only locked UI, and a window privacy shield. All 41 core tests and the unsigned Release build pass, but the denied-authentication alert test failed twice consecutively. Implementation changes stopped under the circuit breaker. The feature is **not marked complete**. See [Authentication Findings and All File Diffs](AUTHENTICATION-FINDINGS.md) for the exact failure, test-double isolation, remaining verification, and per-file patches.
++
++## Authentication Review Follow-Up
++
++Read-only evidence showed no alert in the failed capture/hierarchy; a focused core assertion confirmed failure publication and the locked state. A single root presenter now owns operation/draft alerts and derives titles from failure operations. The unchanged denial-alert assertion passes. Presentation-triggered summary loading is guarded at the shared store; two concurrent presenters and later unlocked presentations do not reload the editing session. The themed window cover passes color, inactive-attachment, and active/resign notification checks. Archive action remains Release, and a Testing archive is actively rejected by a build phase. See [Authentication Findings and All File Diffs](AUTHENTICATION-FINDINGS.md) for final results and policy/device limits.
++
++Final authentication review validation: **43 core tests and all 14 native tests passed**, with no skips or weakened assertions. The Release build passed; explicit Testing archive validation was rejected by the intended build guard. The findings report now includes all 22 edited source/test/configuration/documentation files and regenerated individual/combined diffs. Real-device authentication and full privacy-surface verification remain separate acceptance checks; immediate background locking and unsaved-editor discard remain the stated policy.
++
++Presenter review follow-up: the retained 16-configuration action render test passes. Two pending failure sources are presented sequentially and verified through binding and UI tests. All nine selected native tests pass, and a normal unsigned Release archive succeeds; Testing archive rejection remains in force. No additional view with stacked alert modifiers was found. Immediate background/manual/device-lock relocking with unsaved-editor discard remains the explicit policy. See the authentication findings addendum for coverage limits and commit-baseline provenance.
+--- /dev/null
++++ b/docs/AUTHENTICATION-FINDINGS.md
+@@ -0,0 +1,91 @@
++# Authentication Implementation Findings
++
++Reviewed November 4, 2026. **Application-level validation passed.** All 43 core tests, all 14 native tests, and the unsigned physical-device Release build passed. The former denial-alert assertion passes unchanged. Actual hardware biometrics/passcode and end-to-end privacy capture checks remain unverified.
++
++## Implemented Boundary
++
++- Normal Debug/Release use LocalAuthentication `deviceOwnerAuthentication` with device biometrics and system device-passcode fallback. No app PIN, biometric template, or successful authentication grant is persisted.
++- The locked UI exposes aggregate counts only. Names, photos, notes, measurements, certificates, saved-result details, edits, and all data-bearing tabs require authentication. Restored navigation does not bypass the gate.
++- The app store boundary checks detail/attachment/mutation access. Actor-queued writes and attachment reads use a synchronously revocable lease; admitted atomic transactions may finish, but stale completions cannot republish unlocked state.
++- Manual lock, app background, and protected-data-unavailable notifications revoke access, clear the public detailed state/draft, and cancel owned work. Authentication request identities reject stale successful callbacks. The session is shared across windows.
++- The privacy shield is window-level and opaque while inactive; lock transitions dismiss presented controllers. Its fill now resolves `privacyCover`, matching the SwiftUI cover. Scene activity updates as well as UIKit notifications prevent an inactive attachment from leaving it stuck visible.
++
++## Review Findings and Resolution
++
++| Finding | Evidence and Outcome |
++| --- | --- |
++| Missing authentication error alert | The preserved screenshot showed no alert; the hierarchy had zero alert nodes. The added core assertion proved `operationFailure` was non-nil with the expected operation/cause while state stayed locked. Two root alert modifiers were merged into one enum-driven presenter. The original native assertion now passes. Presentation changes resolved the failure; no assertion was weakened. |
++| Failure title depended on lock state | Titles now derive from the failure source/operation. Unlock failures say “Records Remain Locked”; Load Summary failures are identified as summary-load failures; draft failures retain their own title. |
++| Presentation-triggered reload | `prepareForPresentation()` consumes the initial locked/unloaded request once at the shared store. Tests exercise concurrent presenters and later appearances while unlocked, verifying generation and draft preservation. These are shared-model tests, not two physical window scenes. |
++| Cover differed from theme / initial inactivity | Native tests verify exact cover colors in light/dark, opaque alpha, initial inactive attachment, activation, and resign/active notifications. The cover is an accessibility modal while visible. |
++| Testing archive risk | Archive action is checked as Release. A build phase actively rejects a Testing archive, including an explicit command-line configuration override. Negative archive validation produced the intended guard error and no archive Info.plist. |
++| Earlier operation-failure coverage | No earlier native UI test asserted the root operation-failure alert. Previous successful functional runs did not establish alert presentation coverage. |
++
++## Background and Draft Policy
++
++**Immediate relocking remains the implemented policy.** Unsaved editor state is discarded when protected views are removed; the in-memory calculator draft is cleared and pending autosave is cancelled. Already committed data is preserved. A grace period or protected restoration of unsaved forms is a product decision still open; neither was silently introduced. Switching apps mid-entry can therefore discard uncommitted edits.
++
++Locked summary loading remains count-only at the UI/service output, but loads the private repository and can run existing journal recovery before authentication. The repository retains decrypted data internally; this is not an application-managed encrypted vault or a guarantee of memory erasure. Previously returned values cannot be retroactively revoked; future service calls are blocked and protected UI is removed.
++
++## Verification and Durable Evidence
++
++| Check | Result | Evidence |
++| --- | --- | --- |
++| Denial-state diagnostic before presentation edits | PASS; expected failure and locked state asserted | [diagnostic log](validation/authentication/review/denial-diagnostic.log) |
++| Full core suite | PASS: 43 tests | [core log](validation/authentication/review/core.log) |
++| Full native suite | PASS: 14 tests, zero failures/skips | [summary](validation/authentication/review/native-summary.json), [log](validation/authentication/review/native.log) |
++| Native coverage | Six adapter/accessibility/cover tests plus eight UI workflows: denial/relock/background, CRUD/relaunch, photo/training, calculators/history, standard/accessibility previews | [attachments](validation/authentication/review/attachments/manifest.json) |
++| Release build | PASS; unsigned physical-device compilation | [log](validation/authentication/review/release.log) |
++| Release isolation / Face ID purpose string | PASS; no test authenticator/denial flag in strings; purpose string present | [inspection](validation/authentication/review/release-isolation.txt) |
++| Testing archive rejection | PASS: expected `Testing authentication cannot be archived` error | [negative-check log](validation/authentication/review/archive-rejection.log) |
++
++The previous stopped run and its exact failing command remain in [initial partial findings](validation/authentication/review/initial-partial-findings.txt) and the original evidence directory. The read-only diagnostic and focused core test preceded presentation edits. There were no test skips or removed assertions.
++
++Reproduce normal native validation with `xcodebuild -project LeadersBook.xcodeproj -scheme LeadersBook -destination 'platform=iOS Simulator,id=042F1B65-E9EF-413F-B09B-9B6E3F191ABC' -derivedDataPath /private/tmp/leaders-auth-build -collect-test-diagnostics never CODE_SIGNING_ALLOWED=NO test`. Core validation: `swift test --scratch-path /private/tmp/leaders-auth-core`. Release: use `-configuration Release -destination 'generic/platform=iOS' -derivedDataPath /private/tmp/leaders-auth-release CODE_SIGNING_ALLOWED=NO build`.
++
++## Configuration and Remaining Device Checks
++
++The separate **Testing** configuration substitutes only the external OS authenticator. Real store/repository/filesystem gates and UI remain under test. Normal Debug and Release use the real system adapter. The normal Run action is Debug, Archive is Release, and Testing archives are rejected. A test-double success does not establish successful real biometric/passcode interaction.
++
++Remaining checks: hardware Face ID/passcode cancellation/fallback/no-passcode cases, protected-data lock behavior, actual multi-window transitions, Quick Look/camera/editor app-switcher snapshots, full VoiceOver privacy, and Duo poses/reserved regions. The cover's native component test does not establish every system-controller capture path. Backup, sharing, retention, and organizational authorization findings remain open in the privacy audit.
++
++## Every Edited File and Its Diff
++
++Diffs compare the session-start snapshot with current files. The project was untracked, so these are **not Git HEAD diffs**. The former partial patch is retained separately. Generated logs, screenshots, result summaries, and patches are evidence artifacts.
++
++[Complete unified patch](validation/authentication/authentication.patch)
++
++## Presenter and Baseline Review Addendum
++
++- The original `testActionStyleUsesRowSelectionForRenderedLabel` was **fixed and retained**, not replaced by a role-choice test. It still renders the real style with a scene-attached window across 16 selected/enabled/appearance/contrast combinations, asserting exact RGBA and selected-label contrast. It passed again in the latest [native log](validation/authentication/presenter-review/native.log).
++- Two failures from different sources are retained in their existing source slots. Operation failure has priority; the draft failure remains pending until the operation is acknowledged, then appears. Both the binding-level test and actual UI test pass this sequence. This is one slot per source, not a general FIFO for arbitrarily many failures.
++- Positive archive validation passed with `xcodebuild -project LeadersBook.xcodeproj -scheme LeadersBook -configuration Release -destination 'generic/platform=iOS' -derivedDataPath /private/tmp/leaders-auth-release -archivePath /private/tmp/leaders-auth-release-positive.xcarchive CODE_SIGNING_ALLOWED=NO archive`. [Archive log](validation/authentication/presenter-review/release-archive.log) and [properties/hash](validation/authentication/presenter-review/archive-summary.json) preserve evidence. This is an unsigned archive, not signing/distribution approval.
++- Alert scan: ContentView, FitnessView, SoldiersView, SoldierEditor, SoldierPhotoPicker, TrainingRecordEditor, and HeightWeightEditor each own one alert. The two alerts in TrainingRecordEditor.swift belong to separate view types. Nested child/parent alerts still need route-specific testing; no additional stacked modifiers on one view were found.
++- Latest broader validation passed **nine native tests**: seven adapter/presenter/cover tests and two UI workflows. The earlier full 14-test run remains historical evidence; a full run of the now-expanded 16-test suite was not repeated. The simultaneous-error fixture exists only in Testing; its flag is absent from the Release archive.
++- Immediate relocking on manual lock, protected-data lock, and ordinary backgrounding remains explicit policy. Unsaved editor discard is a known trade-off. A grace period or protected in-memory draft restoration requires a separate product decision; this review did not change it.
++- The initial local baseline commit includes this report and its diff evidence. Resolve the baseline with Git history; no remote push is part of this work. Historical session-start patches remain useful provenance, while future audits can use commit-based diffs.
++
++| File | Diff |
++| --- | --- |
++| `LeadersBook/App/DeviceAuthenticator.swift` | [Unified diff](validation/authentication/patches/LeadersBook__App__DeviceAuthenticator.swift.diff) |
++| `LeadersBook/App/LeadersBookApp.swift` | [Unified diff](validation/authentication/patches/LeadersBook__App__LeadersBookApp.swift.diff) |
++| `LeadersBook/Core/BookRepository.swift` | [Unified diff](validation/authentication/patches/LeadersBook__Core__BookRepository.swift.diff) |
++| `LeadersBook/Core/LeaderStore.swift` | [Unified diff](validation/authentication/patches/LeadersBook__Core__LeaderStore.swift.diff) |
++| `LeadersBook/Core/RecordAccess.swift` | [Unified diff](validation/authentication/patches/LeadersBook__Core__RecordAccess.swift.diff) |
++| `LeadersBook/Views/ContentView.swift` | [Unified diff](validation/authentication/patches/LeadersBook__Views__ContentView.swift.diff) |
++| `LeadersBook/Views/LockedRecordsView.swift` | [Unified diff](validation/authentication/patches/LeadersBook__Views__LockedRecordsView.swift.diff) |
++| `LeadersBook/Views/PrivacyShield.swift` | [Unified diff](validation/authentication/patches/LeadersBook__Views__PrivacyShield.swift.diff) |
++| `LeadersBook/Views/SoldiersView.swift` | [Unified diff](validation/authentication/patches/LeadersBook__Views__SoldiersView.swift.diff) |
++| `LeadersBook.xcodeproj/project.pbxproj` | [Unified diff](validation/authentication/patches/LeadersBook.xcodeproj__project.pbxproj.diff) |
++| `LeadersBook.xcodeproj/xcshareddata/xcschemes/LeadersBook.xcscheme` | [Unified diff](validation/authentication/patches/LeadersBook.xcodeproj__xcshareddata__xcschemes__LeadersBook.xcscheme.diff) |
++| `Tests/LeadersBookCoreTests/AttachmentTests.swift` | [Unified diff](validation/authentication/patches/Tests__LeadersBookCoreTests__AttachmentTests.swift.diff) |
++| `Tests/LeadersBookCoreTests/GovernanceTests.swift` | [Unified diff](validation/authentication/patches/Tests__LeadersBookCoreTests__GovernanceTests.swift.diff) |
++| `Tests/LeadersBookCoreTests/LeaderStoreTests.swift` | [Unified diff](validation/authentication/patches/Tests__LeadersBookCoreTests__LeaderStoreTests.swift.diff) |
++| `Tests/LeadersBookCoreTests/RecordAccessTests.swift` | [Unified diff](validation/authentication/patches/Tests__LeadersBookCoreTests__RecordAccessTests.swift.diff) |
++| `Tests/LeadersBookCoreTests/RecoveryTests.swift` | [Unified diff](validation/authentication/patches/Tests__LeadersBookCoreTests__RecoveryTests.swift.diff) |
++| `Tests/LeadersBookCoreTests/TestSupport.swift` | [Unified diff](validation/authentication/patches/Tests__LeadersBookCoreTests__TestSupport.swift.diff) |
++| `Tests/LeadersBookUITests/LeadersBookUITests.swift` | [Unified diff](validation/authentication/patches/Tests__LeadersBookUITests__LeadersBookUITests.swift.diff) |
++| `Tests/ThemeAdapterTests/ThemeAdapterTests.swift` | [Unified diff](validation/authentication/patches/Tests__ThemeAdapterTests__ThemeAdapterTests.swift.diff) |
++| `docs/ARCHITECTURE-AUDIT.md` | [Unified diff](validation/authentication/patches/docs__ARCHITECTURE-AUDIT.md.diff) |
++| `docs/AUTHENTICATION-FINDINGS.md` | [Unified diff](validation/authentication/patches/docs__AUTHENTICATION-FINDINGS.md.diff) |
++| `docs/PRIVACY-HIG-AUDIT.md` | [Unified diff](validation/authentication/patches/docs__PRIVACY-HIG-AUDIT.md.diff) |
+--- a/docs/PRIVACY-HIG-AUDIT.md
++++ b/docs/PRIVACY-HIG-AUDIT.md
+@@ -72,3 +72,9 @@
+ 4. Complete Duo pose/reserved-region and full accessibility/device-dark-mode validation on the required toolchain. Record results rather than inferring compliance from iPad screenshots.
+ 
+ The audit does not establish App Store approval, complete WCAG conformance, or Army/DoD/CUI/PII handling authorization. Those have separate distribution, accessibility, and organizational acceptance requirements. [Apple privacy HIG](https://developer.apple.com/design/human-interface-guidelines/privacy).
++
++## Authentication Follow-Up
++
++Authentication controls are now implemented but only partially verified; the native denial-alert test remains failing. P1/P3 are not closed. [Authentication Findings and All File Diffs](AUTHENTICATION-FINDINGS.md) supersedes the earlier implementation-status statements for authentication only. Backup, sharing, device/OS verification, and other audit findings remain open.
++
++Authentication review update: the denial-alert assertion now passes after merging root presenters. The earlier failure is retained as historical evidence; consult [current findings](AUTHENTICATION-FINDINGS.md) for app-level validation and outstanding hardware/privacy-surface checks. Immediate background relocking remains the implemented policy; a grace period or unsaved-editor restoration has not been introduced.

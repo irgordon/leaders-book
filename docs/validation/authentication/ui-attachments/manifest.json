@@ -1,0 +1,161 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "08976228-4712-4664-9DA2-4E368224275C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Locked Summary — Manual Lock_0_4B5CC043-9A51-4F35-AB18-2D2EF8AEDEC7.png",
+        "timestamp" : 1793828956.091
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "B70B1DFD-A195-4DDB-94E1-75AD5A813D28",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-11-04 at 16.49.14",
+        "timestamp" : 1793828954.639
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "21A04DC3-985E-4F53-97B8-BA817AE9845D",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-04 at 16.49.14",
+        "timestamp" : 1793828954.925
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "CD9DC5AE-BF67-4B86-AD9B-79C75E0BAEC0",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-11-04 at 16.49.13",
+        "timestamp" : 1793828953.152
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "EDB33EEC-9215-4EE5-8A46-43560B75DCE9",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-04 at 16.49.13",
+        "timestamp" : 1793828953.436
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "79A53166-3564-4570-BC15-E73F253E1A42",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-11-04 at 16.49.09",
+        "timestamp" : 1793828949.534
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "A6AD4945-1A15-4CF6-9C5A-D244C9EC7E04",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-04 at 16.49.09",
+        "timestamp" : 1793828949.835
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "24BDB149-D46D-469E-AFC1-8E3CAC32A56A.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Locked Summary — Denied Authentication_0_78293575-20DA-495D-BFA7-6F9820C09140.png",
+        "timestamp" : 1793828944.331
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "8970D69D-6CF2-4B45-B776-68CF0BBA23A5.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "App UI hierarchy for com.leadersbook_0_0C9BE618-9D1F-40F9-BD20-29E92BCC3149.app",
+        "timestamp" : 1793828944.221
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "7D8A6436-7809-41E9-813E-42197AE67478",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-11-04 at 16.49.04",
+        "timestamp" : 1793828944.221
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "CB36F4A8-1268-4AC5-B257-94279EA02CB0.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Records Remain Locked\" Alert`_0_0DD9D2BC-F4BA-4EDB-B913-3637E7861E9E.txt",
+        "timestamp" : 1793828944.196
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "AC4A6E17-03ED-4638-8486-CB8B7EF1A870.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Records Remain Locked\" Alert`_0_101E4F32-8ABB-4661-BFF3-520AAA06D1A3.txt",
+        "timestamp" : 1793828943.255
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "90910EEE-104C-4401-A616-7E10EBF3D43A.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Records Remain Locked\" Alert`_0_AAA4B3D5-B937-4F38-84ED-1B9E67FE3D6F.txt",
+        "timestamp" : 1793828942.196
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "A3995FD8-7BFC-4C50-9ECE-D68AFDEE7347.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Records Remain Locked\" Alert`_0_AE6E0E99-DBA2-4C63-8601-EF446EEB5C39.txt",
+        "timestamp" : 1793828941.215
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "A8D876C4-0491-4D22-8920-9477DF984BBE.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Records Remain Locked\" Alert`_0_9DA66381-4D57-4E9A-BE05-1C7D3BF010C9.txt",
+        "timestamp" : 1793828940.258
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "50F9E21D-BDE9-4BB5-926B-DDE219C219E2",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-04 at 16.48.59",
+        "timestamp" : 1793828939.166
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "A3C8A96E-567A-4472-8CC2-51409DA7342E.mp4",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Screen Recording 2026-11-04 at 16.48.54.mp4",
+        "timestamp" : 1793828934.569
+      }
+    ],
+    "testIdentifier" : "LeadersBookUITests/testLockedSummaryAndRejectedAuthentication()",
+    "testIdentifierURL" : "test://com.apple.xcode/LeadersBook/LeadersBookUITests/LeadersBookUITests/testLockedSummaryAndRejectedAuthentication"
+  }
+]

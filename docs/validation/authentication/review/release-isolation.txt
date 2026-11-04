@@ -1,0 +1,3 @@
+PASS: test authenticator and denial flag absent from Release strings.
+PASS: NSFaceIDUsageDescription present.
+SHA-256: 04517b67002ba234a307c6e3602156b5991791be1ea4da2324c88a52a410343d

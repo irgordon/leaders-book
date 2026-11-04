@@ -1,0 +1,31 @@
+--- a/LeadersBook/Core/BookRepository.swift
++++ b/LeadersBook/Core/BookRepository.swift
+@@ -180,11 +180,17 @@
+         case .unopened: throw RecordError.recoveryRequired
+         }
+     }
+-    func readAttachment(_ attachment: RecordAttachment) throws -> ImportedRecordFile {
+-        do { return try ImportedRecordFile(attachment: attachment, data: Data(contentsOf: attachmentURL(attachment))) }
++    func readAttachment(_ attachment: RecordAttachment, permit: RecordAccessLease) throws -> ImportedRecordFile {
++        try permit.check()
++        do {
++            let file = try ImportedRecordFile(attachment: attachment, data: Data(contentsOf: attachmentURL(attachment)))
++            try permit.check()
++            return file
++        }
+         catch { throw AppFailure("Read Attachment \(attachment.id)", underlying: error) }
+     }
+-    func apply(_ mutation: BookMutation) throws -> LoadedBook {
++    func apply(_ mutation: BookMutation, permit: RecordAccessLease) throws -> LoadedBook {
++        try permit.check()
+         try Task.checkCancellation()
+         let (current, persistedData) = try currentBook()
+         guard case .clean = current.cleanup else { throw RecordError.recoveryRequired }
+@@ -237,6 +243,7 @@
+         let nextDTO = BookDTO(candidate, transaction: id)
+         let nextData = try JSONEncoder().encode(nextDTO)
+         try Task.checkCancellation()
++        try permit.check()
+         try write(JSONEncoder().encode(journal), to: journalURL)
+         do {
+             for file in uploads { try write(file.data, to: attachmentURL(file.attachment)) }

@@ -1,0 +1,4 @@
+Query chain:
+ →Find: Target Application 'com.leadersbook.app'
+  ↪︎Find: Descendants matching type Alert
+    ↪︎Find: Elements matching predicate '"Records Remain Locked" IN identifiers'

@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-04",
+  "report_sha256": "ed9e4ca3533ea089d62b5c76d9d65e727578b636b0e26b1e274dab52fb7fab95",
+  "inventory_sha256": "8b3a5864477f75cc6f4cda25f355af91be59a1e9712bb80168a9e73d271484a7",
+  "fresh_checks": [
+    "Privacy plist syntax: passed",
+    "Xcode 27.0 confirmed",
+    "No Duo simulator type installed"
+  ],
+  "not_run": [
+    "Hardware authentication/file-protection/backup restore",
+    "Network packet capture",
+    "Full accessibility session"
+  ]
+}

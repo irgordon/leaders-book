@@ -1,0 +1,11 @@
+--- a/Tests/LeadersBookCoreTests/RecoveryTests.swift
++++ b/Tests/LeadersBookCoreTests/RecoveryTests.swift
+@@ -59,7 +59,7 @@
+         _ = try await repository.load()
+         let photo = try RecordAttachment(name: "Referenced.jpg", kind: .jpeg)
+         var draft = SoldierDraft(name: "Example"); draft.photo = photo
+-        _ = try await repository.apply(.saveSoldier(try Soldier(draft: draft), expectedRevision: draft.revision, [try ImportedRecordFile(attachment: photo, data: jpegFixture)]))
++        _ = try await repository.apply(.saveSoldier(try Soldier(draft: draft), expectedRevision: draft.revision, [try ImportedRecordFile(attachment: photo, data: jpegFixture)]), permit: RecordAccessLease())
+         try journal(at: url, id: UUID(), new: [photo], removed: [])
+         let fresh = BookRepository(fileURL: url, scorer: scorer)
+         await #expect(throws: AppFailure.self) { try await fresh.load() }

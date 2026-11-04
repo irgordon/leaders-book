@@ -1,0 +1,147 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project LeadersBook.xcodeproj -scheme LeadersBook -destination "platform=iOS Simulator,id=042F1B65-E9EF-413F-B09B-9B6E3F191ABC" -derivedDataPath /private/tmp/leaders-theme-adopted-build -resultBundlePath /private/tmp/leaders-action-adapter-final "-only-testing:ThemeAdapterTests" CODE_SIGNING_ALLOWED=NO test
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+
+Writing result bundle at path:
+	/private/tmp/leaders-action-adapter-final
+
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (3 targets)
+    Target 'LeadersBookUITests' in project 'LeadersBook'
+        ➜ Explicit dependency on target 'LeadersBook' in project 'LeadersBook'
+    Target 'ThemeAdapterTests' in project 'LeadersBook'
+        ➜ Explicit dependency on target 'LeadersBook' in project 'LeadersBook'
+    Target 'LeadersBook' in project 'LeadersBook' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --print-asset-tag-combinations --output-format xml1 /Users/godzilla/Documents/ChatGPT/Army App - Leaders Book/LeadersBook/Resources/Assets.xcassets
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+Build description signature: bb83e15d093604efa93cca5a5bc5917d
+Build description path: /tmp/leaders-theme-adopted-build/Build/Intermediates.noindex/XCBuildData/bb83e15d093604efa93cca5a5bc5917d.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk /tmp/leaders-theme-adopted-build/SDKStatCaches.noindex/iphonesimulator27.0-24A430-8dc58220667be655e1bcc261a7455254.sdkstatcache
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book/LeadersBook.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -o /tmp/leaders-theme-adopted-build/SDKStatCaches.noindex/iphonesimulator27.0-24A430-8dc58220667be655e1bcc261a7455254.sdkstatcache
+
+ProcessInfoPlistFile /tmp/leaders-theme-adopted-build/Build/Products/Debug-iphonesimulator/LeadersBook.app/Info.plist /tmp/leaders-theme-adopted-build/Build/Intermediates.noindex/LeadersBook.build/Debug-iphonesimulator/LeadersBook.build/empty-LeadersBook.plist (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-infoPlistUtility /tmp/leaders-theme-adopted-build/Build/Intermediates.noindex/LeadersBook.build/Debug-iphonesimulator/LeadersBook.build/empty-LeadersBook.plist -producttype com.apple.product-type.application -genpkginfo /tmp/leaders-theme-adopted-build/Build/Products/Debug-iphonesimulator/LeadersBook.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /tmp/leaders-theme-adopted-build/Build/Intermediates.noindex/LeadersBook.build/Debug-iphonesimulator/LeadersBook.build/assetcatalog_generated_info.plist -o /tmp/leaders-theme-adopted-build/Build/Products/Debug-iphonesimulator/LeadersBook.app/Info.plist
+
+CopySwiftLibs /tmp/leaders-theme-adopted-build/Build/Products/Debug-iphonesimulator/LeadersBook.app (in target 'LeadersBook' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /tmp/leaders-theme-adopted-build/Build/Products/Debug-iphonesimulator/LeadersBook.app/LeadersBook.debug.dylib --scan-folder /tmp/leaders-theme-adopted-build/Build/Products/Debug-iphonesimulator/LeadersBook.app/Frameworks --scan-folder /tmp/leaders-theme-adopted-build/Build/Products/Debug-iphonesimulator/LeadersBook.app/PlugIns --scan-folder /tmp/leaders-theme-adopted-build/Build/Products/Debug-iphonesimulator/LeadersBook.app/SystemExtensions --scan-folder /tmp/leaders-theme-adopted-build/Build/Products/Debug-iphonesimulator/LeadersBook.app/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /tmp/leaders-theme-adopted-build/Build/Products/Debug-iphonesimulator/LeadersBook.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /tmp/leaders-theme-adopted-build/Build/Intermediates.noindex/LeadersBook.build/Debug-iphonesimulator/LeadersBook.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+Ignoring --strip-bitcode because --sign was not passed
+
+ProcessInfoPlistFile /tmp/leaders-theme-adopted-build/Build/Products/Debug-iphonesimulator/LeadersBook.app/PlugIns/ThemeAdapterTests.xctest/Info.plist /tmp/leaders-theme-adopted-build/Build/Intermediates.noindex/LeadersBook.build/Debug-iphonesimulator/ThemeAdapterTests.build/empty-ThemeAdapterTests.plist (in target 'ThemeAdapterTests' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-infoPlistUtility /tmp/leaders-theme-adopted-build/Build/Intermediates.noindex/LeadersBook.build/Debug-iphonesimulator/ThemeAdapterTests.build/empty-ThemeAdapterTests.plist -producttype com.apple.product-type.bundle.unit-test -expandbuildsettings -format binary -platform iphonesimulator -o /tmp/leaders-theme-adopted-build/Build/Products/Debug-iphonesimulator/LeadersBook.app/PlugIns/ThemeAdapterTests.xctest/Info.plist
+
+CopySwiftLibs /tmp/leaders-theme-adopted-build/Build/Products/Debug-iphonesimulator/LeadersBook.app/PlugIns/ThemeAdapterTests.xctest (in target 'ThemeAdapterTests' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /tmp/leaders-theme-adopted-build/Build/Products/Debug-iphonesimulator/LeadersBook.app/PlugIns/ThemeAdapterTests.xctest/ThemeAdapterTests --scan-folder /tmp/leaders-theme-adopted-build/Build/Products/Debug-iphonesimulator/LeadersBook.app/PlugIns/ThemeAdapterTests.xctest/Frameworks --scan-folder /tmp/leaders-theme-adopted-build/Build/Products/Debug-iphonesimulator/LeadersBook.app/PlugIns/ThemeAdapterTests.xctest/PlugIns --scan-folder /tmp/leaders-theme-adopted-build/Build/Products/Debug-iphonesimulator/LeadersBook.app/PlugIns/ThemeAdapterTests.xctest/SystemExtensions --scan-folder /tmp/leaders-theme-adopted-build/Build/Products/Debug-iphonesimulator/LeadersBook.app/PlugIns/ThemeAdapterTests.xctest/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /tmp/leaders-theme-adopted-build/Build/Products/Debug-iphonesimulator/LeadersBook.app/PlugIns/ThemeAdapterTests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /tmp/leaders-theme-adopted-build/Build/Intermediates.noindex/LeadersBook.build/Debug-iphonesimulator/ThemeAdapterTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+Ignoring --strip-bitcode because --sign was not passed
+
+ProcessInfoPlistFile /tmp/leaders-theme-adopted-build/Build/Products/Debug-iphonesimulator/LeadersBookUITests-Runner.app/PlugIns/LeadersBookUITests.xctest/Info.plist /tmp/leaders-theme-adopted-build/Build/Intermediates.noindex/LeadersBook.build/Debug-iphonesimulator/LeadersBookUITests.build/empty-LeadersBookUITests.plist (in target 'LeadersBookUITests' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-infoPlistUtility /tmp/leaders-theme-adopted-build/Build/Intermediates.noindex/LeadersBook.build/Debug-iphonesimulator/LeadersBookUITests.build/empty-LeadersBookUITests.plist -producttype com.apple.product-type.bundle.ui-testing -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /tmp/leaders-theme-adopted-build/Build/Intermediates.noindex/LeadersBook.build/Debug-iphonesimulator/LeadersBookUITests.build/ProductTypeInfoPlistAdditions.plist -o /tmp/leaders-theme-adopted-build/Build/Products/Debug-iphonesimulator/LeadersBookUITests-Runner.app/PlugIns/LeadersBookUITests.xctest/Info.plist
+
+CopySwiftLibs /tmp/leaders-theme-adopted-build/Build/Products/Debug-iphonesimulator/LeadersBookUITests-Runner.app/PlugIns/LeadersBookUITests.xctest (in target 'LeadersBookUITests' from project 'LeadersBook')
+    cd /Users/godzilla/Documents/ChatGPT/Army\ App\ -\ Leaders\ Book
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /tmp/leaders-theme-adopted-build/Build/Products/Debug-iphonesimulator/LeadersBookUITests-Runner.app/PlugIns/LeadersBookUITests.xctest/LeadersBookUITests --scan-folder /tmp/leaders-theme-adopted-build/Build/Products/Debug-iphonesimulator/LeadersBookUITests-Runner.app/PlugIns/LeadersBookUITests.xctest/Frameworks --scan-folder /tmp/leaders-theme-adopted-build/Build/Products/Debug-iphonesimulator/LeadersBookUITests-Runner.app/PlugIns/LeadersBookUITests.xctest/PlugIns --scan-folder /tmp/leaders-theme-adopted-build/Build/Products/Debug-iphonesimulator/LeadersBookUITests-Runner.app/PlugIns/LeadersBookUITests.xctest/SystemExtensions --scan-folder /tmp/leaders-theme-adopted-build/Build/Products/Debug-iphonesimulator/LeadersBookUITests-Runner.app/PlugIns/LeadersBookUITests.xctest/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /tmp/leaders-theme-adopted-build/Build/Products/Debug-iphonesimulator/LeadersBookUITests-Runner.app/PlugIns/LeadersBookUITests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /tmp/leaders-theme-adopted-build/Build/Intermediates.noindex/LeadersBook.build/Debug-iphonesimulator/LeadersBookUITests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+Ignoring --strip-bitcode because --sign was not passed
+
+PruneExplicitPrecompiledModules /tmp/leaders-theme-adopted-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /tmp/leaders-theme-adopted-build/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /tmp/leaders-theme-adopted-build/SDKExplicitPrecompiledModules
+
+2026-11-04 00:03:04.235505-0500 LeadersBook[24614:11469643] [API] cannot add handler to 0 from 0 - dropping
+2026-11-04 00:03:04.235605-0500 LeadersBook[24614:11469643] [API] cannot add handler to 0 from 0 - dropping
+2026-11-04 00:03:04.236925-0500 LeadersBook[24614:11469643] [API] cannot add handler to 0 from 0 - dropping
+2026-11-04 00:03:04.236981-0500 LeadersBook[24614:11469643] [API] cannot add handler to 0 from 0 - dropping
+2026-11-04 00:03:04.237023-0500 LeadersBook[24614:11469643] [API] cannot add handler to 0 from 0 - dropping
+2026-11-04 00:03:04.237059-0500 LeadersBook[24614:11469643] [API] cannot add handler to 0 from 0 - dropping
+2026-11-04 00:03:04.244977-0500 LeadersBook[24614:11469643] [XPCErrors] non-launching port is incompatible with service identifier "com.apple.PointerUI.pointeruid.default-service"
+2026-11-04 00:03:04.292167-0500 LeadersBook[24614:11469643] [API] cannot add handler to 0 from 0 - dropping
+2026-11-04 00:03:04.292291-0500 LeadersBook[24614:11469643] [API] cannot add handler to 0 from 0 - dropping
+Test Suite 'All tests' started at 2026-11-04 00:03:04.571.
+Test Suite 'ThemeAdapterTests.xctest' started at 2026-11-04 00:03:04.572.
+Test Suite 'ThemeAdapterTests' started at 2026-11-04 00:03:04.572.
+Test Case '-[ThemeAdapterTests.ThemeAdapterTests testActionStyleUsesRowSelectionForRenderedLabel]' started.
+2026-11-04 00:03:04.587558-0500 LeadersBook[24614:11469643] [API] cannot add handler to 0 from 0 - dropping
+light-standard-selected-false-enabled-false: nontransparent=5184/5184, maxAlpha=255, drawHierarchy=true, sceneAttached=true, connectedScenes=1, actualStyle=1, actualContrast=0
+2026-11-04 00:03:04.719999-0500 LeadersBook[24614:11469643] [API] cannot add handler to 0 from 0 - dropping
+light-standard-selected-false-enabled-true: nontransparent=5184/5184, maxAlpha=255, drawHierarchy=true, sceneAttached=true, connectedScenes=1, actualStyle=1, actualContrast=0
+2026-11-04 00:03:04.853339-0500 LeadersBook[24614:11469643] [API] cannot add handler to 0 from 0 - dropping
+light-standard-selected-true-enabled-false: nontransparent=5184/5184, maxAlpha=255, drawHierarchy=true, sceneAttached=true, connectedScenes=1, actualStyle=1, actualContrast=0
+2026-11-04 00:03:04.986647-0500 LeadersBook[24614:11469643] [API] cannot add handler to 0 from 0 - dropping
+light-standard-selected-true-enabled-true: nontransparent=5184/5184, maxAlpha=255, drawHierarchy=true, sceneAttached=true, connectedScenes=1, actualStyle=1, actualContrast=0
+2026-11-04 00:03:05.119731-0500 LeadersBook[24614:11469643] [API] cannot add handler to 0 from 0 - dropping
+light-increased-selected-false-enabled-false: nontransparent=5184/5184, maxAlpha=255, drawHierarchy=true, sceneAttached=true, connectedScenes=1, actualStyle=1, actualContrast=1
+2026-11-04 00:03:05.253080-0500 LeadersBook[24614:11469643] [API] cannot add handler to 0 from 0 - dropping
+light-increased-selected-false-enabled-true: nontransparent=5184/5184, maxAlpha=255, drawHierarchy=true, sceneAttached=true, connectedScenes=1, actualStyle=1, actualContrast=1
+2026-11-04 00:03:05.386414-0500 LeadersBook[24614:11469643] [API] cannot add handler to 0 from 0 - dropping
+light-increased-selected-true-enabled-false: nontransparent=5184/5184, maxAlpha=255, drawHierarchy=true, sceneAttached=true, connectedScenes=1, actualStyle=1, actualContrast=1
+2026-11-04 00:03:05.503255-0500 LeadersBook[24614:11469643] [API] cannot add handler to 0 from 0 - dropping
+light-increased-selected-true-enabled-true: nontransparent=5184/5184, maxAlpha=255, drawHierarchy=true, sceneAttached=true, connectedScenes=1, actualStyle=1, actualContrast=1
+2026-11-04 00:03:05.636394-0500 LeadersBook[24614:11469643] [API] cannot add handler to 0 from 0 - dropping
+dark-standard-selected-false-enabled-false: nontransparent=5184/5184, maxAlpha=255, drawHierarchy=true, sceneAttached=true, connectedScenes=1, actualStyle=2, actualContrast=0
+2026-11-04 00:03:05.769727-0500 LeadersBook[24614:11469643] [API] cannot add handler to 0 from 0 - dropping
+dark-standard-selected-false-enabled-true: nontransparent=5184/5184, maxAlpha=255, drawHierarchy=true, sceneAttached=true, connectedScenes=1, actualStyle=2, actualContrast=0
+2026-11-04 00:03:05.903049-0500 LeadersBook[24614:11469643] [API] cannot add handler to 0 from 0 - dropping
+dark-standard-selected-true-enabled-false: nontransparent=5184/5184, maxAlpha=255, drawHierarchy=true, sceneAttached=true, connectedScenes=1, actualStyle=2, actualContrast=0
+2026-11-04 00:03:06.036416-0500 LeadersBook[24614:11469643] [API] cannot add handler to 0 from 0 - dropping
+dark-standard-selected-true-enabled-true: nontransparent=5184/5184, maxAlpha=255, drawHierarchy=true, sceneAttached=true, connectedScenes=1, actualStyle=2, actualContrast=0
+2026-11-04 00:03:06.169781-0500 LeadersBook[24614:11469643] [API] cannot add handler to 0 from 0 - dropping
+dark-increased-selected-false-enabled-false: nontransparent=5184/5184, maxAlpha=255, drawHierarchy=true, sceneAttached=true, connectedScenes=1, actualStyle=2, actualContrast=1
+2026-11-04 00:03:06.303084-0500 LeadersBook[24614:11469643] [API] cannot add handler to 0 from 0 - dropping
+dark-increased-selected-false-enabled-true: nontransparent=5184/5184, maxAlpha=255, drawHierarchy=true, sceneAttached=true, connectedScenes=1, actualStyle=2, actualContrast=1
+2026-11-04 00:03:06.453107-0500 LeadersBook[24614:11469643] [API] cannot add handler to 0 from 0 - dropping
+dark-increased-selected-true-enabled-false: nontransparent=5184/5184, maxAlpha=255, drawHierarchy=true, sceneAttached=true, connectedScenes=1, actualStyle=2, actualContrast=1
+2026-11-04 00:03:06.636498-0500 LeadersBook[24614:11469643] [API] cannot add handler to 0 from 0 - dropping
+dark-increased-selected-true-enabled-true: nontransparent=5184/5184, maxAlpha=255, drawHierarchy=true, sceneAttached=true, connectedScenes=1, actualStyle=2, actualContrast=1
+Test Case '-[ThemeAdapterTests.ThemeAdapterTests testActionStyleUsesRowSelectionForRenderedLabel]' passed (2.205 seconds).
+Test Case '-[ThemeAdapterTests.ThemeAdapterTests testActualSwiftUIColorAdapterResolvesAllTraitCombinations]' started.
+Test Case '-[ThemeAdapterTests.ThemeAdapterTests testActualSwiftUIColorAdapterResolvesAllTraitCombinations]' passed (0.004 seconds).
+Test Case '-[ThemeAdapterTests.ThemeAdapterTests testBodyFontRespondsToAccessibilityCategory]' started.
+Test Case '-[ThemeAdapterTests.ThemeAdapterTests testBodyFontRespondsToAccessibilityCategory]' passed (0.001 seconds).
+Test Suite 'ThemeAdapterTests' passed at 2026-11-04 00:03:06.784.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 2.209 (2.212) seconds
+Test Suite 'ThemeAdapterTests.xctest' passed at 2026-11-04 00:03:06.784.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 2.209 (2.212) seconds
+Test Suite 'All tests' passed at 2026-11-04 00:03:06.784.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 2.209 (2.213) seconds
+2026-11-04 00:03:07.059 xcodebuild[24595:11469204] [MT] IDETestOperationsObserverDebug: 5.912 elapsed -- Testing started completed.
+2026-11-04 00:03:07.059 xcodebuild[24595:11469204] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-04 00:03:07.059 xcodebuild[24595:11469204] [MT] IDETestOperationsObserverDebug: 5.912 sec, +5.912 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/leaders-action-adapter-final
+
+** TEST SUCCEEDED **
+
+Testing started

@@ -1,0 +1,121 @@
+--- /dev/null
++++ b/Tests/LeadersBookCoreTests/RecordAccessTests.swift
+@@ -0,0 +1,118 @@
++import Foundation
++import Testing
++@testable import LeadersBookCore
++
++@MainActor
++private final class DeferredAuthenticator: RecordAuthenticating {
++    var continuation: CheckedContinuation<Void, Error>?
++    var cancelled = false
++    func authenticate() async throws {
++        try await withCheckedThrowingContinuation { continuation = $0 }
++    }
++    func cancel() { cancelled = true }
++}
++
++@MainActor
++struct RecordAccessTests {
++    @Test func unavailableAuthenticationFailsClosed() async throws {
++        let store = LeaderStore(fileURL: fixtureFile(), scorer: try AFTScoring())
++        await #expect(throws: RecordAccessError.unavailable) { try await store.unlock() }
++        #expect(!store.isUnlocked)
++        let failure = try #require(store.operationFailure)
++        #expect(failure.operation == "Unlock Records")
++        #expect(failure.underlying as? RecordAccessError == .unavailable)
++        guard case .locked = store.state else { Issue.record("Denied authentication changed lock state"); return }
++        #expect(throws: RecordAccessError.locked) { try store.records }
++    }
++
++    @Test func twoPresentersDoNotReloadAnUnlockedSession() async throws {
++        let url = fixtureFile(); defer { cleanFixture(url) }
++        let store = LeaderStore(fileURL: url, scorer: try AFTScoring(), authenticator: TestAuthenticator())
++        async let first: Void = store.prepareForPresentation()
++        async let second: Void = store.prepareForPresentation()
++        _ = await (first, second)
++        try await store.unlock()
++        let before = try store.records
++        store.updateDraft(maximumDraft())
++        await store.prepareForPresentation()
++        await store.prepareForPresentation()
++        #expect(store.isUnlocked)
++        #expect((try store.records).generation == before.generation)
++        #expect(before.generation == 2)
++        #expect(store.draft.values == maximumDraft().values)
++        store.draftSave.cancel()
++    }
++
++    @Test func archiveConfigurationExcludesTestAuthentication() throws {
++        let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
++        let scheme = try String(contentsOf: root.appending(path: "LeadersBook.xcodeproj/xcshareddata/xcschemes/LeadersBook.xcscheme"), encoding: .utf8)
++        #expect(scheme.contains("<ArchiveAction buildConfiguration=\"Release\""))
++    }
++
++    @Test func lockedRoutesRejectAccessAndPreserveRecords() async throws {
++        let url = fixtureFile(); defer { cleanFixture(url) }
++        let store = try await openStore(url)
++        let attachment = try RecordAttachment(name: "Private.jpg", kind: .jpeg)
++        var soldier = SoldierDraft(name: "Private Identity")
++        soldier.photo = attachment
++        try await store.saveSoldier(soldier, importing: [try ImportedRecordFile(attachment: attachment, data: jpegFixture)])
++        let before = try Data(contentsOf: url)
++        store.lock()
++        guard case .locked(let summary) = store.state else { Issue.record("Expected locked summary"); return }
++        #expect(summary == LockedSummary(soldiers: 1, results: 0))
++        #expect(throws: RecordAccessError.locked) { try store.records }
++        #expect(throws: RecordAccessError.locked) { try store.attachmentURL(attachment) }
++        await #expect(throws: RecordAccessError.locked) { try await store.readAttachment(attachment) }
++        await #expect(throws: RecordAccessError.locked) { try await store.saveSoldier(soldier) }
++        await #expect(throws: RecordAccessError.locked) { try await store.deleteSoldier(id: soldier.id) }
++        await #expect(throws: RecordAccessError.locked) { try await store.saveDraft(maximumDraft()) }
++        await #expect(throws: RecordAccessError.locked) { try await store.saveResult() }
++        await #expect(throws: RecordAccessError.locked) { try await store.deleteResults(ids: []) }
++        await #expect(throws: RecordAccessError.locked) { try await store.recoverAttachments() }
++        store.updateDraft(maximumDraft())
++        #expect(store.draft.values.isEmpty)
++        await store.reload()
++        guard case .locked = store.state else { Issue.record("Reload bypassed authentication"); return }
++        #expect(try Data(contentsOf: url) == before)
++        try await store.unlock()
++        #expect((try store.records).soldiers.first?.name == "Private Identity")
++        #expect(try Data(contentsOf: url) == before)
++    }
++
++    @Test func staleAuthenticationCannotUnlockAfterLock() async throws {
++        let url = fixtureFile(); defer { cleanFixture(url) }
++        let authenticator = DeferredAuthenticator()
++        let store = LeaderStore(fileURL: url, scorer: try AFTScoring(), authenticator: authenticator)
++        let task = Task { try await store.unlock() }
++        defer {
++            task.cancel()
++            if let pending = authenticator.continuation {
++                authenticator.continuation = nil
++                pending.resume(throwing: CancellationError())
++            }
++        }
++        for _ in 0..<100 where authenticator.continuation == nil { await Task.yield() }
++        let completion = try #require(authenticator.continuation)
++        store.lock()
++        authenticator.continuation = nil
++        completion.resume()
++        await #expect(throws: RecordAccessError.superseded) { try await task.value }
++        #expect(authenticator.cancelled)
++        #expect(!store.isUnlocked)
++    }
++
++    @Test func revokedLeasePreventsQueuedStorageAccess() async throws {
++        let url = fixtureFile(); defer { cleanFixture(url) }
++        let repository = BookRepository(fileURL: url, scorer: try AFTScoring())
++        _ = try await repository.load()
++        let lease = RecordAccessLease()
++        lease.revoke()
++        let soldier = try Soldier(draft: SoldierDraft(name: "Blocked"))
++        await #expect(throws: RecordAccessError.locked) {
++            try await repository.apply(.saveSoldier(soldier, expectedRevision: nil, []), permit: lease)
++        }
++        let attachment = try RecordAttachment(name: "Blocked.jpg", kind: .jpeg)
++        await #expect(throws: RecordAccessError.locked) { try await repository.readAttachment(attachment, permit: lease) }
++        #expect(!FileManager.default.fileExists(atPath: url.path))
++    }
++}

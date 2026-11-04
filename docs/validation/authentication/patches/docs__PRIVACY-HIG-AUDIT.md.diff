@@ -1,0 +1,12 @@
+--- a/docs/PRIVACY-HIG-AUDIT.md
++++ b/docs/PRIVACY-HIG-AUDIT.md
+@@ -72,3 +72,9 @@
+ 4. Complete Duo pose/reserved-region and full accessibility/device-dark-mode validation on the required toolchain. Record results rather than inferring compliance from iPad screenshots.
+ 
+ The audit does not establish App Store approval, complete WCAG conformance, or Army/DoD/CUI/PII handling authorization. Those have separate distribution, accessibility, and organizational acceptance requirements. [Apple privacy HIG](https://developer.apple.com/design/human-interface-guidelines/privacy).
++
++## Authentication Follow-Up
++
++Authentication controls are now implemented but only partially verified; the native denial-alert test remains failing. P1/P3 are not closed. [Authentication Findings and All File Diffs](AUTHENTICATION-FINDINGS.md) supersedes the earlier implementation-status statements for authentication only. Backup, sharing, device/OS verification, and other audit findings remain open.
++
++Authentication review update: the denial-alert assertion now passes after merging root presenters. The earlier failure is retained as historical evidence; consult [current findings](AUTHENTICATION-FINDINGS.md) for app-level validation and outstanding hardware/privacy-surface checks. Immediate background relocking remains the implemented policy; a grace period or unsaved-editor restoration has not been introduced.

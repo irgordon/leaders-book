@@ -1,0 +1,84 @@
+--- a/LeadersBook/Views/ContentView.swift
++++ b/LeadersBook/Views/ContentView.swift
+@@ -7,9 +7,32 @@
+     @State private var recoveryOperation = OwnedOperation()
+     @Environment(\.scenePhase) private var scenePhase
+ 
++    enum PresentedFailure: Identifiable {
++        case operation(AppFailure), draft(AppFailure)
++        var id: UUID { failure.id }
++        var failure: AppFailure { switch self { case .operation(let value), .draft(let value): value } }
++        var title: String {
++            switch self {
++            case .draft: "Draft Not Saved"
++            case .operation(let failure): failure.operation == "Unlock Records" ? "Records Remain Locked" : failure.operation + " Couldn’t Finish"
++            }
++        }
++    }
++    var presentedFailure: Binding<PresentedFailure?> {
++        Binding(get: {
++            if let failure = store.operationFailure { return .operation(failure) }
++            return store.draftSave.phase.failure.map(PresentedFailure.draft)
++        }, set: { value in
++            guard value == nil else { return }
++            if store.operationFailure != nil { store.operationFailure = nil }
++            else { store.draftSave.dismissFailure() }
++        })
++    }
++
+     var body: some View {
+         Group {
+             switch store.state {
++            case .locked(let summary): LockedRecordsView(store: store, summary: summary)
+             case .loading:
+                 ProgressView("Opening Records…")
+             case .failed(let error):
+@@ -38,9 +61,24 @@
+                 }
+             }
+         }
+-        .task { if case .loading = store.state { await store.reload() } }
++         .task {
++            await store.prepareForPresentation()
++            #if AUTHENTICATION_TEST_DOUBLE
++            if ProcessInfo.processInfo.arguments.contains("--authentication-test-simultaneous-errors") {
++                store.draftSave.start("Test Draft") { throw CocoaError(.fileWriteNoPermission) }
++                store.operationFailure = AppFailure("Unlock Records", underlying: RecordAccessError.cancelled)
++            }
++            #endif
++        }
++        .background(PrivacyShield(locked: !store.isUnlocked, active: scenePhase == .active))
++        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in store.lock() }
++        .onReceive(NotificationCenter.default.publisher(for: UIApplication.protectedDataWillBecomeUnavailableNotification)) { _ in store.lock() }
+         .safeAreaInset(edge: .top) {
+             VStack(spacing: 0) {
++            if case .ready = store.state {
++                Button("Lock Records", systemImage: "lock") { store.lock() }
++                    .buttonStyle(LBActionButtonStyle()).padding(8).accessibilityIdentifier("lockRecords")
++            }
+             if let warning = store.storageWarning {
+                 Button("Changes Saved With a Storage Warning") { store.operationFailure = warning }.buttonStyle(LBActionButtonStyle())
+                     .padding().frame(maxWidth: .infinity).background(Color.lbSurfaceRaised)
+@@ -58,7 +96,7 @@
+         }
+         }
+         .onDisappear { recoveryOperation.cancel() }
+-        .privacySensitive()
++        .privacySensitive(store.isUnlocked)
+         .overlay {
+             if scenePhase != .active {
+                 ZStack {
+@@ -70,11 +108,8 @@
+                 .accessibilityHidden(true)
+             }
+         }
+-        .alert(item: $store.operationFailure) { failure in
+-            Alert(title: Text("Operation Couldn’t Finish"), message: Text(failure.localizedDescription), dismissButton: .default(Text("OK")))
+-        }
+-        .alert(item: Binding(get: { store.draftSave.phase.failure }, set: { if $0 == nil { store.draftSave.dismissFailure() } })) { failure in
+-            Alert(title: Text("Draft Not Saved"), message: Text(failure.localizedDescription), dismissButton: .default(Text("OK")))
++        .alert(item: presentedFailure) { presented in
++            Alert(title: Text(presented.title), message: Text(presented.failure.localizedDescription), dismissButton: .default(Text("OK")))
+         }
+     }
+ }

@@ -1,0 +1,175 @@
+--- a/Tests/LeadersBookUITests/LeadersBookUITests.swift
++++ b/Tests/LeadersBookUITests/LeadersBookUITests.swift
+@@ -2,10 +2,49 @@
+ 
+ @MainActor
+ final class LeadersBookUITests: XCTestCase {
++    func testSimultaneousFailuresAreBothPresented() {
++        let app = XCUIApplication()
++        app.launchArguments = ["--authentication-test-simultaneous-errors"]
++        app.launch()
++        let operation = app.alerts["Records Remain Locked"]
++        XCTAssertTrue(operation.waitForExistence(timeout: 5))
++        operation.buttons["OK"].tap()
++        let draft = app.alerts["Draft Not Saved"]
++        XCTAssertTrue(draft.waitForExistence(timeout: 5))
++        draft.buttons["OK"].tap()
++        XCTAssertTrue(app.buttons["unlockRecords"].waitForExistence(timeout: 5))
++        XCTAssertFalse(app.alerts.firstMatch.exists)
++    }
++
++    func testLockedSummaryAndRejectedAuthentication() {
++        let app = XCUIApplication()
++        app.launchArguments = ["--authentication-test-denied"]
++        app.launch()
++        XCTAssertTrue(app.buttons["unlockRecords"].waitForExistence(timeout: 5))
++        XCTAssertFalse(app.buttons["lockRecords"].exists)
++        XCTAssertFalse(app.tabBars.buttons["Soldiers"].exists)
++        app.buttons["unlockRecords"].tap()
++        XCTAssertTrue(app.alerts["Records Remain Locked"].waitForExistence(timeout: 5))
++        XCTAssertFalse(app.buttons["lockRecords"].exists)
++        capture("Locked Summary — Denied Authentication", app: app)
++        app.terminate()
++        app.launchArguments = []
++        launchUnlocked(app)
++        XCUIDevice.shared.press(.home)
++        app.activate()
++        XCTAssertTrue(app.buttons["unlockRecords"].waitForExistence(timeout: 5))
++        app.buttons["unlockRecords"].tap()
++        XCTAssertTrue(app.buttons["lockRecords"].waitForExistence(timeout: 5))
++        app.buttons["lockRecords"].tap()
++        XCTAssertTrue(app.buttons["unlockRecords"].waitForExistence(timeout: 5))
++        XCTAssertFalse(app.tabBars.buttons["Soldiers"].exists)
++        capture("Locked Summary — Manual Lock", app: app)
++    }
++
+     func testAFTEventFailureExplanation() throws {
+         let app = XCUIApplication()
+         app.launchArguments = ["--preview-light"]
+-        app.launch()
++        launchUnlocked(app)
+         selectTab("Today", in: app)
+         app.buttons["Score an AFT"].tap()
+         enterMaximumAFT(in: app)
+@@ -25,7 +64,7 @@
+     func testRankAndPlaceholderPreviews() throws {
+         continueAfterFailure = false
+         let app = XCUIApplication()
+-        app.launch()
++        launchUnlocked(app)
+         let team = [("PFC", "Jordan Morgan"), ("SPC", "Alex Chen"), ("CPL", "Taylor Brooks"), ("SGT", "Casey Turner"), ("PV2", "Riley Davis")]
+         for (rank, name) in team {
+             selectTab("Soldiers", in: app)
+@@ -73,7 +112,7 @@
+             XCUIDevice.shared.appearance = appearance
+             app.terminate()
+             app.launchArguments = [name == "Dark" ? "--preview-dark" : "--preview-light"]
+-            app.launch()
++            launchUnlocked(app)
+             selectTab("Today", in: app)
+             capture("Theme Front Cover — \(name)", app: app)
+             selectTab("Soldiers", in: app)
+@@ -91,7 +130,7 @@
+         continueAfterFailure = false
+         let app = XCUIApplication()
+         app.launchArguments = ["-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+-        app.launch()
++        launchUnlocked(app)
+         selectTab("Soldiers", in: app)
+         if app.buttons["BackButton"].exists { app.buttons["BackButton"].tap() }
+         let soldier = app.descendants(matching: .any).matching(NSPredicate(format: "label == %@", "SGT Casey Turner")).firstMatch
+@@ -113,7 +152,7 @@
+     func testPhotoTrainingAndHeightWeightWorkflow() throws {
+         continueAfterFailure = false
+         let app = XCUIApplication()
+-        app.launch()
++        launchUnlocked(app)
+         selectTab("Today", in: app)
+         capture("Front Cover — Layout Preview", app: app)
+         selectTab("Soldiers", in: app)
+@@ -159,7 +198,7 @@
+         reveal(saveResult, in: app)
+         saveResult.tap()
+         app.terminate()
+-        app.launch()
++        launchUnlocked(app)
+         selectTab("Soldiers", in: app)
+         if !app.navigationBars.staticTexts["PVT \(name)"].exists {
+             app.descendants(matching: .any).matching(NSPredicate(format: "label == %@", "PVT \(name)")).firstMatch.tap()
+@@ -189,7 +228,7 @@
+     func testSoldierCreationEditingRelaunchAndDeletion() throws {
+         continueAfterFailure = false
+         let app = XCUIApplication()
+-        app.launch()
++        launchUnlocked(app)
+         let name = "Alex Turner"
+         let editedName = "Alex Taylor"
+         selectTab("Soldiers", in: app)
+@@ -210,7 +249,7 @@
+         app.buttons["saveSoldier"].tap()
+         XCTAssertTrue(app.navigationBars.staticTexts["PVT \(editedName)"].waitForExistence(timeout: 5))
+         app.terminate()
+-        app.launch()
++        launchUnlocked(app)
+         selectTab("Soldiers", in: app)
+         if !app.navigationBars.staticTexts["PVT \(editedName)"].exists {
+             app.descendants(matching: .any).matching(NSPredicate(format: "label == %@", "PVT \(editedName)")).firstMatch.tap()
+@@ -226,7 +265,7 @@
+         app.buttons["Delete Soldier and Results"].tap()
+         XCTAssertTrue(app.navigationBars.staticTexts["PVT \(editedName)"].waitForNonExistence(timeout: 5))
+         app.terminate()
+-        app.launch()
++        launchUnlocked(app)
+         selectTab("Soldiers", in: app)
+         XCTAssertFalse(app.descendants(matching: .any).matching(NSPredicate(format: "label == %@", "PVT \(editedName)")).firstMatch.exists)
+     }
+@@ -234,7 +273,7 @@
+     func testRatioShortcutCalculationAndRelaunch() throws {
+         continueAfterFailure = false
+         let app = XCUIApplication()
+-        app.launch()
++        launchUnlocked(app)
+         selectTab("Today", in: app)
+         app.buttons["HT/WT Calculator"].tap()
+         let height = app.textFields["ratioHeight"]
+@@ -253,7 +292,7 @@
+         selectTab("Fitness", in: app)
+         XCTAssertEqual(height.value as? String, "70")
+         app.terminate()
+-        app.launch()
++        launchUnlocked(app)
+         selectTab("Fitness", in: app)
+         XCTAssertTrue(height.waitForExistence(timeout: 5))
+         XCTAssertEqual(height.value as? String, "70")
+@@ -268,7 +307,7 @@
+     func testAFTCalculationSavingAndHistory() throws {
+         continueAfterFailure = false
+         let app = XCUIApplication()
+-        app.launch()
++        launchUnlocked(app)
+         selectTab("Today", in: app)
+         app.buttons["Score an AFT"].tap()
+         enterMaximumAFT(in: app)
+@@ -283,7 +322,7 @@
+         result.tap()
+         XCTAssertEqual(app.staticTexts["savedAFTTotal"].label, "500 / 500")
+         app.terminate()
+-        app.launch()
++        launchUnlocked(app)
+         selectTab("Fitness", in: app)
+         XCTAssertTrue(result.waitForExistence(timeout: 5))
+         result.tap()
+@@ -294,6 +333,13 @@
+         add(screenshot)
+     }
+ 
++    private func launchUnlocked(_ app: XCUIApplication) {
++        app.launch()
++        XCTAssertTrue(app.buttons["unlockRecords"].waitForExistence(timeout: 5))
++        app.buttons["unlockRecords"].tap()
++        XCTAssertTrue(app.buttons["lockRecords"].waitForExistence(timeout: 5))
++    }
++
+     private func selectTab(_ title: String, in app: XCUIApplication) {
+         // iPadOS floating tabs need not expose a TabBar ancestor.
+         if app.tabBars.buttons[title].exists {

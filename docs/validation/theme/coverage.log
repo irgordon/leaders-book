@@ -1,0 +1,28 @@
+Building for debugging...
+[2 / 13]
+[3 / 8] LeadersBookCoreTests-product
+[5 / 10] LeadersBookCoreTests-product
+[10 / 13] LeadersBookCoreTests-product
+Build complete! (0.98 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite ThemeContrastTests started.
+◇ Test contrastIsSymmetric() started.
+◇ Test knownRatioMatchesReference() started.
+◇ Test interactionPairingsRemainCovered() started.
+◇ Test raisedSurfaceRegression(mode:) started.
+◇ Test everyRequirementMeetsWCAG(mode:contrast:) started.
+◇ Test case passing 1 argument mode → .light to raisedSurfaceRegression(mode:) started.
+◇ Test case passing 1 argument mode → .dark to raisedSurfaceRegression(mode:) started.
+◇ Test case passing 2 arguments mode → .light, contrast → .standard to everyRequirementMeetsWCAG(mode:contrast:) started.
+◇ Test case passing 2 arguments mode → .dark, contrast → .standard to everyRequirementMeetsWCAG(mode:contrast:) started.
+◇ Test case passing 2 arguments mode → .dark, contrast → .increased to everyRequirementMeetsWCAG(mode:contrast:) started.
+✔ Test contrastIsSymmetric() passed after 0.001 seconds.
+✔ Test raisedSurfaceRegression(mode:) with 2 test cases passed after 0.001 seconds.
+◇ Test case passing 2 arguments mode → .light, contrast → .increased to everyRequirementMeetsWCAG(mode:contrast:) started.
+✔ Test knownRatioMatchesReference() passed after 0.001 seconds.
+✔ Test interactionPairingsRemainCovered() passed after 0.001 seconds.
+✔ Test everyRequirementMeetsWCAG(mode:contrast:) with 4 test cases passed after 0.001 seconds.
+✔ Suite ThemeContrastTests passed after 0.001 seconds.
+✔ Test run with 5 tests in 1 suite passed after 0.001 seconds.

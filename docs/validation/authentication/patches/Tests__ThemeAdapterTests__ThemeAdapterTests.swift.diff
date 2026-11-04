@@ -1,0 +1,64 @@
+--- a/Tests/ThemeAdapterTests/ThemeAdapterTests.swift
++++ b/Tests/ThemeAdapterTests/ThemeAdapterTests.swift
+@@ -4,6 +4,61 @@
+ 
+ @MainActor
+ final class ThemeAdapterTests: XCTestCase {
++ func testSimultaneousFailuresRetainDraftUntilAcknowledged() async throws {
++  let scorer = try AFTScoring()
++  let store = LeaderStore(scorer: scorer)
++  store.draftSave.start("Test Draft") { throw CocoaError(.fileWriteNoPermission) }
++  for _ in 0..<100 where store.draftSave.phase.isRunning { await Task.yield() }
++  let draft = try XCTUnwrap(store.draftSave.phase.failure)
++  let operation = AppFailure("Unlock Records", underlying: RecordAccessError.cancelled)
++  store.operationFailure = operation
++  let binding = ContentView(store: store, scorer: scorer).presentedFailure
++  XCTAssertEqual(binding.wrappedValue?.id, operation.id)
++  XCTAssertEqual(binding.wrappedValue?.title, "Records Remain Locked")
++  binding.wrappedValue = nil
++  XCTAssertNil(store.operationFailure)
++  XCTAssertEqual(store.draftSave.phase.failure?.id, draft.id)
++  XCTAssertEqual(binding.wrappedValue?.id, draft.id)
++  XCTAssertEqual(binding.wrappedValue?.title, "Draft Not Saved")
++  binding.wrappedValue = nil
++  XCTAssertNil(binding.wrappedValue)
++ }
++
++ func testPrivacyCoverThemeAndInactiveAttachment() throws {
++  let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
++  let previous = scene.windows.first(where: \.isKeyWindow)
++  let window = UIWindow(windowScene: scene)
++  let controller = UIViewController()
++  window.rootViewController = controller
++  window.makeKeyAndVisible()
++  defer { window.isHidden = true; previous?.makeKey() }
++  let anchor = ShieldAnchor(frame: window.bounds)
++  anchor.updateActive(false)
++  controller.view.addSubview(anchor)
++  let cover = try XCTUnwrap(window.subviews.last)
++  XCTAssertEqual(cover.accessibilityLabel, "Records Hidden")
++  XCTAssertFalse(cover.isHidden)
++  XCTAssertTrue(cover.accessibilityViewIsModal)
++  for mode in ThemeMode.allCases {
++   let traits = UITraitCollection(userInterfaceStyle: mode == .dark ? .dark : .light)
++   let color = try XCTUnwrap(cover.backgroundColor?.resolvedColor(with: traits))
++   var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
++   XCTAssertTrue(color.getRed(&r, green: &g, blue: &b, alpha: &a))
++   let expected = ThemeRole.privacyCover.rgb(in: mode)
++   XCTAssertEqual(r, CGFloat(expected.red)/255, accuracy: 0.00001)
++   XCTAssertEqual(g, CGFloat(expected.green)/255, accuracy: 0.00001)
++   XCTAssertEqual(b, CGFloat(expected.blue)/255, accuracy: 0.00001)
++   XCTAssertEqual(a, 1)
++  }
++  anchor.updateActive(true)
++  XCTAssertTrue(cover.isHidden)
++  NotificationCenter.default.post(name: UIApplication.willResignActiveNotification, object: nil)
++  XCTAssertFalse(cover.isHidden)
++  NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
++  XCTAssertTrue(cover.isHidden)
++  anchor.removeCover()
++ }
++
+  func testOverdueTrainingBoundaries() throws {
+   let today = Calendar.current.startOfDay(for: .now)
+   var draft = TrainingDraft()

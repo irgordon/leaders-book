@@ -1,0 +1,27 @@
+--- a/Tests/LeadersBookCoreTests/GovernanceTests.swift
++++ b/Tests/LeadersBookCoreTests/GovernanceTests.swift
+@@ -44,8 +44,11 @@
+     @Test func filesystemCausesRemainAvailableBehindPresentation() async throws {
+         let url = fixtureFile(); defer { cleanFixture(url) }
+         try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
+-        let store = LeaderStore(fileURL: url, scorer: try AFTScoring()); await store.reload()
+-        guard case .failed(let failure) = store.state else { Issue.record("Expected load failure"); return }
++        let store = LeaderStore(fileURL: url, scorer: try AFTScoring(), authenticator: TestAuthenticator())
++        let failure: AppFailure
++        do { try await store.unlock(); Issue.record("Expected load failure"); return }
++        catch let cause as AppFailure { failure = cause }
++        guard case .locked = store.state else { Issue.record("Failed load exposed records"); return }
+         #expect((failure.rootCause as NSError).domain == NSCocoaErrorDomain)
+         #expect(!failure.localizedDescription.contains(url.path))
+         let secondary = AppFailure("Cleanup", underlying: CocoaError(.fileWriteNoPermission))
+@@ -89,8 +92,8 @@
+         let repository = BookRepository(fileURL: url, scorer: try AFTScoring())
+         _ = try await repository.load()
+         let id = UUID(), input = maximumDraft()
+-        _ = try await repository.apply(.saveResult(input, id))
+-        await #expect(throws: RecordError.conflict) { try await repository.apply(.saveResult(input, id)) }
++        _ = try await repository.apply(.saveResult(input, id), permit: RecordAccessLease())
++        await #expect(throws: RecordError.conflict) { try await repository.apply(.saveResult(input, id), permit: RecordAccessLease()) }
+         let loaded = try await repository.load()
+         #expect(loaded.snapshot.results.count == 1)
+         #expect(loaded.snapshot.results.first?.id == id)

@@ -1,0 +1,5 @@
+Release executable inspection: PASS
+Neither --preview-dark nor --preview-light is present in strings output.
+Source also encloses both controls in #if DEBUG.
+Executable SHA-256: 75a26b2acf5f27834a0c9b5fa54c419fc22d65daf991b4239afe348f6a21ff8b
+This does not verify on-device automatic appearance switching.

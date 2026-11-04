@@ -1,0 +1,18 @@
+--- a/docs/ARCHITECTURE-AUDIT.md
++++ b/docs/ARCHITECTURE-AUDIT.md
+@@ -126,3 +126,15 @@
+ ## Privacy and Duo Audit — November 4, 2026
+ 
+ [Privacy, data controls, accessibility, and Duo audit](PRIVACY-HIG-AUDIT.md) records the new P1–P9 findings. The summary/detail authentication boundary is missing; backup policy and presentation privacy are incomplete; no tracking implementation was found within static scope. These are additional findings, not a reopening of the earlier six data-integrity fixes. No application code changed during the audit.
++
++## Authentication Implementation — Partial Verification
++
++The approved authentication work adds a fail-closed store boundary, revocable storage permits, a system LocalAuthentication adapter, aggregate-only locked UI, and a window privacy shield. All 41 core tests and the unsigned Release build pass, but the denied-authentication alert test failed twice consecutively. Implementation changes stopped under the circuit breaker. The feature is **not marked complete**. See [Authentication Findings and All File Diffs](AUTHENTICATION-FINDINGS.md) for the exact failure, test-double isolation, remaining verification, and per-file patches.
++
++## Authentication Review Follow-Up
++
++Read-only evidence showed no alert in the failed capture/hierarchy; a focused core assertion confirmed failure publication and the locked state. A single root presenter now owns operation/draft alerts and derives titles from failure operations. The unchanged denial-alert assertion passes. Presentation-triggered summary loading is guarded at the shared store; two concurrent presenters and later unlocked presentations do not reload the editing session. The themed window cover passes color, inactive-attachment, and active/resign notification checks. Archive action remains Release, and a Testing archive is actively rejected by a build phase. See [Authentication Findings and All File Diffs](AUTHENTICATION-FINDINGS.md) for final results and policy/device limits.
++
++Final authentication review validation: **43 core tests and all 14 native tests passed**, with no skips or weakened assertions. The Release build passed; explicit Testing archive validation was rejected by the intended build guard. The findings report now includes all 22 edited source/test/configuration/documentation files and regenerated individual/combined diffs. Real-device authentication and full privacy-surface verification remain separate acceptance checks; immediate background locking and unsaved-editor discard remain the stated policy.
++
++Presenter review follow-up: the retained 16-configuration action render test passes. Two pending failure sources are presented sequentially and verified through binding and UI tests. All nine selected native tests pass, and a normal unsigned Release archive succeeds; Testing archive rejection remains in force. No additional view with stacked alert modifiers was found. Immediate background/manual/device-lock relocking with unsaved-editor discard remains the explicit policy. See the authentication findings addendum for coverage limits and commit-baseline provenance.

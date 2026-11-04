@@ -1,0 +1,35 @@
+{
+  "date": "2026-11-04",
+  "method": "Static source inventory; absence of matches is not runtime proof",
+  "source_sha256": {
+    "LeadersBook/Core/RecordAttachment.swift": "9faecd644ad2f7c7de46165e961a565adaa7757ccf0aeaa4de27d0edbd8a8541",
+    "LeadersBook/Core/ThemePalette.swift": "bd2b4ea22aa96a109a84917a8cbfbe99359c90bc3f5370133d7176739f00fa30",
+    "LeadersBook/Core/AppFailure.swift": "6f85d8252e8b4d6271d4089cf39e2bc60be26960fe062e7d13067fdfa71a8e7a",
+    "LeadersBook/Core/Soldier.swift": "b74b496ba4d529c3f835e3d03ed74256fee4cfb3b8a432c56937d161662df629",
+    "LeadersBook/Core/LeaderStore.swift": "c25769a6b366882031ce7ded0c8d551b867ed25378f0ebb8bbd034006f967a15",
+    "LeadersBook/Core/BookRepository.swift": "fe1087de92c124ee1f09267e14b9589b5b22a75d9b191a9a64efb46b8eb33ba2",
+    "LeadersBook/Core/Fitness.swift": "0c7e09e24f6e9eac4791ada8ef5582f9af39e0fddd10bbaa9d356031832a29c9",
+    "LeadersBook/Core/ReferenceContent.swift": "a0ba8aaba5b1537e2ed1bb7c8e93a492800fd490dfb557914ec4e48f2c90008a",
+    "LeadersBook/App/LeadersBookApp.swift": "3db273a51fdef0dc9314cd7e3e1ceaebcf73d60d4492851db093de40f1ecd8a5",
+    "LeadersBook/Views/RecordFileImport.swift": "d1eee6230a4104ed01c14729ceb94f04092e2a1cd46624b0fc8ba2fdbceabb70",
+    "LeadersBook/Views/TrainingRecordEditor.swift": "7738e8f3212de30bd777d35f955675ef8084185b14707db866a0b853f63bdc0a",
+    "LeadersBook/Views/TrainingRecordSection.swift": "db2d1d9b44a4beddcf85154dfd99d7523a7ba3cc6d2223f77984b3a6dbda0370",
+    "LeadersBook/Views/SoldierEditor.swift": "36031c1961d869a862b1d54560b05966dd7e56699db29a82f8681ee8e4b0aba0",
+    "LeadersBook/Views/GuidesView.swift": "61fe0dd22987213afaedf617adbcda823528bf777caf7090ab3005c88dafc4b6",
+    "LeadersBook/Views/SoldiersView.swift": "5c1a1db92a9f7e58071d93b60098ddf517fbdc590ea86829f8d48bac29e7bc69",
+    "LeadersBook/Views/TodayView.swift": "d85d2d1043ecfa2b1da67f3f80c5dd8b3a80a13c962a25c9e1536e03808db676",
+    "LeadersBook/Views/FitnessView.swift": "7f8160ced8e2612b3d2ab15068bb173b8dbf8741da6b0fedb89be435e2ea0d38",
+    "LeadersBook/Views/AFTResultView.swift": "dc3060309b381e16782fbe438b262ac426f2f3541d5b79d3a231422b1fd8de64",
+    "LeadersBook/Views/Theme.swift": "8d822a6d7e8a4e6a29843d11e64416bb7c24f900b6c1cca4f644b199e143f042",
+    "LeadersBook/Views/ContentView.swift": "03ffd8e438c3ced17085152959dacacb13fd26c4e09825b8a92dd8babdb2293c",
+    "LeadersBook/Resources/PrivacyInfo.xcprivacy": "b267716076963c159b3c25394b6a58aba0e620fe1e81aab51dc078d4a48f7f23",
+    "Package.swift": "a61a6b09b071225b0298fa848f6722cb466a2edd2e60216c873586cf90776d9e",
+    "LeadersBook.xcodeproj/project.pbxproj": "1302b55a96d20dfa6e11d8db808592ed7c9717d898fbf27fe25c6b2011fb43ac"
+  },
+  "matches": {
+    "authentication": [],
+    "tracking_network": [],
+    "backup_control": [],
+    "capture_control": []
+  }
+}
