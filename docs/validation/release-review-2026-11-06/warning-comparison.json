@@ -1,0 +1,19 @@
+{
+  "baseline_commit": "9e97fca",
+  "experiment_commit": "6ba0176",
+  "diagnostic_only": true,
+  "production_layout_changed": false,
+  "invalid_frame_warning_counts": {
+    "baseline-first": 3,
+    "navigation-toolbar": 0,
+    "keyboard-control": 1
+  },
+  "matched_experiment": {
+    "simulator": "DCD3DC92-18FE-4B88-AF4F-A37178C2848C",
+    "test": "testAFTCalculationSavingAndHistory",
+    "navigation_passed": true,
+    "keyboard_passed": true
+  },
+  "baseline_photo_retry": "FAILED: multiple matching PVT Jordan Morgan buttons in retained synthetic fixtures; not a baseline pass",
+  "bootstrap_failure": "First probe failed before connecting due to overlapping diagnostic runners; retried on a separate simulator."
+}

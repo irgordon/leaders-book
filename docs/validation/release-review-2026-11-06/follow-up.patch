@@ -1,0 +1,63 @@
+diff --git a/docs/ARCHITECTURE-AUDIT.md b/docs/ARCHITECTURE-AUDIT.md
+index bc94a1f..1174ac7 100644
+--- a/docs/ARCHITECTURE-AUDIT.md
++++ b/docs/ARCHITECTURE-AUDIT.md
+@@ -37,7 +37,7 @@ Date: November 2, 2026. Policy: [AGENTS.md](../AGENTS.md). Scope: the approved r
+ - **Persistence:** [BookRepository.swift](../LeadersBook/Core/BookRepository.swift) decodes concrete DTOs and constructs [Soldier.swift](../LeadersBook/Core/Soldier.swift), [RecordAttachment.swift](../LeadersBook/Core/RecordAttachment.swift), and [Fitness.swift](../LeadersBook/Core/Fitness.swift) domain values. Unknown schema/table versions and invalid records preserve the file and stop loading.
+ - **Editing:** `SoldierDraft`, `TrainingDraft`, and `FitnessDraft` explicitly allow incomplete user entry. Drafts must pass the construction boundary before committed records or scoring logic receive them. Calculator drafts intentionally retain invalid performance text, with explicit field errors; profile structure and selected identities remain constrained.
+ - **Scoring:** table shape, points, metadata, age labels, and required events are checked at table construction. Core scoring receives `EventPerformance` and `AgeBand`. Completed persisted results must match all five computed points and their known table version.
+-- **Media:** imported files have immutable validated metadata and a bounded format envelope. Portraits additionally pass the platform image decoder; Quick Look owns full document rendering. `RecordFileImport` handles security-scoped access at the Files boundary. Missing metadata is an error, not a guessed size of zero.
++- **Media:** imported files have immutable validated metadata and a bounded format envelope. Portraits additionally pass the platform image decoder. The original Quick Look presenter was replaced by the read-only certificate viewer in the November 5 privacy correction: PDFKit parses/extracts text, and Core Graphics draws pages; its accessibility trade-offs remain open. `RecordFileImport` handles security-scoped access at the Files boundary. Missing metadata is an error, not a guessed size of zero.
+ - **UI:** [LeaderStore.swift](../LeadersBook/Core/LeaderStore.swift) owns UI state and app-lifetime mutation tasks. [AppFailure.swift](../LeadersBook/Core/AppFailure.swift) owns cancellable UI operations. Imports and certificate preview are presentation-owned and cancel on dismissal/replacement. Root views pass validated snapshots to descendants, avoiding unavailable-store reads during a reload.
+ - **UIKit:** the camera dictionary stays inside the delegate adapter and immediately becomes a typed captured/cancelled/failed outcome. No raw dictionary enters a service.
+ 
+@@ -184,3 +184,32 @@ Discovery commands: `git status --short`; `git log -3 --oneline`; `git remote -v
+ Apple's Observation guidance supports property-driven SwiftUI updates, while the app remains responsible for domain validation and authorization: https://developer.apple.com/documentation/swiftui/migrating-from-the-observable-object-protocol-to-the-observable-macro. Retain delegates for UIKit editing and LocalAuthentication callbacks where appropriate; adding a reactive library has no demonstrated benefit for this task.
+ 
+ Overall assessment remains **Partial**, with no new P0/P1 application defect established by this limited review. The runtime warnings and omitted UI release checks deserve investigation before cosmetic cleanup. [This review's documentation diff](validation/coding-practices-review-2026-11-06/architecture-audit.diff) compares against the November 5 audit text. Earlier evidence manifests remain historical snapshots and were not regenerated.
++
++
++## Release-Review Follow-Up — November 6, 2026
++
++Checkpoint first: `6ba0176` records the application/tests and `3da6f45` records existing audits/evidence before new gate changes. No remote is configured. Connected-repository discovery found no matching Leaders Book destination; the remote URL is requested. No repository was created or published. Source relocation is not performed; the active Documents path is retained and build products remain outside Documents. A source-directory move needs a chosen destination and workspace handoff; this review does not establish whether Documents is synced.
++
++### Gate and Diagnostic Results
++
++The `--validate` branch now uses Testing and the scheme's complete native test selection, followed by the independent Release build. Testing substitutes only the external authenticator; Release still uses LocalAuthentication. Fast iteration continues through `swift test --filter` or `xcodebuild -only-testing`; the release command omits those filters. **Fresh gate PASS:** 50 core tests, all 20 native tests (9 adapter/component and 11 UI workflows, zero failures/skips), then unsigned Release build. The four pre-existing native invalid-frame warnings remain explicit diagnostics. [Gate log](validation/release-review-2026-11-06/release-gate.log) and [native summary](validation/release-review-2026-11-06/gate-native-summary.json) preserve the results.
++
++Warnings are pre-existing: the November 3 theme log already records them, and fresh baseline `9e97fca` runs reproduce the diagnostic in AFT, photo/training/HT-WT and ratio workflows. AFT and ratio pass; the first photo run was interrupted when diagnostic runners overlapped on a simulator, and its isolated retry fails on duplicate `PVT Jordan Morgan` buttons from retained synthetic fixtures. Those runs are not counted as a full baseline pass; the current gate's photo workflow passes. No baseline assertion was edited to accommodate this failure.
++
++Matched AFT experiment: source `6ba0176`, same simulator DCD3DC92-18FE-4B88-AF4F-A37178C2848C and unchanged workflow assertions. Moving only the Done toolbar group's placement from `.keyboard` to `.topBarTrailing` passes with zero invalid-frame warnings; restoring `.keyboard` passes with one warning. This supports the keyboard-accessory hypothesis for that workflow, without proving the internal framework cause or every warning's origin. Production layout is unchanged. These are disposable source copies, not a theme/authentication fix or a completed historical bisect.
++
++### Private Notes and Export Control Rationale — Deployment Context Pending
++
++Assets are private Soldier notes/certificates and retained edits. The scoped objective is to prevent implicit app-provided transfers of notes/certificates to the clipboard, drag destinations, Writing Tools or sharing services without a deliberate fresh-authenticated export. It is not a guarantee against an authorized device owner copying visible information, screenshots, recording, mirroring, a compromised OS, imported originals, backups or already-exported copies. Deployment/device-management assumptions have been requested; this is a preliminary control rationale, not a finalized organizational threat assessment.
++
++- `DeviceAuthenticator.authenticateForExport` creates a new LAContext; `LeaderStore.authenticateExport` checks readiness, request identity, cancellation and epoch after suspension. The returned original lease is checked before export and again after certificate reading. `RecordExportSheet` receives typed notes or certificate bytes. No app-created export file is used; the OS/recipient can retain an authorized copy.
++- `AuthenticatedExportButton` owns its task, disables duplicate actions and clears its presented payload on disappearance. Existing tests verify denied export, successful notes Copy, fresh authentication per store export, and stale completion after lock. Physical prompts, certificate destinations and cancellation during provider transfer remain unverified.
++- `ProtectedNotesTextView` disables copy/cut commands, text drag and Writing Tools, but those restrictions are only app-route controls. VoiceOver/keyboard editing still need device testing. Current `SoldiersView` notes are nonselectable; the sole remaining `.textSelection(.enabled)` is public guide paragraphs in `GuidesView.swift:65`. That exception follows data sensitivity; it is not an unchecked private-note copy route.
++- Quick Look was replaced to remove implicit sharing/selection/link routes that bypass the explicit export action. The viewer still parses PDFs with PDFKit, so it does not remove the PDF decoder attack surface. Page-level text labels and pinch zoom do not establish equivalent PDFView/Quick Look accessibility. Large/many-page PDFs and eager text extraction merit profiling.
++- PDFView is a candidate for a narrowly scoped prototype. Public headers expose responder copy/selection and URL/remote-action delegate hooks, but `PDFDocument.allowsCopying` is readonly document permission metadata, not an application policy switch. A replacement must demonstrate that copy, drag, link actions and share menus remain gated while VoiceOver/zoom/navigation improve; no such prototype or replacement was made here. [PDFView](https://developer.apple.com/documentation/pdfkit/pdfview), [link delegate](https://developer.apple.com/documentation/pdfkit/pdfviewdelegate/pdfviewwillclick%28onlink%3Awith%3A%29).
++
++Organizational authorization for real Soldier data remains an unresolved deployment decision for an authorized owner; local authentication and App Store acceptance cannot grant that authorization. Backup eligibility and fresh-auth export are the owner's selected application policies, not evidence that an organization permits them.
++
++The installed `xcrun swift-format` was inspected without installing anything. Strict lint of `PrivacyControls.swift` reports 230 formatting diagnostics; adding a blocking check now would fail the existing baseline. Formatting that sensitive file and agreeing a formatting baseline should precede enforcement; no broad reformat or new dependency/configuration was introduced.
++
++[Source bundle for review](validation/release-review-2026-11-06/privacy-export-review.zip) contains nine relevant app/test files from `6ba0176` and their hashes. [Commands and diagnostic caveats](validation/release-review-2026-11-06/commands.txt), gate/diagnostic logs, result summaries and [all current edited-file diffs](validation/release-review-2026-11-06/follow-up.patch) are retained alongside it. Historical evidence manifests remain dated snapshots.
+diff --git a/script/build_and_run.sh b/script/build_and_run.sh
+index 5e89c14..3240c26 100755
+--- a/script/build_and_run.sh
++++ b/script/build_and_run.sh
+@@ -34,9 +34,10 @@ if [[ "$MODE" == "--validate" ]]; then
+     VALIDATION_ROOT="${TMPDIR:-/tmp}/LeadersBookValidation"
+     DERIVED="$VALIDATION_ROOT/DerivedData"
+     swift test --scratch-path "$VALIDATION_ROOT/Core"
+-    xcodebuild -project "$PROJECT" -scheme LeadersBook -configuration Debug \
++    # Release gate: exercise both adapters and all authenticated UI workflows.
++    xcodebuild -project "$PROJECT" -scheme LeadersBook -configuration Testing \
+         -destination "platform=iOS Simulator,id=$DEVICE" -derivedDataPath "$DERIVED" \
+-        -only-testing:ThemeAdapterTests CODE_SIGNING_ALLOWED=NO test
++        -collect-test-diagnostics never CODE_SIGNING_ALLOWED=NO test
+     xcodebuild -project "$PROJECT" -scheme LeadersBook -configuration Release \
+         -destination 'generic/platform=iOS' -derivedDataPath "$DERIVED" \
+         CODE_SIGNING_ALLOWED=NO build

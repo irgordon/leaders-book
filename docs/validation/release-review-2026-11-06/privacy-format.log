@@ -1,0 +1,230 @@
+LeadersBook/Views/PrivacyControls.swift:3:1: error: [OrderedImports] sort import statements lexicographically
+LeadersBook/Views/PrivacyControls.swift:29:46: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:46:61: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:46:87: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:48:35: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:71:54: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:74:53: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:97:49: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:154:49: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:154:75: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:154:109: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:158:56: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:159:56: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:29:46: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:29:46: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:29:46: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:46:61: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:46:87: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:48:35: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:46:61: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:46:87: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:48:35: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:46:61: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:46:87: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:48:35: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:46:61: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:46:87: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:48:35: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:71:54: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:74:53: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:71:54: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:74:53: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:97:49: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:97:49: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:98:40: error: [OneCasePerLine] move 'image' to its own 'case' declaration
+LeadersBook/Views/PrivacyControls.swift:98:56: error: [OneCasePerLine] move 'pdf' to its own 'case' declaration
+LeadersBook/Views/PrivacyControls.swift:98:82: error: [OneCasePerLine] move 'failed' to its own 'case' declaration
+LeadersBook/Views/PrivacyControls.swift:154:49: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:154:75: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:154:109: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:158:56: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:159:56: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:154:49: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:154:75: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:154:109: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:158:56: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:159:56: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:154:49: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:154:75: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:154:109: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:158:56: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:159:56: error: [DoNotUseSemicolons] remove ';' and move the next statement to a new line
+LeadersBook/Views/PrivacyControls.swift:88:99: error: [TrailingComma] add trailing comma to the last element in multiline collection literal
+LeadersBook/Views/PrivacyControls.swift:6:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:7:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:8:1: error: [Indentation] unindent by 6 spaces
+LeadersBook/Views/PrivacyControls.swift:9:1: error: [LineLength] line is too long
+LeadersBook/Views/PrivacyControls.swift:9:1: error: [Indentation] unindent by 8 spaces
+LeadersBook/Views/PrivacyControls.swift:10:1: error: [Indentation] unindent by 8 spaces
+LeadersBook/Views/PrivacyControls.swift:11:1: error: [Indentation] unindent by 6 spaces
+LeadersBook/Views/PrivacyControls.swift:12:1: error: [LineLength] line is too long
+LeadersBook/Views/PrivacyControls.swift:12:1: error: [Indentation] unindent by 6 spaces
+LeadersBook/Views/PrivacyControls.swift:13:1: error: [LineLength] line is too long
+LeadersBook/Views/PrivacyControls.swift:13:1: error: [Indentation] unindent by 6 spaces
+LeadersBook/Views/PrivacyControls.swift:14:1: error: [LineLength] line is too long
+LeadersBook/Views/PrivacyControls.swift:14:1: error: [Indentation] unindent by 6 spaces
+LeadersBook/Views/PrivacyControls.swift:15:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:16:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:20:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:21:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:22:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:23:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:24:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:25:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:26:1: error: [Indentation] unindent by 6 spaces
+LeadersBook/Views/PrivacyControls.swift:27:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:28:1: error: [Indentation] unindent by 6 spaces
+LeadersBook/Views/PrivacyControls.swift:29:1: error: [Indentation] unindent by 6 spaces
+LeadersBook/Views/PrivacyControls.swift:29:27: error: [AddLines] add 1 line break
+LeadersBook/Views/PrivacyControls.swift:29:60: error: [AddLines] add 1 line break
+LeadersBook/Views/PrivacyControls.swift:30:1: error: [LineLength] line is too long
+LeadersBook/Views/PrivacyControls.swift:30:1: error: [Indentation] unindent by 6 spaces
+LeadersBook/Views/PrivacyControls.swift:31:1: error: [LineLength] line is too long
+LeadersBook/Views/PrivacyControls.swift:31:1: error: [Indentation] unindent by 8 spaces
+LeadersBook/Views/PrivacyControls.swift:32:1: error: [Indentation] unindent by 6 spaces
+LeadersBook/Views/PrivacyControls.swift:33:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:37:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:38:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:39:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:40:1: error: [LineLength] line is too long
+LeadersBook/Views/PrivacyControls.swift:40:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:41:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:42:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:43:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:44:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:45:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:46:1: error: [LineLength] line is too long
+LeadersBook/Views/PrivacyControls.swift:46:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:47:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:47:100: error: [AddLines] add 1 line break
+LeadersBook/Views/PrivacyControls.swift:48:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:49:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:50:1: error: [LineLength] line is too long
+LeadersBook/Views/PrivacyControls.swift:50:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:51:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:52:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:53:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:58:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:59:1: error: [LineLength] line is too long
+LeadersBook/Views/PrivacyControls.swift:59:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:60:1: error: [LineLength] line is too long
+LeadersBook/Views/PrivacyControls.swift:60:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:61:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:64:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:65:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:66:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:67:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:68:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:69:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:70:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:71:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:72:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:73:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:74:1: error: [LineLength] line is too long
+LeadersBook/Views/PrivacyControls.swift:74:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:75:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:76:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:77:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:78:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:79:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:80:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:81:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:82:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:83:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:84:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:85:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:86:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:87:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:92:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:93:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:94:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:95:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:96:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:97:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:98:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:99:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:100:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:101:1: error: [Indentation] unindent by 6 spaces
+LeadersBook/Views/PrivacyControls.swift:102:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:103:1: error: [Indentation] unindent by 6 spaces
+LeadersBook/Views/PrivacyControls.swift:104:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:105:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:106:1: error: [LineLength] line is too long
+LeadersBook/Views/PrivacyControls.swift:106:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:107:1: error: [LineLength] line is too long
+LeadersBook/Views/PrivacyControls.swift:107:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:108:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:109:1: error: [Indentation] unindent by 6 spaces
+LeadersBook/Views/PrivacyControls.swift:110:1: error: [Indentation] unindent by 8 spaces
+LeadersBook/Views/PrivacyControls.swift:111:1: error: [LineLength] line is too long
+LeadersBook/Views/PrivacyControls.swift:111:1: error: [Indentation] unindent by 10 spaces
+LeadersBook/Views/PrivacyControls.swift:112:1: error: [Indentation] unindent by 14 spaces
+LeadersBook/Views/PrivacyControls.swift:113:1: error: [LineLength] line is too long
+LeadersBook/Views/PrivacyControls.swift:113:1: error: [Indentation] unindent by 14 spaces
+LeadersBook/Views/PrivacyControls.swift:114:1: error: [Indentation] unindent by 8 spaces
+LeadersBook/Views/PrivacyControls.swift:115:1: error: [Indentation] unindent by 6 spaces
+LeadersBook/Views/PrivacyControls.swift:116:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:117:1: error: [Indentation] unindent by 6 spaces
+LeadersBook/Views/PrivacyControls.swift:118:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:119:1: error: [LineLength] line is too long
+LeadersBook/Views/PrivacyControls.swift:119:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:120:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:121:1: error: [Indentation] unindent by 6 spaces
+LeadersBook/Views/PrivacyControls.swift:122:1: error: [Indentation] unindent by 8 spaces
+LeadersBook/Views/PrivacyControls.swift:123:1: error: [LineLength] line is too long
+LeadersBook/Views/PrivacyControls.swift:123:1: error: [Indentation] unindent by 10 spaces
+LeadersBook/Views/PrivacyControls.swift:124:1: error: [Indentation] unindent by 8 spaces
+LeadersBook/Views/PrivacyControls.swift:125:1: error: [Indentation] unindent by 8 spaces
+LeadersBook/Views/PrivacyControls.swift:126:1: error: [Indentation] unindent by 10 spaces
+LeadersBook/Views/PrivacyControls.swift:127:1: error: [LineLength] line is too long
+LeadersBook/Views/PrivacyControls.swift:127:1: error: [Indentation] unindent by 12 spaces
+LeadersBook/Views/PrivacyControls.swift:128:1: error: [Indentation] unindent by 12 spaces
+LeadersBook/Views/PrivacyControls.swift:129:1: error: [Indentation] unindent by 12 spaces
+LeadersBook/Views/PrivacyControls.swift:130:1: error: [Indentation] unindent by 14 spaces
+LeadersBook/Views/PrivacyControls.swift:130:103: error: [AddLines] add 1 line break
+LeadersBook/Views/PrivacyControls.swift:130:122: error: [AddLines] add 1 line break
+LeadersBook/Views/PrivacyControls.swift:131:1: error: [LineLength] line is too long
+LeadersBook/Views/PrivacyControls.swift:131:1: error: [Indentation] unindent by 14 spaces
+LeadersBook/Views/PrivacyControls.swift:132:1: error: [Indentation] unindent by 16 spaces
+LeadersBook/Views/PrivacyControls.swift:132:110: error: [AddLines] add 1 line break
+LeadersBook/Views/PrivacyControls.swift:132:146: error: [AddLines] add 1 line break
+LeadersBook/Views/PrivacyControls.swift:133:1: error: [LineLength] line is too long
+LeadersBook/Views/PrivacyControls.swift:133:1: error: [Indentation] unindent by 16 spaces
+LeadersBook/Views/PrivacyControls.swift:134:1: error: [Indentation] unindent by 16 spaces
+LeadersBook/Views/PrivacyControls.swift:134:103: error: [AddLines] add 1 line break
+LeadersBook/Views/PrivacyControls.swift:134:121: error: [AddLines] add 1 line break
+LeadersBook/Views/PrivacyControls.swift:135:1: error: [LineLength] line is too long
+LeadersBook/Views/PrivacyControls.swift:135:1: error: [Indentation] unindent by 16 spaces
+LeadersBook/Views/PrivacyControls.swift:136:1: error: [Indentation] unindent by 14 spaces
+LeadersBook/Views/PrivacyControls.swift:137:1: error: [Indentation] unindent by 14 spaces
+LeadersBook/Views/PrivacyControls.swift:138:1: error: [Indentation] unindent by 12 spaces
+LeadersBook/Views/PrivacyControls.swift:139:1: error: [LineLength] line is too long
+LeadersBook/Views/PrivacyControls.swift:139:1: error: [Indentation] unindent by 14 spaces
+LeadersBook/Views/PrivacyControls.swift:140:1: error: [Indentation] unindent by 14 spaces
+LeadersBook/Views/PrivacyControls.swift:141:1: error: [Indentation] unindent by 12 spaces
+LeadersBook/Views/PrivacyControls.swift:142:1: error: [Indentation] unindent by 10 spaces
+LeadersBook/Views/PrivacyControls.swift:142:60: error: [RemoveLine] remove line break
+LeadersBook/Views/PrivacyControls.swift:143:28: error: [AddLines] add 1 line break
+LeadersBook/Views/PrivacyControls.swift:143:98: error: [AddLines] add 1 line break
+LeadersBook/Views/PrivacyControls.swift:144:1: error: [Indentation] unindent by 8 spaces
+LeadersBook/Views/PrivacyControls.swift:145:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:146:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:149:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:150:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:151:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:152:1: error: [Indentation] unindent by 2 spaces
+LeadersBook/Views/PrivacyControls.swift:153:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:154:1: error: [LineLength] line is too long
+LeadersBook/Views/PrivacyControls.swift:154:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:155:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:156:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:157:1: error: [LineLength] line is too long
+LeadersBook/Views/PrivacyControls.swift:157:1: error: [Indentation] unindent by 6 spaces
+LeadersBook/Views/PrivacyControls.swift:158:1: error: [Indentation] unindent by 6 spaces
+LeadersBook/Views/PrivacyControls.swift:159:1: error: [Indentation] unindent by 6 spaces
+LeadersBook/Views/PrivacyControls.swift:160:1: error: [LineLength] line is too long
+LeadersBook/Views/PrivacyControls.swift:160:1: error: [Indentation] unindent by 6 spaces
+LeadersBook/Views/PrivacyControls.swift:161:1: error: [Indentation] unindent by 6 spaces
+LeadersBook/Views/PrivacyControls.swift:162:1: error: [Indentation] unindent by 4 spaces
+LeadersBook/Views/PrivacyControls.swift:163:1: error: [Indentation] unindent by 2 spaces

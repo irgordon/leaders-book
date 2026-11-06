@@ -1,0 +1,55 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "41693FDD-A503-4ED2-A4D2-2CBB521C51D4",
+        "deviceName" : "Leaders Book Compact Preview",
+        "modelName" : "iPhone 18 Pro",
+        "osBuildNumber" : "24A434",
+        "osVersion" : "27.0",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 1,
+      "passedTests" : 0,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "LeadersBook · Built with macOS 27.2",
+  "expectedFailures" : 0,
+  "failedTests" : 1,
+  "finishTime" : 1793944595.083,
+  "passedTests" : 0,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "Invalid frame dimension (negative or non-finite)."
+    }
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1793944538.496,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "Failed to tap \"PVT Jordan Morgan\" Button: Find single matching element. Multiple matching elements found for <XCUIElementQuery: 0x1066e7cf0>.\nSparse tree of matches:\n→Application, pid: 44884, label: 'The Leaders Book'\n  ↳Window (Main)\n    ↳Other\n      ↳Other\n        ↳Other\n          ↳Other\n            ↳Other\n              ↳CollectionView\n                ↳Cell\n                ⋅ ↳Button, label: 'PVT Jordan Morgan', Selected\n                ↳Cell\n                  ↳Button, label: 'PVT Jordan Morgan'",
+      "targetName" : "LeadersBookUITests",
+      "testIdentifier" : 1,
+      "testIdentifierString" : "LeadersBookUITests/testPhotoTrainingAndHeightWeightWorkflow()",
+      "testIdentifierURL" : "test://com.apple.xcode/LeadersBook/LeadersBookUITests/LeadersBookUITests/testPhotoTrainingAndHeightWeightWorkflow",
+      "testName" : "testPhotoTrainingAndHeightWeightWorkflow()"
+    }
+  ],
+  "title" : "Test - LeadersBook",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 1
+}
