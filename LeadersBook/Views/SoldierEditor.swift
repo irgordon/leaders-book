@@ -1,34 +1,49 @@
 import SwiftUI
 
 struct SoldierEditor: View {
-    @State var soldier: SoldierDraft
-    let isNew: Bool
+    @State var edit: SoldierEditSession
     let store: LeaderStore
-    let save: (SoldierDraft, [ImportedRecordFile]) async throws -> Void
-    @State private var files: [ImportedRecordFile] = []
+    let save: (SoldierEditSession) async throws -> Void
+    private var soldier: SoldierDraft {
+        get { edit.soldier }
+        nonmutating set { update(soldier: newValue, files: edit.files) }
+    }
+    private var soldierBinding: Binding<SoldierDraft> { Binding(get: { soldier }, set: { soldier = $0 }) }
+    private var filesBinding: Binding<[ImportedRecordFile]> {
+        Binding(get: { edit.files }, set: { update(soldier: soldier, files: $0) })
+    }
+    private func update(soldier: SoldierDraft, files: [ImportedRecordFile]) {
+        var updated = edit
+        updated.soldier = soldier; updated.files = files
+        do { try store.updateSoldierEdit(updated); edit = updated }
+        catch { if store.isUnlocked { store.operationFailure = AppFailure("Preserve Soldier Edits", underlying: error) } }
+    }
     @State private var photoOperation = OwnedOperation()
     @State private var saveOperation = OwnedOperation()
     @Environment(\.dismiss) private var dismiss
         @State private var confirmingCancel = false
-    @State private var original: SoldierDraft?
 
+    private func discardAndDismiss() {
+        do { try store.discardSoldierEdit(edit); dismiss() }
+        catch { store.operationFailure = AppFailure("Discard Soldier Edits", underlying: error) }
+    }
     var body: some View {
         NavigationStack {
             Form {
-                SoldierPhotoPicker(attachment: $soldier.photo, files: $files, store: store, operation: photoOperation)
+                SoldierPhotoPicker(attachment: soldierBinding.photo, files: filesBinding, store: store, operation: photoOperation)
                 Section("Soldier") {
-                    TextField("Name", text: $soldier.name)
+                    TextField("Name", text: soldierBinding.name)
                         .textContentType(.name)
                         .accessibilityIdentifier("soldierName")
-                    Picker("Rank", selection: $soldier.rank) {
+                    Picker("Rank", selection: soldierBinding.rank) {
                         ForEach(Rank.allCases, id: \.self) { rank in Text(rank.rawValue).tag(rank) }
                     }
                     .accessibilityIdentifier("soldierRank")
-                    TextField("Unit / Platoon", text: $soldier.unit)
-                    TextField("Team", text: $soldier.team)
+                    TextField("Unit / Platoon", text: soldierBinding.unit)
+                    TextField("Team", text: soldierBinding.team)
                 }.leadersBookRow()
                 Section {
-                    ForEach($soldier.training) { $item in
+                    ForEach(soldierBinding.training) { $item in
                         VStack(alignment: .leading, spacing: 12) {
                             TextField("Training title", text: $item.title)
                             if item.completionDates == nil && item.certificate == nil {
@@ -52,27 +67,27 @@ struct SoldierEditor: View {
                     Text("Use your unit’s requirements and due dates. This is a personal checklist, not an official training system.")
                 }.leadersBookRow()
                 Section {
-                    TextField("Leadership notes", text: $soldier.notes, axis: .vertical)
-                        .lineLimit(4...12)
+                    ProtectedNotesEditor(text: soldierBinding.notes).frame(minHeight: 150)
+                    Text("To copy or share notes, save them, then use Authenticate to Export Notes in the soldier record.").font(.caption)
                 } header: {
                     Text("Notes")
                 } footer: {
-                    Text("Records stay on this device. Keep notes limited to information your organization permits you to store here.")
+                    Text("Saved records remain eligible for system backups. Keep notes limited to information your organization permits you to store here.")
                 }.leadersBookRow()
             }.leadersBookList()
             .disabled(saveOperation.phase.isRunning)
-            .navigationTitle(isNew ? "Add Soldier" : "Edit Soldier")
+            .navigationTitle(edit.isNew ? "Add Soldier" : "Edit Soldier")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel", systemImage: "xmark") {
-                        if original == soldier { dismiss() } else { confirmingCancel = true }
+                        if !edit.hasChanges { discardAndDismiss() } else { confirmingCancel = true }
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save", systemImage: "checkmark") {
                         saveOperation.start("Save Soldier") {
-                            try await save(soldier, files)
+                            try await save(edit)
                             dismiss()
                         }
                     }
@@ -80,10 +95,9 @@ struct SoldierEditor: View {
                     .accessibilityIdentifier("saveSoldier")
                 }
             }
-            .onAppear { if original == nil { original = soldier } }
-            .interactiveDismissDisabled(original != nil && original != soldier)
+            .interactiveDismissDisabled(edit.hasChanges)
             .confirmationDialog("Discard Unsaved Changes?", isPresented: $confirmingCancel, titleVisibility: .visible) {
-                Button("Discard Changes", role: .destructive) { dismiss() }.foregroundStyle(Color.lbDanger)
+                Button("Discard Changes", role: .destructive) { discardAndDismiss() }.foregroundStyle(Color.lbDanger)
             }
             .onDisappear { photoOperation.cancel(); saveOperation.cancel() }
             .alert(item: Binding(get: { saveOperation.phase.failure }, set: { if $0 == nil { saveOperation.dismissFailure() } })) { failure in

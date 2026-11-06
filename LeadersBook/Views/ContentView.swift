@@ -4,6 +4,7 @@ struct ContentView: View {
     @Bindable var store: LeaderStore
     let scorer: AFTScoring
     @SceneStorage("selectedTab") private var selectedTab = 0
+    @State private var editorWindow = UUID()
     @State private var recoveryOperation = OwnedOperation()
     @Environment(\.scenePhase) private var scenePhase
 
@@ -50,7 +51,7 @@ struct ContentView: View {
                         TodayView(store: store, records: book.snapshot, scorer: scorer, selectedTab: $selectedTab)
                     }
                     Tab("Soldiers", systemImage: "person.2", value: 1) {
-                        SoldiersView(store: store, records: book.snapshot, scorer: scorer)
+                        SoldiersView(store: store, records: book.snapshot, scorer: scorer, editorWindow: editorWindow)
                     }
                     Tab("Guides", systemImage: "books.vertical", value: 2) {
                         GuidesView()
@@ -61,16 +62,16 @@ struct ContentView: View {
                 }
             }
         }
-         .task {
-            await store.prepareForPresentation()
-            #if AUTHENTICATION_TEST_DOUBLE
+        #if AUTHENTICATION_TEST_DOUBLE
+        .task {
             if ProcessInfo.processInfo.arguments.contains("--authentication-test-simultaneous-errors") {
                 store.draftSave.start("Test Draft") { throw CocoaError(.fileWriteNoPermission) }
                 store.operationFailure = AppFailure("Unlock Records", underlying: RecordAccessError.cancelled)
             }
-            #endif
         }
-        .background(PrivacyShield(locked: !store.isUnlocked, active: scenePhase == .active))
+        #endif
+        .background(PrivacyShield(locked: !store.isUnlocked, active: scenePhase == .active,
+                                  onDisconnect: { store.disconnectEditorWindow(editorWindow) }))
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in store.lock() }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.protectedDataWillBecomeUnavailableNotification)) { _ in store.lock() }
         .safeAreaInset(edge: .top) {

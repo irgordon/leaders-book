@@ -12,8 +12,63 @@ private final class DeferredAuthenticator: RecordAuthenticating {
     func cancel() { cancelled = true }
 }
 
+@MainActor private final class ExportAuthenticator: RecordAuthenticating {
+    var exports = 0
+    var denied = false
+    var hold = false
+    var continuation: CheckedContinuation<Void, Error>?
+    func authenticate() async throws {}
+    func authenticateForExport() async throws {
+        exports += 1
+        if denied { throw RecordAccessError.cancelled }
+        if hold { try await withCheckedThrowingContinuation { continuation = $0 } }
+    }
+    func cancel() {}
+}
+
 @MainActor
 struct RecordAccessTests {
+    @Test func exportsRequireFreshAuthenticationAndRejectLateCompletion() async throws {
+        let url = fixtureFile(); defer { cleanFixture(url) }
+        let auth = ExportAuthenticator()
+        let store = LeaderStore(fileURL: url, scorer: try AFTScoring(), authenticator: auth)
+        try await store.unlock()
+        let file = try RecordAttachment(name: "Certificate.pdf", kind: .pdf)
+        var soldier = SoldierDraft(name: "Export Test")
+        soldier.notes = "Private notes"
+        soldier.training = [TrainingDraft(title: "Course", completed: true, completionDates: [.now], certificate: file)]
+        try await store.saveSoldier(soldier, importing: [try ImportedRecordFile(attachment: file, data: pdfFixture)])
+        #expect(try await store.exportNotes(soldierID: soldier.id).data == Data("Private notes".utf8))
+        #expect(auth.exports == 1)
+        #expect(try await store.exportCertificate(file).data == pdfFixture)
+        #expect(auth.exports == 2)
+        auth.denied = true
+        await #expect(throws: RecordAccessError.cancelled) { try await store.exportCertificate(file) }
+        auth.denied = false; auth.hold = true
+        let task = Task { try await store.exportNotes(soldierID: soldier.id) }
+        defer { task.cancel(); auth.continuation?.resume(throwing: CancellationError()); auth.continuation = nil }
+        for _ in 0..<100 where auth.continuation == nil { await Task.yield() }
+        let continuation = try #require(auth.continuation); auth.continuation = nil
+        store.lock(); continuation.resume()
+        await #expect(throws: RecordAccessError.locked) { try await task.value }
+        #expect(!store.isUnlocked)
+    }
+
+    @Test func retentionUsesOneCalendarYearWithoutDeleting() throws {
+        var calendar = Calendar(identifier: .gregorian); calendar.timeZone = try #require(TimeZone(secondsFromGMT: 0))
+        var draft = SoldierDraft(name: "Retention Test")
+        draft.updatedAt = try #require(calendar.date(from: DateComponents(year: 2024, month: 1, day: 1)))
+        let soldier = try Soldier(draft: draft)
+        let before = try #require(calendar.date(from: DateComponents(year: 2024, month: 12, day: 31)))
+        let anniversary = try #require(calendar.date(from: DateComponents(year: 2025, month: 1, day: 1)))
+        #expect(!soldier.requiresRetentionReview(on: before, calendar: calendar))
+        #expect(soldier.requiresRetentionReview(on: anniversary, calendar: calendar))
+        #expect(soldier.name == "Retention Test")
+        #expect(!soldier.committedVersion().requiresRetentionReview())
+        draft.updatedAt = Date(timeIntervalSinceReferenceDate: Double.greatestFiniteMagnitude)
+        #expect(try Soldier(draft: draft).retentionReview(on: anniversary, calendar: calendar) == .dateUnavailable)
+    }
+
     @Test func unavailableAuthenticationFailsClosed() async throws {
         let store = LeaderStore(fileURL: fixtureFile(), scorer: try AFTScoring())
         await #expect(throws: RecordAccessError.unavailable) { try await store.unlock() }
@@ -25,22 +80,20 @@ struct RecordAccessTests {
         #expect(throws: RecordAccessError.locked) { try store.records }
     }
 
-    @Test func twoPresentersDoNotReloadAnUnlockedSession() async throws {
+    @Test func lockedReloadDoesNotReadOrRecoverPrivateFiles() async throws {
         let url = fixtureFile(); defer { cleanFixture(url) }
-        let store = LeaderStore(fileURL: url, scorer: try AFTScoring(), authenticator: TestAuthenticator())
-        async let first: Void = store.prepareForPresentation()
-        async let second: Void = store.prepareForPresentation()
-        _ = await (first, second)
-        try await store.unlock()
-        let before = try store.records
-        store.updateDraft(maximumDraft())
-        await store.prepareForPresentation()
-        await store.prepareForPresentation()
-        #expect(store.isUnlocked)
-        #expect((try store.records).generation == before.generation)
-        #expect(before.generation == 2)
-        #expect(store.draft.values == maximumDraft().values)
-        store.draftSave.cancel()
+        try FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
+        let root = Data("Private malformed records".utf8), journal = Data("Pending private journal".utf8)
+        let journalURL = url.deletingLastPathComponent().appending(path: "pending-transaction.json")
+        try root.write(to: url); try journal.write(to: journalURL)
+        let store = LeaderStore(fileURL: url, scorer: try AFTScoring())
+        await store.reload()
+        #expect(store.operationFailure?.rootCause as? RecordAccessError == .locked)
+        guard case .locked(nil) = store.state else { Issue.record("Cold locked state exposed a summary"); return }
+        #expect(try Data(contentsOf: url) == root)
+        #expect(try Data(contentsOf: journalURL) == journal)
+        await #expect(throws: RecordAccessError.unavailable) { try await store.unlock() }
+        #expect(try Data(contentsOf: journalURL) == journal)
     }
 
     @Test func archiveConfigurationExcludesTestAuthentication() throws {

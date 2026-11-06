@@ -1,0 +1,123 @@
+import Foundation
+import Testing
+@testable import LeadersBookCore
+
+@MainActor private final class DraftAuthenticator: RecordAuthenticating {
+    var denied = false
+    func authenticate() async throws { if denied { throw RecordAccessError.cancelled } }
+    func cancel() {}
+}
+
+@MainActor struct SoldierEditTests {
+    @Test func sceneDisconnectReleasesOnlyItsDraftAndRejectsStaleWrites() async throws {
+        let url = fixtureFile(); defer { cleanFixture(url) }
+        let store = try await openStore(url)
+        let first = UUID(), second = UUID()
+        var a = try store.beginSoldierEdit(SoldierDraft(), window: first)
+        a.soldier.notes = "First"; try store.updateSoldierEdit(a)
+        var b = try store.beginSoldierEdit(SoldierDraft(), window: second)
+        b.soldier.notes = "Second"; try store.updateSoldierEdit(b)
+        store.disconnectEditorWindow(first)
+        #expect(throws: RecordError.conflict) { try store.updateSoldierEdit(a) }
+        store.lock(); store.disconnectEditorWindow(first); try await store.unlock()
+        #expect(try store.restoreSoldierEdit(window: first) == nil)
+        #expect(try store.restoreSoldierEdit(window: second)?.soldier.notes == "Second")
+        store.lock(); store.disconnectEditorWindow(second); try await store.unlock()
+        #expect(try store.restoreSoldierEdit(window: second) == nil)
+    }
+
+    @Test func failedUnlockDoesNotExposeOrLoseDraft() async throws {
+        let url = fixtureFile(); defer { cleanFixture(url) }
+        let auth = DraftAuthenticator()
+        let store = LeaderStore(fileURL: url, scorer: try AFTScoring(), authenticator: auth)
+        try await store.unlock()
+        var edit = try store.beginSoldierEdit(SoldierDraft(), window: UUID())
+        edit.soldier.notes = "Private"
+        try store.updateSoldierEdit(edit)
+        store.lock(); auth.denied = true
+        await #expect(throws: RecordAccessError.cancelled) { try await store.unlock() }
+        #expect(throws: RecordAccessError.locked) { try store.restoreSoldierEdit(window: edit.window) }
+        auth.denied = false; try await store.unlock()
+        #expect(try store.restoreSoldierEdit(window: edit.window)?.soldier.notes == "Private")
+    }
+
+    @Test func protectedDraftRestoresWithoutDiskWritesOrStaleAccess() async throws {
+        let url = fixtureFile(); defer { cleanFixture(url) }
+        let store = try await openStore(url)
+        try await store.saveSoldier(SoldierDraft(name: "Saved"))
+        let before = try Data(contentsOf: url)
+        let window = UUID()
+        var edit = try store.beginSoldierEdit(SoldierDraft(), window: window)
+        edit.soldier.notes = "Unsaved private notes"
+        edit.soldier.training = [TrainingDraft(title: "", tracksDueDate: true)]
+        let photo = try RecordAttachment(name: "Pending.jpg", kind: .jpeg)
+        edit.soldier.photo = photo
+        edit.files = [try ImportedRecordFile(attachment: photo, data: jpegFixture)]
+        try store.updateSoldierEdit(edit)
+        store.lock()
+        #expect(throws: RecordAccessError.locked) { try store.restoreSoldierEdit(window: window) }
+        #expect(throws: RecordAccessError.locked) { try store.updateSoldierEdit(edit) }
+        try await store.unlock()
+        let restored = try #require(try store.restoreSoldierEdit(window: window))
+        #expect(restored.soldier == edit.soldier)
+        #expect(restored.original == edit.original)
+        #expect(restored.files.first?.data == jpegFixture)
+        #expect(restored.hasChanges)
+        #expect(throws: RecordAccessError.locked) { try store.updateSoldierEdit(edit) }
+        #expect(throws: RecordAccessError.locked) { try store.discardSoldierEdit(edit) }
+        #expect(try Data(contentsOf: url) == before)
+        let freshProcess = try await openStore(url)
+        #expect(try freshProcess.restoreSoldierEdit(window: window) == nil)
+    }
+
+    @Test func windowsSaveAndDiscardIndependently() async throws {
+        let url = fixtureFile(); defer { cleanFixture(url) }
+        let store = try await openStore(url)
+        let first = UUID(), second = UUID()
+        var a = try store.beginSoldierEdit(SoldierDraft(), window: first)
+        a.soldier.name = "Discarded"
+        try store.updateSoldierEdit(a)
+        var b = try store.beginSoldierEdit(SoldierDraft(), window: second)
+        b.soldier.name = "Saved"; b.soldier.notes = "Retained"
+        let photo = try RecordAttachment(name: "Saved.jpg", kind: .jpeg)
+        b.soldier.photo = photo
+        b.files = [try ImportedRecordFile(attachment: photo, data: jpegFixture)]
+        try store.updateSoldierEdit(b)
+        store.lock(); try await store.unlock()
+        a = try #require(try store.restoreSoldierEdit(window: first))
+        b = try #require(try store.restoreSoldierEdit(window: second))
+        #expect(a.soldier.name == "Discarded")
+        try store.discardSoldierEdit(a)
+        #expect(try store.restoreSoldierEdit(window: first) == nil)
+        try await store.saveSoldierEdit(b)
+        #expect(try store.restoreSoldierEdit(window: second) == nil)
+        #expect((try store.records).soldiers.first?.notes == "Retained")
+        let bytes = try Data(contentsOf: store.attachmentURL(photo))
+        #expect(bytes == jpegFixture)
+        store.lock(); try await store.unlock()
+        #expect(try store.restoreSoldierEdit(window: second) == nil)
+    }
+
+    @Test func restoredRevisionCannotOverwriteAnotherWindow() async throws {
+        let url = fixtureFile(); defer { cleanFixture(url) }
+        let store = try await openStore(url)
+        try await store.saveSoldier(SoldierDraft(name: "Original"))
+        let soldier = try #require((try store.records).soldiers.first)
+        var edit = try store.beginSoldierEdit(SoldierDraft(soldier), window: UUID())
+        edit.soldier.notes = "Unsaved"
+        try store.updateSoldierEdit(edit)
+        var other = SoldierDraft(soldier); other.notes = "Other Window"
+        try await store.saveSoldier(other)
+        store.lock(); try await store.unlock()
+        let restored = try #require(try store.restoreSoldierEdit(window: edit.window))
+        await #expect(throws: RecordError.conflict) { try await store.saveSoldierEdit(restored) }
+        #expect((try store.records).soldiers.first?.notes == "Other Window")
+        #expect(try store.restoreSoldierEdit(window: edit.window)?.soldier.notes == "Unsaved")
+        var tampered = restored
+        tampered.soldier.revision = try #require((try store.records).soldiers.first).revision
+        #expect(throws: RecordError.conflict) { try store.updateSoldierEdit(tampered) }
+        try await store.deleteSoldier(id: soldier.id)
+        await #expect(throws: RecordError.conflict) { try await store.saveSoldierEdit(restored) }
+        #expect((try store.records).soldiers.isEmpty)
+    }
+}

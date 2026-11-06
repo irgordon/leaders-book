@@ -1,0 +1,164 @@
+import SwiftUI
+import UniformTypeIdentifiers
+import PDFKit
+
+struct DataPolicyView: View {
+    var body: some View {
+        List {
+            Section("Storage and Backups") {
+                Text("Saved records and attachments stay in this app’s storage and remain eligible for system backups. Backups may retain data after you delete it here.")
+                Text("Imported originals and copies you export are outside this app’s deletion controls.")
+            }.leadersBookRow()
+            Section("Sharing") { Text("Exporting notes or certificates requires fresh device authentication. Once exported, the receiving app controls the copy. System screenshots cannot be prevented.") }.leadersBookRow()
+            Section("Retention") { Text("One calendar year after a Soldier record’s last saved update, the app warns that a retention review is due. Nothing is deleted automatically. Confirmed deletion removes the record and linked results and unshared attachments from this app.") }.leadersBookRow()
+            Section("Unsaved Edits") { Text("Soldier edits remain in protected process memory while locked. They are released on Save, Discard, scene disconnect, or process termination. Other editors discard unsaved entries on lock.") }.leadersBookRow()
+        }.leadersBookList().navigationTitle("Privacy and Data Controls")
+    }
+}
+
+struct AuthenticatedExportButton: View {
+    let title: String
+    let request: @MainActor () async throws -> AuthorizedRecordExport
+    @State private var operation = OwnedOperation()
+    @State private var export: AuthorizedRecordExport?
+    var body: some View {
+        Button(title, systemImage: "square.and.arrow.up") {
+            operation.start("Authorize Export") { export = try await request() }
+        }.buttonStyle(LBActionButtonStyle()).disabled(operation.phase.isRunning)
+            .sheet(item: $export) { RecordExportSheet(export: $0) }
+            .onDisappear { operation.cancel(); export = nil }
+            .alert(item: Binding(get: { operation.phase.failure }, set: { if $0 == nil { operation.dismissFailure() } })) {
+                Alert(title: Text("Export Not Authorized"), message: Text($0.localizedDescription), dismissButton: .default(Text("OK")))
+            }
+    }
+}
+
+struct RecordExportSheet: UIViewControllerRepresentable {
+    let export: AuthorizedRecordExport
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        switch export.content {
+        case .notes(let text): return UIActivityViewController(activityItems: [text], applicationActivities: nil)
+        case .certificate(let file):
+        let provider = NSItemProvider()
+        provider.suggestedName = file.attachment.name
+        let bytes = file.data
+        let type: UTType
+        switch file.attachment.kind { case .pdf: type = .pdf; case .jpeg: type = .jpeg; case .png: type = .png }
+        provider.registerDataRepresentation(forTypeIdentifier: type.identifier, visibility: .all) { completion in
+            completion(bytes, nil); return nil
+        }
+        return UIActivityViewController(activityItemsConfiguration: UIActivityItemsConfiguration(itemProviders: [provider]))
+        }
+    }
+    func updateUIViewController(_ controller: UIActivityViewController, context: Context) {}
+}
+
+/// Notes cannot use clipboard/export menus without the explicit authenticated export action.
+final class ProtectedNotesTextView: UITextView {
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        let allowed = [#selector(paste(_:)), #selector(select(_:)), #selector(selectAll(_:)), #selector(delete(_:))]
+        return allowed.contains(action) && super.canPerformAction(action, withSender: sender)
+    }
+}
+struct ProtectedNotesEditor: UIViewRepresentable {
+    @Binding var text: String
+    func makeCoordinator() -> Coordinator { Coordinator(text: $text) }
+    func makeUIView(context: Context) -> ProtectedNotesTextView {
+        let view = ProtectedNotesTextView()
+        view.delegate = context.coordinator
+        view.font = .preferredFont(forTextStyle: .body)
+        view.adjustsFontForContentSizeCategory = true
+        view.textColor = UIColor(Color.lbTextPrimary); view.backgroundColor = .clear
+        view.writingToolsBehavior = .none
+        view.textDragInteraction?.isEnabled = false
+        view.accessibilityLabel = "Leadership Notes"; view.accessibilityIdentifier = "soldierNotes"
+        return view
+    }
+    func updateUIView(_ view: ProtectedNotesTextView, context: Context) {
+        context.coordinator.text = $text
+        view.isEditable = context.environment.isEnabled
+        view.isSelectable = context.environment.isEnabled
+        if view.text != text { view.text = text }
+    }
+    final class Coordinator: NSObject, UITextViewDelegate {
+        var text: Binding<String>
+        init(text: Binding<String>) { self.text = text }
+        func textViewDidChange(_ textView: UITextView) { text.wrappedValue = textView.text }
+    }
+}
+
+/// PDF pages are drawn without interactive links, selection, or an implicit share menu.
+struct CertificatePreview: View {
+    let attachment: RecordAttachment
+    let store: LeaderStore
+    @State private var phase: Phase = .loading
+    @State private var zoom: CGFloat = 1
+    @GestureState private var pinch: CGFloat = 1
+    private struct Page { let drawing: CGPDFPage; let accessibleText: String? }
+    private enum Phase { case loading, image(UIImage), pdf(PDFDocument, [Page]), failed(AppFailure) }
+    var body: some View {
+        NavigationStack {
+            GeometryReader { geometry in
+            ScrollView([.horizontal, .vertical]) {
+                Group {
+                switch phase {
+                case .loading: ProgressView("Opening Certificate…")
+                case .failed(let failure): Text(failure.localizedDescription).padding()
+                case .image(let image): Image(uiImage: image).resizable().scaledToFit().accessibilityLabel("Certificate Image")
+                case .pdf(_, let pages):
+                    LazyVStack {
+                        ForEach(pages.indices, id: \.self) { index in
+                            PDFPageCanvas(page: pages[index].drawing).aspectRatio(pages[index].drawing.getBoxRect(.mediaBox).width / pages[index].drawing.getBoxRect(.mediaBox).height, contentMode: .fit)
+                                .accessibilityElement()
+                                .accessibilityLabel("Certificate Page \(index + 1) of \(pages.count). " + (pages[index].accessibleText ?? "No embedded text. Authenticate to export for another reader."))
+                        }
+                    }
+                }
+                }.frame(width: geometry.size.width * min(4, max(1, zoom * pinch)))
+            }
+            .gesture(MagnifyGesture().updating($pinch) { value, state, _ in state = value.magnification }
+                .onEnded { zoom = min(4, max(1, zoom * $0.magnification)) })
+            }.background(Color.lbBackground).navigationTitle("Certificate")
+                .safeAreaInset(edge: .bottom) {
+                    AuthenticatedExportButton(title: "Authenticate to Export") { try await store.exportCertificate(attachment) }.padding()
+                }
+                .task {
+                    do {
+                        let file = try await store.readAttachment(attachment)
+                        try Task.checkCancellation()
+                        if attachment.kind == .pdf {
+                            guard let document = PDFDocument(data: file.data), document.pageCount > 0, !document.isLocked else { throw RecordError.invalidAttachment }
+                            let pages = try (0..<document.pageCount).map { index in
+                                guard let source = document.page(at: index), let page = source.pageRef else { throw RecordError.invalidAttachment }
+                                let bounds = page.getBoxRect(.mediaBox)
+                                guard bounds.width.isFinite, bounds.height.isFinite, bounds.width > 0, bounds.height > 0 else { throw RecordError.invalidAttachment }
+                                return Page(drawing: page, accessibleText: source.string)
+                            }
+                            phase = .pdf(document, pages)
+                        } else {
+                            guard let image = UIImage(data: file.data) else { throw RecordError.invalidAttachment }
+                            phase = .image(image)
+                        }
+                    } catch is CancellationError { return }
+                    catch { phase = .failed(AppFailure("Preview Certificate", underlying: error)) }
+                }
+        }
+    }
+}
+struct PDFPageCanvas: UIViewRepresentable {
+    let page: CGPDFPage
+    func makeUIView(context: Context) -> PageView { PageView(page: page) }
+    func updateUIView(_ view: PageView, context: Context) {}
+    final class PageView: UIView {
+        let page: CGPDFPage
+        init(page: CGPDFPage) { self.page = page; super.init(frame: .zero); isUserInteractionEnabled = false; contentMode = .redraw }
+        required init?(coder: NSCoder) { fatalError("Programmatic view only") }
+        override func draw(_ rect: CGRect) {
+            guard let context = UIGraphicsGetCurrentContext() else { preconditionFailure("PDF drawing requires a graphics context") }
+            context.setFillColor(UIColor.white.cgColor); context.fill(bounds)
+            context.translateBy(x: 0, y: bounds.height); context.scaleBy(x: 1, y: -1)
+            context.concatenate(page.getDrawingTransform(.mediaBox, rect: bounds, rotate: 0, preserveAspectRatio: true))
+            context.drawPDFPage(page)
+        }
+    }
+}

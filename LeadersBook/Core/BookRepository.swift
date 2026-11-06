@@ -205,7 +205,10 @@ actor BookRepository {
                 guard soldiers[index].revision == expectedRevision else { throw RecordError.conflict }
                 soldiers[index] = soldier.committedVersion()
             }
-            else { soldiers.append(soldier.committedVersion()) }
+            else {
+                guard expectedRevision == nil else { throw RecordError.conflict }
+                soldiers.append(soldier.committedVersion())
+            }
             uploads = files
         case .deleteSoldier(let id):
             soldiers.removeAll { $0.id == id }; results.removeAll { $0.soldierID == id }

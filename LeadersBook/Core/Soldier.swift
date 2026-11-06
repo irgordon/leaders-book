@@ -137,6 +137,8 @@ struct TrainingItem: Identifiable, Equatable, Sendable {
     }
 }
 
+enum RetentionReview: Sendable { case current, due, dateUnavailable }
+
 struct Soldier: Identifiable, Equatable, Sendable {
     let id: UUID
     private let validatedName: NonemptyText
@@ -151,6 +153,15 @@ struct Soldier: Identifiable, Equatable, Sendable {
     let heightWeight: [HeightWeightRecord]?
     var name: String { validatedName.value }
     var displayName: String { "\(rank.rawValue) \(name)" }
+    func retentionReview(on date: Date = .now, calendar: Calendar = Calendar(identifier: .gregorian)) -> RetentionReview {
+        guard (Date.distantPast...Date.distantFuture).contains(updatedAt),
+              (Date.distantPast...Date.distantFuture).contains(date),
+              let years = calendar.dateComponents([.year], from: updatedAt, to: date).year else { return .dateUnavailable }
+        return years >= 1 ? .due : .current
+    }
+    func requiresRetentionReview(on date: Date = .now, calendar: Calendar = Calendar(identifier: .gregorian)) -> Bool {
+        retentionReview(on: date, calendar: calendar) != .current
+    }
     var overdueCount: Int { training.filter { $0.isOverdue() }.count }
     init(draft: SoldierDraft) throws {
         id = draft.id

@@ -2,8 +2,35 @@ import XCTest
 import SwiftUI
 @testable import LeadersBook
 
+@MainActor private struct SceneAuthenticator: RecordAuthenticating {
+ func authenticate() async throws {}
+ func cancel() {}
+}
+
 @MainActor
 final class ThemeAdapterTests: XCTestCase {
+ func testPresenterSupportsTwoPendingSourcesRatherThanAThirdQueueSlot() async throws {
+  let scorer = try AFTScoring(), store = LeaderStore(scorer: try AFTScoring())
+  store.draftSave.start("Draft") { throw CocoaError(.fileWriteNoPermission) }
+  for _ in 0..<100 where store.draftSave.phase.isRunning { await Task.yield() }
+  let draft = try XCTUnwrap(store.draftSave.phase.failure)
+  store.operationFailure = AppFailure("First Operation", underlying: RecordAccessError.locked)
+  let latest = AppFailure("Second Operation", underlying: RecordAccessError.locked)
+  store.operationFailure = latest
+  let binding = ContentView(store: store, scorer: scorer).presentedFailure
+  XCTAssertEqual(binding.wrappedValue?.id, latest.id)
+  binding.wrappedValue = nil
+  XCTAssertEqual(binding.wrappedValue?.id, draft.id)
+  binding.wrappedValue = nil
+  XCTAssertNil(binding.wrappedValue)
+ }
+ func testNotesDoNotOfferUnauthenticatedCopyOrCut() {
+  let view = ProtectedNotesTextView()
+  view.text = "Private notes"; view.selectedRange = NSRange(location: 0, length: 7)
+  XCTAssertFalse(view.canPerformAction(#selector(UIResponderStandardEditActions.copy(_:)), withSender: nil))
+  XCTAssertFalse(view.canPerformAction(#selector(UIResponderStandardEditActions.cut(_:)), withSender: nil))
+ }
+
  func testSimultaneousFailuresRetainDraftUntilAcknowledged() async throws {
   let scorer = try AFTScoring()
   let store = LeaderStore(scorer: scorer)
@@ -24,7 +51,7 @@ final class ThemeAdapterTests: XCTestCase {
   XCTAssertNil(binding.wrappedValue)
  }
 
- func testPrivacyCoverThemeAndInactiveAttachment() throws {
+ func testPrivacyCoverThemeAndInactiveAttachment() async throws {
   let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
   let previous = scene.windows.first(where: \.isKeyWindow)
   let window = UIWindow(windowScene: scene)
@@ -57,6 +84,42 @@ final class ThemeAdapterTests: XCTestCase {
   NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
   XCTAssertTrue(cover.isHidden)
   anchor.removeCover()
+  if UIDevice.current.userInterfaceIdiom == .pad { try await verifyTwoRealScenes() }
+ }
+ private func verifyTwoRealScenes() async throws {
+  XCTAssertTrue(UIApplication.shared.supportsMultipleScenes)
+  let original = Set(UIApplication.shared.connectedScenes.map { $0.session.persistentIdentifier })
+  let first = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+  var activationFailure: Error?
+  UIApplication.shared.requestSceneSessionActivation(nil, userActivity: nil, options: nil) { activationFailure = $0 }
+  for _ in 0..<100 {
+   if activationFailure != nil || UIApplication.shared.connectedScenes.contains(where: { !original.contains($0.session.persistentIdentifier) }) { break }
+   try await Task.sleep(for: .milliseconds(50))
+  }
+  if let activationFailure { throw activationFailure }
+  let second = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first { !original.contains($0.session.persistentIdentifier) })
+  XCTAssertFalse(first === second)
+  let store = LeaderStore(fileURL: FileManager.default.temporaryDirectory.appending(path: "Scene-\(UUID())/records.json"), scorer: try AFTScoring(), authenticator: SceneAuthenticator())
+  try await store.unlock()
+  let a = UUID(), b = UUID()
+  var editA = try store.beginSoldierEdit(SoldierDraft(), window: a); editA.soldier.notes = "Scene A"; try store.updateSoldierEdit(editA)
+  var editB = try store.beginSoldierEdit(SoldierDraft(), window: b); editB.soldier.notes = "Scene B"; try store.updateSoldierEdit(editB)
+  let window = UIWindow(windowScene: second)
+  window.rootViewController = UIViewController(); window.makeKeyAndVisible()
+  let anchor = ShieldAnchor(frame: window.bounds)
+  anchor.onDisconnect = { store.disconnectEditorWindow(b) }
+  window.rootViewController?.view.addSubview(anchor)
+  defer { window.isHidden = true; anchor.removeCover() }
+  var destructionFailure: Error?
+  UIApplication.shared.requestSceneSessionDestruction(second.session, options: nil) { destructionFailure = $0 }
+  for _ in 0..<100 {
+   if try destructionFailure != nil || store.restoreSoldierEdit(window: b) == nil { break }
+   try await Task.sleep(for: .milliseconds(50))
+  }
+  if let destructionFailure { throw destructionFailure }
+  XCTAssertNil(try store.restoreSoldierEdit(window: b))
+  XCTAssertEqual(try store.restoreSoldierEdit(window: a)?.soldier.notes, "Scene A")
+  print("REAL_SCENES: two distinct UIWindowScenes created; disconnect cleared B and preserved A")
  }
 
  func testOverdueTrainingBoundaries() throws {

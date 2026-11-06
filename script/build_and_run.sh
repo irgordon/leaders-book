@@ -33,7 +33,7 @@ if [[ "$MODE" == "--validate" ]]; then
     # Keep signed build products outside document-provider folders with Finder metadata.
     VALIDATION_ROOT="${TMPDIR:-/tmp}/LeadersBookValidation"
     DERIVED="$VALIDATION_ROOT/DerivedData"
-    swift test --scratch-path "$VALIDATION_ROOT/Core" --filter ThemeContrastTests
+    swift test --scratch-path "$VALIDATION_ROOT/Core"
     xcodebuild -project "$PROJECT" -scheme LeadersBook -configuration Debug \
         -destination "platform=iOS Simulator,id=$DEVICE" -derivedDataPath "$DERIVED" \
         -only-testing:ThemeAdapterTests CODE_SIGNING_ALLOWED=NO test

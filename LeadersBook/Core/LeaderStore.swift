@@ -13,12 +13,12 @@ final class LeaderStore {
     private(set) var state: BookLoadState = .locked(nil)
     private enum Access { case locked, authenticating(UUID), unlocked(UUID) }
     private var access: Access = .locked
-    private enum InitialSummary { case pending, consumed }
-    private var initialSummary: InitialSummary = .pending
     private var summary: LockedSummary?
+    private var soldierEdits: [UUID: SoldierEditSession] = [:]
     private let authenticator: any RecordAuthenticating
     private var epoch = UUID()
     private var lease: RecordAccessLease?
+    private var exportRequest: UUID?
     var isUnlocked: Bool { if case .unlocked = access { true } else { false } }
     var isAuthenticating: Bool { if case .authenticating = access { true } else { false } }
     private(set) var draft = FitnessDraft()
@@ -75,32 +75,28 @@ final class LeaderStore {
         lease?.revoke(); lease = nil
         access = .locked
         authenticator.cancel()
+        exportRequest = nil
         draftSave.cancel()
         for task in operations.values { task.cancel() }
         draft = FitnessDraft()
+        soldierEdits = soldierEdits.filter { $0.value.hasChanges }
         operationFailure = nil
         state = .locked(summary)
     }
     private func requireAccess() throws {
         guard case .unlocked = access else { throw RecordAccessError.locked }
     }
-    /// Shared by all windows; presentation must not reload an active editing session.
-    func prepareForPresentation() async {
-        guard case .pending = initialSummary, case .locked(nil) = state, case .locked = access else { return }
-        initialSummary = .consumed
-        await reload()
-    }
     func reload() async {
+        do { try requireAccess() }
+        catch { operationFailure = AppFailure("Reload Records", underlying: error); return }
         draftSave.cancel()
         let request = UUID()
         let generation = epoch
-        let unlocked: Bool
-        if case .unlocked = access { unlocked = true; state = .loading(request) } else { unlocked = false }
+        state = .loading(request)
         do {
             let book = try await repository.load()
             guard generation == epoch else { return }
             summary = LockedSummary(soldiers: book.snapshot.soldiers.count, results: book.snapshot.results.count)
-            guard unlocked else { state = .locked(summary); return }
             guard case .loading(let active) = state, active == request else { return }
             state = .ready(book); draft = book.snapshot.fitnessDraft
         } catch is CancellationError {
@@ -109,7 +105,6 @@ final class LeaderStore {
             state = .loading(UUID())
         } catch {
             guard generation == epoch else { return }
-            if !unlocked { state = .locked(summary); operationFailure = AppFailure("Load Summary", underlying: error); return }
             guard case .loading(let active) = state, active == request else { return }
             state = .failed(AppFailure("Open Records", underlying: error))
         }
@@ -162,6 +157,70 @@ final class LeaderStore {
             }
             throw error
         }
+    }
+    private func authenticateExport() async throws -> RecordAccessLease {
+        try requireReady()
+        guard exportRequest == nil else { throw RecordAccessError.superseded }
+        let request = UUID(), generation = epoch
+        let permit = try accessLease()
+        exportRequest = request
+        defer { if exportRequest == request { exportRequest = nil } }
+        try await authenticator.authenticateForExport()
+        try Task.checkCancellation()
+        try requireReady()
+        guard generation == epoch, exportRequest == request else { throw RecordAccessError.superseded }
+        return permit
+    }
+    func exportNotes(soldierID: UUID) async throws -> AuthorizedRecordExport {
+        let permit = try await authenticateExport()
+        try permit.check()
+        guard let soldier = try records.soldiers.first(where: { $0.id == soldierID }) else { throw RecordError.missingSoldier }
+        return AuthorizedRecordExport(content: .notes(soldier.notes))
+    }
+    func exportCertificate(_ attachment: RecordAttachment) async throws -> AuthorizedRecordExport {
+        let permit = try await authenticateExport()
+        try permit.check()
+        guard try records.attachments.contains(attachment) else { throw RecordError.invalidAttachment }
+        let file = try await readAttachment(attachment)
+        try permit.check()
+        return AuthorizedRecordExport(content: .certificate(file))
+    }
+    /// Scene lifecycle cleanup is permitted while locked and cannot recreate a draft.
+    func disconnectEditorWindow(_ window: UUID) { soldierEdits[window] = nil }
+    func beginSoldierEdit(_ soldier: SoldierDraft, window: UUID) throws -> SoldierEditSession {
+        if let existing = try restoreSoldierEdit(window: window) { return existing }
+        let edit = SoldierEditSession(id: UUID(), window: window, original: soldier,
+                                      soldier: soldier, files: [], permit: try accessLease())
+        soldierEdits[window] = edit
+        return edit
+    }
+    func restoreSoldierEdit(window: UUID) throws -> SoldierEditSession? {
+        try requireReady()
+        guard let retained = soldierEdits[window] else { return nil }
+        let restored = SoldierEditSession(id: retained.id, window: window, original: retained.original,
+                                         soldier: retained.soldier, files: retained.files, permit: try accessLease())
+        soldierEdits[window] = restored
+        return restored
+    }
+    func updateSoldierEdit(_ edit: SoldierEditSession) throws {
+        try requireReady()
+        try edit.permit.check()
+        guard let retained = soldierEdits[edit.window], retained.id == edit.id,
+              retained.original == edit.original, retained.original.id == edit.soldier.id,
+              edit.soldier.revision == retained.original.revision else { throw RecordError.conflict }
+        soldierEdits[edit.window] = edit
+    }
+    func discardSoldierEdit(_ edit: SoldierEditSession) throws {
+        try requireReady()
+        try edit.permit.check()
+        guard let retained = soldierEdits[edit.window] else { return } // Already saved/closed is an idempotent outcome.
+        guard retained.id == edit.id else { throw RecordError.conflict }
+        soldierEdits[edit.window] = nil
+    }
+    func saveSoldierEdit(_ edit: SoldierEditSession) async throws {
+        try updateSoldierEdit(edit)
+        try await saveSoldier(edit.soldier, importing: edit.files)
+        try discardSoldierEdit(edit)
     }
     func saveSoldier(_ input: SoldierDraft, importing files: [ImportedRecordFile] = []) async throws {
         try requireReady()

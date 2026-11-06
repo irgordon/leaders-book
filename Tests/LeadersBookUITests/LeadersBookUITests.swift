@@ -2,6 +2,87 @@ import XCTest
 
 @MainActor
 final class LeadersBookUITests: XCTestCase {
+    func testExportDenialAndPublicBackupPolicy() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchArguments = ["--authentication-test-export-denied"]
+        app.launch()
+        XCTAssertTrue(app.buttons["unlockRecords"].waitForExistence(timeout: 5))
+        app.buttons["Privacy and Data Controls"].tap()
+        XCTAssertTrue(app.navigationBars["Privacy and Data Controls"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "system backups")).firstMatch.exists)
+        app.buttons["BackButton"].tap()
+        app.buttons["unlockRecords"].tap()
+        XCTAssertTrue(app.buttons["lockRecords"].waitForExistence(timeout: 5))
+        selectTab("Soldiers", in: app)
+        if app.buttons["BackButton"].exists { app.buttons["BackButton"].tap() }
+        app.buttons.matching(identifier: "Add Soldier").firstMatch.tap()
+        let name = app.textFields["soldierName"]
+        XCTAssertTrue(name.waitForExistence(timeout: 5)); name.tap(); name.typeText("Export Policy Test")
+        let notes = app.textViews["soldierNotes"]
+        reveal(notes, in: app); notes.tap(); notes.typeText("Private export content")
+        app.buttons["saveSoldier"].tap()
+        XCTAssertTrue(app.navigationBars.staticTexts["PVT Export Policy Test"].waitForExistence(timeout: 5))
+        let export = app.buttons["Authenticate to Export Notes"]
+        reveal(export, in: app); export.tap()
+        XCTAssertTrue(app.alerts["Export Not Authorized"].waitForExistence(timeout: 5))
+        app.alerts["Export Not Authorized"].buttons["OK"].tap()
+        app.terminate(); app.launchArguments = []; launchUnlocked(app)
+        selectTab("Soldiers", in: app)
+        if !app.navigationBars.staticTexts["PVT Export Policy Test"].exists {
+            app.descendants(matching: .any).matching(NSPredicate(format: "label == %@", "PVT Export Policy Test")).firstMatch.tap()
+        }
+        reveal(export, in: app); export.tap()
+        XCTAssertTrue(app.cells["Copy"].waitForExistence(timeout: 5))
+        capture("Fresh Authentication — Authorized Notes Export", app: app)
+        app.cells["Copy"].tap()
+        let delete = app.buttons["Delete Soldier"]
+        reveal(delete, in: app); delete.tap(); app.buttons["Delete Soldier and Results"].tap()
+    }
+
+    func testSoldierEditsRestoreAfterUnlockAndClearAfterSaveOrDiscard() {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        launchUnlocked(app)
+        selectTab("Soldiers", in: app)
+        if app.buttons["BackButton"].exists { app.buttons["BackButton"].tap() }
+        app.buttons.matching(identifier: "Add Soldier").firstMatch.tap()
+        let name = app.textFields["soldierName"]
+        XCTAssertTrue(name.waitForExistence(timeout: 5))
+        name.tap(); name.typeText("Memory Draft")
+        let notes = app.descendants(matching: .any).matching(identifier: "soldierNotes").firstMatch
+        reveal(notes, in: app)
+        notes.tap(); notes.typeText("Unsaved notes survive locking")
+        XCUIDevice.shared.press(.home)
+        app.activate()
+        XCTAssertTrue(app.buttons["unlockRecords"].waitForExistence(timeout: 5))
+        XCTAssertFalse(name.exists)
+        app.buttons["unlockRecords"].tap()
+        XCTAssertTrue(app.buttons["saveSoldier"].waitForExistence(timeout: 5))
+        reveal(notes, in: app)
+        XCTAssertEqual(notes.value as? String, "Unsaved notes survive locking")
+        app.buttons["saveSoldier"].tap()
+        XCTAssertTrue(app.navigationBars.staticTexts["PVT Memory Draft"].waitForExistence(timeout: 5))
+        let delete = app.buttons["Delete Soldier"]
+        reveal(delete, in: app); delete.tap()
+        app.buttons["Delete Soldier and Results"].tap()
+        XCTAssertTrue(app.buttons.matching(identifier: "Add Soldier").firstMatch.waitForExistence(timeout: 5))
+        app.buttons.matching(identifier: "Add Soldier").firstMatch.tap()
+        XCTAssertTrue(name.waitForExistence(timeout: 5))
+        name.tap(); name.typeText("Discarded Draft")
+        XCUIDevice.shared.press(.home); app.activate()
+        XCTAssertTrue(app.buttons["unlockRecords"].waitForExistence(timeout: 5))
+        app.buttons["unlockRecords"].tap()
+        XCTAssertTrue(name.waitForExistence(timeout: 5))
+        XCTAssertEqual(name.value as? String, "Discarded Draft")
+        app.buttons["Cancel"].tap()
+        app.buttons["Discard Changes"].tap()
+        app.buttons["lockRecords"].tap()
+        app.buttons["unlockRecords"].tap()
+        XCTAssertTrue(app.buttons["lockRecords"].waitForExistence(timeout: 5))
+        XCTAssertFalse(name.exists)
+    }
+
     func testSimultaneousFailuresAreBothPresented() {
         let app = XCUIApplication()
         app.launchArguments = ["--authentication-test-simultaneous-errors"]
