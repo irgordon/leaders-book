@@ -34,9 +34,10 @@ if [[ "$MODE" == "--validate" ]]; then
     VALIDATION_ROOT="${TMPDIR:-/tmp}/LeadersBookValidation"
     DERIVED="$VALIDATION_ROOT/DerivedData"
     swift test --scratch-path "$VALIDATION_ROOT/Core"
-    xcodebuild -project "$PROJECT" -scheme LeadersBook -configuration Debug \
+    # Release gate: exercise both adapters and all authenticated UI workflows.
+    xcodebuild -project "$PROJECT" -scheme LeadersBook -configuration Testing \
         -destination "platform=iOS Simulator,id=$DEVICE" -derivedDataPath "$DERIVED" \
-        -only-testing:ThemeAdapterTests CODE_SIGNING_ALLOWED=NO test
+        -collect-test-diagnostics never CODE_SIGNING_ALLOWED=NO test
     xcodebuild -project "$PROJECT" -scheme LeadersBook -configuration Release \
         -destination 'generic/platform=iOS' -derivedDataPath "$DERIVED" \
         CODE_SIGNING_ALLOWED=NO build
