@@ -1,0 +1,12 @@
+{
+  "archive": "Release, unsigned",
+  "binary_sha256": "9ce69db81eb2af5d002f660d949abf8345e9c109e4e4d2c2ffe01d521576b775",
+  "forbidden_strings": {
+    "UITestAuthenticator": false,
+    "--authentication-test-denied": false,
+    "--authentication-test-export-denied": false,
+    "--authentication-test-simultaneous-errors": false,
+    "--preview": false
+  },
+  "archive_succeeded": true
+}

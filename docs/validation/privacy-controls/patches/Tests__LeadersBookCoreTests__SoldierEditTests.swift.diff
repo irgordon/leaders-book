@@ -1,0 +1,26 @@
+--- a/Tests/LeadersBookCoreTests/SoldierEditTests.swift
++++ b/Tests/LeadersBookCoreTests/SoldierEditTests.swift
+@@ -9,6 +9,23 @@
+ }
+ 
+ @MainActor struct SoldierEditTests {
++    @Test func sceneDisconnectReleasesOnlyItsDraftAndRejectsStaleWrites() async throws {
++        let url = fixtureFile(); defer { cleanFixture(url) }
++        let store = try await openStore(url)
++        let first = UUID(), second = UUID()
++        var a = try store.beginSoldierEdit(SoldierDraft(), window: first)
++        a.soldier.notes = "First"; try store.updateSoldierEdit(a)
++        var b = try store.beginSoldierEdit(SoldierDraft(), window: second)
++        b.soldier.notes = "Second"; try store.updateSoldierEdit(b)
++        store.disconnectEditorWindow(first)
++        #expect(throws: RecordError.conflict) { try store.updateSoldierEdit(a) }
++        store.lock(); store.disconnectEditorWindow(first); try await store.unlock()
++        #expect(try store.restoreSoldierEdit(window: first) == nil)
++        #expect(try store.restoreSoldierEdit(window: second)?.soldier.notes == "Second")
++        store.lock(); store.disconnectEditorWindow(second); try await store.unlock()
++        #expect(try store.restoreSoldierEdit(window: second) == nil)
++    }
++
+     @Test func failedUnlockDoesNotExposeOrLoseDraft() async throws {
+         let url = fixtureFile(); defer { cleanFixture(url) }
+         let auth = DraftAuthenticator()

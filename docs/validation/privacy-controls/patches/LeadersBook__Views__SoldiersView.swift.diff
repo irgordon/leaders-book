@@ -1,0 +1,80 @@
+--- a/LeadersBook/Views/SoldiersView.swift
++++ b/LeadersBook/Views/SoldiersView.swift
+@@ -1,5 +1,4 @@
+ import SwiftUI
+-import QuickLook
+ 
+ struct SoldiersView: View {
+     let store: LeaderStore
+@@ -14,7 +13,7 @@
+     @State private var deleting: Soldier?
+     @State private var trainingSoldier: Soldier?
+     @State private var measuringSoldier: Soldier?
+-    @State private var previewURL: URL?
++    @State private var previewAttachment: RecordAttachment?
+     @State private var previewOperation = OwnedOperation()
+ 
+     @ScaledMetric private var rankWidth = 28
+@@ -44,6 +43,9 @@
+                                 Text(soldier.displayName).font(.headline)
+                                 if !soldier.unit.isEmpty {
+                                     Text(soldier.unit).foregroundStyle(Color.theme(sizeClass == .regular && selection.wrappedValue == soldier.id ? .textOnSelected : .textSecondary))
++                                }
++                                if soldier.requiresRetentionReview() {
++                                    LBStatusLabel(text: "Retention Review Due", status: .warning).font(.caption)
+                                 }
+                                 if soldier.overdueCount > 0 {
+                                     LBStatusLabel(text: "\(soldier.overdueCount) Overdue Training Items", status: .failure)
+@@ -88,7 +90,7 @@
+                                           previewOperation.start("Open Certificate") {
+                                               _ = try await store.readAttachment(attachment)
+                                               try Task.checkCancellation()
+-                                              previewURL = try store.attachmentURL(attachment)
++                                              previewAttachment = attachment
+                                           }
+                                       })
+                 } else {
+@@ -120,7 +122,7 @@
+         .sheet(item: $measuringSoldier) { soldier in
+             HeightWeightEditor(soldier: SoldierDraft(soldier)) { try await store.saveSoldier($0) }
+         }
+-        .quickLookPreview($previewURL)
++        .sheet(item: $previewAttachment) { CertificatePreview(attachment: $0, store: store) }
+         .onDisappear { previewOperation.cancel() }
+         .onChange(of: selectedSoldier) { previewOperation.cancel() }
+         .alert(item: Binding(get: { previewOperation.phase.failure }, set: { if $0 == nil { previewOperation.dismissFailure() } })) { failure in
+@@ -137,7 +139,7 @@
+                 deleting = nil
+             }.foregroundStyle(Color.lbDanger)
+         } message: { _ in
+-            Text("This permanently removes this soldier’s record and linked fitness results from this device.")
++            Text("This deletes the record, linked fitness results, and unshared attachments from this app. Original imports, exported copies, and system backups are not deleted.")
+         }
+     }
+ }
+@@ -158,6 +160,13 @@
+ 
+     var body: some View {
+         List {
++            if soldier.requiresRetentionReview() {
++                Section("Retention Review Due") {
++                    LBStatusLabel(text: soldier.retentionReview() == .dateUnavailable ? "Retention Date Needs Review" : "One Year Since Last Saved Update", status: .warning)
++                    Text("Review whether this record is still needed. Nothing is deleted automatically.")
++                    Button("Review Deletion", role: .destructive, action: onDelete)
++                }.leadersBookRow()
++            }
+             Section {
+                 HStack(alignment: .top, spacing: 16) {
+                     SoldierPortrait(attachment: soldier.photo, store: store, size: 88)
+@@ -186,7 +195,10 @@
+             TrainingRecordSection(soldier: soldier, store: store, records: records, scorer: scorer,
+                                   addTraining: addTraining, addMeasurements: addMeasurements, preview: preview)
+             if !soldier.notes.isEmpty {
+-                Section("Leadership Notes") { Text(soldier.notes).textSelection(.enabled) }.leadersBookRow()
++                Section("Leadership Notes") {
++                    Text(soldier.notes)
++                    AuthenticatedExportButton(title: "Authenticate to Export Notes") { try await store.exportNotes(soldierID: soldier.id) }
++                }.leadersBookRow()
+             }
+             Section {
+                 Button("Delete Soldier", systemImage: "trash", role: .destructive, action: onDelete).foregroundStyle(Color.lbDanger)

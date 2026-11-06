@@ -1,0 +1,91 @@
+{
+  "date": "2026-11-05",
+  "kind": "hardware-availability-and-manual-checklist",
+  "toolchain": "Xcode 27.0",
+  "connected_physical_ios_devices": 0,
+  "duo_simulator_installed": false,
+  "hardware_tests_executed": false,
+  "simulator_results_are_not_hardware_evidence": true,
+  "checks": [
+    {
+      "id": "biometrics-success",
+      "status": "NOT RUN",
+      "reason": "No connected physical iOS test device; Duo simulator also unavailable where applicable. Real-scene coverage is not inferred from shared-model tests.",
+      "manual_acceptance": "Authenticate through the system prompt; confirm details appear only after success."
+    },
+    {
+      "id": "biometrics-cancel",
+      "status": "NOT RUN",
+      "reason": "No connected physical iOS test device; Duo simulator also unavailable where applicable. Real-scene coverage is not inferred from shared-model tests.",
+      "manual_acceptance": "Cancel the system challenge; confirm locked state and sanitized failure."
+    },
+    {
+      "id": "device-passcode-fallback",
+      "status": "NOT RUN",
+      "reason": "No connected physical iOS test device; Duo simulator also unavailable where applicable. Real-scene coverage is not inferred from shared-model tests.",
+      "manual_acceptance": "Exercise system passcode fallback; never record the passcode in evidence."
+    },
+    {
+      "id": "no-device-passcode",
+      "status": "NOT RUN",
+      "reason": "No connected physical iOS test device; Duo simulator also unavailable where applicable. Real-scene coverage is not inferred from shared-model tests.",
+      "manual_acceptance": "On a dedicated test device without a passcode, verify fail-closed behavior."
+    },
+    {
+      "id": "protected-data-lock",
+      "status": "NOT RUN",
+      "reason": "No connected physical iOS test device; Duo simulator also unavailable where applicable. Real-scene coverage is not inferred from shared-model tests.",
+      "manual_acceptance": "Lock the device during access; verify relock and actual file-protection behavior."
+    },
+    {
+      "id": "two-real-scenes",
+      "status": "NOT RUN",
+      "reason": "No connected physical iOS test device; Duo simulator also unavailable where applicable. Real-scene coverage is not inferred from shared-model tests.",
+      "manual_acceptance": "Open two real UIWindowScenes, edit separately, lock/unlock, close one, and verify isolation/cleanup."
+    },
+    {
+      "id": "voiceover",
+      "status": "NOT RUN",
+      "reason": "No connected physical iOS test device; Duo simulator also unavailable where applicable. Real-scene coverage is not inferred from shared-model tests.",
+      "manual_acceptance": "Inspect focus/order and the locked accessibility tree, including alerts and restored editors."
+    },
+    {
+      "id": "duo-reserved-regions",
+      "status": "NOT RUN",
+      "reason": "No connected physical iOS test device; Duo simulator also unavailable where applicable. Real-scene coverage is not inferred from shared-model tests.",
+      "manual_acceptance": "Exercise outer/inner displays, folds, camera regions, and state continuity."
+    },
+    {
+      "id": "certificate-and-export-snapshot",
+      "status": "NOT RUN",
+      "reason": "No connected physical iOS test device; Duo simulator also unavailable where applicable. Real-scene coverage is not inferred from shared-model tests.",
+      "manual_acceptance": "Open a certificate, enter the app switcher, and confirm no certificate pixels/text are exposed; reauthentication must precede redisplay."
+    },
+    {
+      "id": "camera-snapshot",
+      "status": "NOT RUN",
+      "reason": "No connected physical iOS test device; Duo simulator also unavailable where applicable. Real-scene coverage is not inferred from shared-model tests.",
+      "manual_acceptance": "Open the camera from a Soldier editor, switch away/lock, and check both capture and underlying editor surfaces."
+    },
+    {
+      "id": "editor-snapshot",
+      "status": "NOT RUN",
+      "reason": "No connected physical iOS test device; Duo simulator also unavailable where applicable. Real-scene coverage is not inferred from shared-model tests.",
+      "manual_acceptance": "Type identifiable notes, switch away/lock, and verify cover plus locked accessibility; unlock before restoration."
+    },
+    {
+      "id": "nested-alert-routes",
+      "status": "NOT RUN",
+      "reason": "No connected physical iOS test device; Duo simulator also unavailable where applicable. Real-scene coverage is not inferred from shared-model tests.",
+      "manual_acceptance": "Exercise root operation/draft alerts while editors, importers, and the read-only certificate viewer and export sheet are presented; ensure correct presenter and preserved pending failures."
+    },
+    {
+      "id": "fresh-export-authentication",
+      "status": "NOT RUN",
+      "reason": "No connected physical iOS test device.",
+      "manual_acceptance": "Each notes/certificate export must invoke a fresh system challenge; test cancel, device lock, background and a second export; verify no exported data before success."
+    }
+  ],
+  "availability_command": "xcrun devicectl list devices",
+  "simulator_scene_test": "Two actual UIWindowScenes verified separately in privacy-controls/real-scenes.log; this is not hardware evidence."
+}

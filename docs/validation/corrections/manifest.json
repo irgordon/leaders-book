@@ -1,0 +1,10 @@
+{
+  "date": "2026-11-04",
+  "scope": "documentation corrections and unfiltered simulator verification only",
+  "hardware_evidence_sha256": "ca10af1388475fb48684e354e5ac3cec472408cc20015002fb608f65e6620cb0",
+  "report_sha256": "e00c404ec5a93f2e2fb11132ffceb1e641457b72f0bfc7198c296ff14bbdcc5b",
+  "artifacts": {
+    "full-native.log": "9c0d447d6438e9bf512dcd1c59ace51a9ed3abcd7faa50ede390ab420b95b140",
+    "full-native-summary.json": "81506684b8bae10fa8be98053e8e0a941480605ce91a4b7d93ecfcf250a8c1e3"
+  }
+}

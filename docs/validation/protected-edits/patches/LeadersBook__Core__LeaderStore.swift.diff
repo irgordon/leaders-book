@@ -1,0 +1,60 @@
+--- a/LeadersBook/Core/LeaderStore.swift
++++ b/LeadersBook/Core/LeaderStore.swift
+@@ -16,6 +16,7 @@
+     private enum InitialSummary { case pending, consumed }
+     private var initialSummary: InitialSummary = .pending
+     private var summary: LockedSummary?
++    private var soldierEdits: [UUID: SoldierEditSession] = [:]
+     private let authenticator: any RecordAuthenticating
+     private var epoch = UUID()
+     private var lease: RecordAccessLease?
+@@ -78,6 +79,7 @@
+         draftSave.cancel()
+         for task in operations.values { task.cancel() }
+         draft = FitnessDraft()
++        soldierEdits = soldierEdits.filter { $0.value.hasChanges }
+         operationFailure = nil
+         state = .locked(summary)
+     }
+@@ -163,6 +165,41 @@
+             throw error
+         }
+     }
++    func beginSoldierEdit(_ soldier: SoldierDraft, window: UUID) throws -> SoldierEditSession {
++        if let existing = try restoreSoldierEdit(window: window) { return existing }
++        let edit = SoldierEditSession(id: UUID(), window: window, original: soldier,
++                                      soldier: soldier, files: [], permit: try accessLease())
++        soldierEdits[window] = edit
++        return edit
++    }
++    func restoreSoldierEdit(window: UUID) throws -> SoldierEditSession? {
++        try requireReady()
++        guard let retained = soldierEdits[window] else { return nil }
++        let restored = SoldierEditSession(id: retained.id, window: window, original: retained.original,
++                                         soldier: retained.soldier, files: retained.files, permit: try accessLease())
++        soldierEdits[window] = restored
++        return restored
++    }
++    func updateSoldierEdit(_ edit: SoldierEditSession) throws {
++        try requireReady()
++        try edit.permit.check()
++        guard let retained = soldierEdits[edit.window], retained.id == edit.id,
++              retained.original == edit.original, retained.original.id == edit.soldier.id,
++              edit.soldier.revision == retained.original.revision else { throw RecordError.conflict }
++        soldierEdits[edit.window] = edit
++    }
++    func discardSoldierEdit(_ edit: SoldierEditSession) throws {
++        try requireReady()
++        try edit.permit.check()
++        guard let retained = soldierEdits[edit.window] else { return } // Already saved/closed is an idempotent outcome.
++        guard retained.id == edit.id else { throw RecordError.conflict }
++        soldierEdits[edit.window] = nil
++    }
++    func saveSoldierEdit(_ edit: SoldierEditSession) async throws {
++        try updateSoldierEdit(edit)
++        try await saveSoldier(edit.soldier, importing: edit.files)
++        try discardSoldierEdit(edit)
++    }
+     func saveSoldier(_ input: SoldierDraft, importing files: [ImportedRecordFile] = []) async throws {
+         try requireReady()
+         let soldier = try Soldier(draft: input)

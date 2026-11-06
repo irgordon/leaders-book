@@ -1,0 +1,134 @@
+Building for debugging...
+[5 / 10] LeadersBookCoreTests-product
+[7 / 12] LeadersBookCoreTests-product
+[12 / 15] LeadersBookCoreTests-product
+Build complete! (1.18 sec)
+Test Suite 'All tests' started at 2026-11-05 17:38:09.796.
+Test Suite 'All tests' passed at 2026-11-05 17:38:09.796.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite LeaderStoreTests started.
+◇ Suite AttachmentTests started.
+◇ Suite RecoveryTests started.
+◇ Suite ThemeContrastTests started.
+◇ Suite FitnessTests started.
+◇ Test soldierDraftAndHistorySurviveRelaunch() started.
+◇ Suite RecordAccessTests started.
+◇ Test deletionRemovesLinkedResultsAndDraftAssignmentOnly() started.
+◇ Test invalidRecordsAndFailedWritesDoNotChangeMemory() started.
+◇ Test trainingDueDatesUseCalendarDays() started.
+◇ Suite GovernanceTests started.
+◇ Test missingSoldierAndIncompleteScoresCannotSave() started.
+◇ Suite SoldierEditTests started.
+◇ Test corruptOrNewerFileIsNeverOverwritten() started.
+◇ Test knownRatioMatchesReference() started.
+◇ Test statusRolesHaveAllSurfaceRequirements() started.
+◇ Test parserRejectsMalformedAndNonfiniteInput() started.
+◇ Test everyRequirementMeetsWCAG(mode:contrast:) started.
+◇ Test interactionPairingsRemainCovered() started.
+◇ Test contrastIsSymmetric() started.
+◇ Test photosCertificatesDatesAndMeasurementsSurviveRelaunchAndDeletion() started.
+◇ Test raisedSurfaceRegression(mode:) started.
+◇ Test restartRollsBackUncommittedImportsIdempotently() started.
+◇ Test staleAuthenticationCannotUnlockAfterLock() started.
+◇ Test failedCommitRollsBackNewFilesAndPreservesOldPhoto() started.
+◇ Test sharedReferencesSurviveUntilTheirLastOwnerIsDeleted() started.
+◇ Test failedCleanupRetainsCauseAndCanBeRecoveredAfterRestart() started.
+◇ Test revokedLeasePreventsQueuedStorageAccess() started.
+◇ Test eventStatusBoundaries() started.
+◇ Test everyPublishedThresholdAndCombatColumn() started.
+◇ Test waistRatioUsesMatchingUnitsAndRejectsBadMeasurements() started.
+◇ Test lockedRoutesRejectAccessAndPreserveRecords() started.
+◇ Test unavailablePhotoDoesNotBlockUnrelatedCalculatorWork() started.
+◇ Test invalidDatesMeasurementsAndMissingAttachmentsAreRejected() started.
+◇ Test previousSchemaLoadsWithoutLosingRecords() started.
+◇ Test exportsRequireFreshAuthenticationAndRejectLateCompletion() started.
+◇ Test case passing 2 arguments mode → .light, contrast → .increased to everyRequirementMeetsWCAG(mode:contrast:) started.
+◇ Test unavailableAuthenticationFailsClosed() started.
+◇ Test case passing 2 arguments mode → .light, contrast → .standard to everyRequirementMeetsWCAG(mode:contrast:) started.
+◇ Test case passing 2 arguments mode → .dark, contrast → .standard to everyRequirementMeetsWCAG(mode:contrast:) started.
+◇ Test case passing 1 argument mode → .light to raisedSurfaceRegression(mode:) started.
+◇ Test case passing 2 arguments mode → .dark, contrast → .increased to everyRequirementMeetsWCAG(mode:contrast:) started.
+◇ Test journalCannotRemoveAnAttachmentReferencedByCommittedRecords() started.
+◇ Test case passing 1 argument mode → .dark to raisedSurfaceRegression(mode:) started.
+◇ Test completeResultsRequireEveryEventAndEveryMinimum() started.
+◇ Test lockedReloadDoesNotReadOrRecoverPrivateFiles() started.
+◇ Test cancelledAndReplacedOperationsCannotPublishStaleResults() started.
+◇ Test cancelledProviderErrorRemainsDistinctFromFailure() started.
+◇ Test retentionUsesOneCalendarYearWithoutDeleting() started.
+◇ Test pendingTrainingCannotCarryCompletionData() started.
+◇ Test incompleteAndMalformedInputHaveDistinctTypedErrors() started.
+◇ Test archiveConfigurationExcludesTestAuthentication() started.
+◇ Test windowsSaveAndDiscardIndependently() started.
+◇ Test repeatedResultIntentCannotCreateDuplicateIdentity() started.
+◇ Test maliciousPersistenceIsRejectedAndPreserved() started.
+◇ Test filesystemCausesRemainAvailableBehindPresentation() started.
+◇ Test publishedBoundaryFixtures() started.
+◇ Test protectedDraftRestoresWithoutDiskWritesOrStaleAccess() started.
+◇ Test staleEditorCannotOverwriteNewerRecord() started.
+◇ Test cancelledRecoveryRetainsThePreviousReadyState() started.
+◇ Test sceneDisconnectReleasesOnlyItsDraftAndRejectsStaleWrites() started.
+◇ Test restoredRevisionCannotOverwriteAnotherWindow() started.
+◇ Test failedUnlockDoesNotExposeOrLoseDraft() started.
+◇ Test disappearingKnownDatasetCannotBeReplacedWithDefaults() started.
+✔ Test knownRatioMatchesReference() passed after 0.001 seconds.
+✔ Test raisedSurfaceRegression(mode:) with 2 test cases passed after 0.001 seconds.
+✔ Test contrastIsSymmetric() passed after 0.001 seconds.
+✔ Test everyRequirementMeetsWCAG(mode:contrast:) with 4 test cases passed after 0.001 seconds.
+✔ Test interactionPairingsRemainCovered() passed after 0.001 seconds.
+✔ Test statusRolesHaveAllSurfaceRequirements() passed after 0.001 seconds.
+✔ Suite ThemeContrastTests passed after 0.001 seconds.
+✔ Test waistRatioUsesMatchingUnitsAndRejectsBadMeasurements() passed after 0.001 seconds.
+✔ Test parserRejectsMalformedAndNonfiniteInput() passed after 0.001 seconds.
+✔ Test eventStatusBoundaries() passed after 0.010 seconds.
+✔ Test publishedBoundaryFixtures() passed after 0.010 seconds.
+✔ Test completeResultsRequireEveryEventAndEveryMinimum() passed after 0.010 seconds.
+✔ Test restartRollsBackUncommittedImportsIdempotently() passed after 0.011 seconds.
+✔ Test failedCleanupRetainsCauseAndCanBeRecoveredAfterRestart() passed after 0.011 seconds.
+✔ Test journalCannotRemoveAnAttachmentReferencedByCommittedRecords() passed after 0.015 seconds.
+✔ Suite RecoveryTests passed after 0.016 seconds.
+✔ Test everyPublishedThresholdAndCombatColumn() passed after 0.087 seconds.
+✔ Suite FitnessTests passed after 0.087 seconds.
+✔ Test lockedReloadDoesNotReadOrRecoverPrivateFiles() passed after 0.098 seconds.
+✔ Test unavailableAuthenticationFailsClosed() passed after 0.098 seconds.
+✔ Test filesystemCausesRemainAvailableBehindPresentation() passed after 0.099 seconds.
+✔ Test cancelledProviderErrorRemainsDistinctFromFailure() passed after 0.099 seconds.
+✔ Test trainingDueDatesUseCalendarDays() passed after 0.100 seconds.
+✔ Test retentionUsesOneCalendarYearWithoutDeleting() passed after 0.100 seconds.
+✔ Test pendingTrainingCannotCarryCompletionData() passed after 0.099 seconds.
+✔ Test archiveConfigurationExcludesTestAuthentication() passed after 0.099 seconds.
+✔ Test incompleteAndMalformedInputHaveDistinctTypedErrors() passed after 0.106 seconds.
+✔ Test previousSchemaLoadsWithoutLosingRecords() passed after 0.111 seconds.
+✔ Test maliciousPersistenceIsRejectedAndPreserved() passed after 0.115 seconds.
+✔ Test sceneDisconnectReleasesOnlyItsDraftAndRejectsStaleWrites() passed after 0.115 seconds.
+✔ Test failedUnlockDoesNotExposeOrLoseDraft() passed after 0.115 seconds.
+✔ Test staleAuthenticationCannotUnlockAfterLock() passed after 0.115 seconds.
+✔ Test windowsSaveAndDiscardIndependently() passed after 0.123 seconds.
+✔ Test revokedLeasePreventsQueuedStorageAccess() passed after 0.124 seconds.
+✔ Test protectedDraftRestoresWithoutDiskWritesOrStaleAccess() passed after 0.124 seconds.
+✔ Test failedCommitRollsBackNewFilesAndPreservesOldPhoto() passed after 0.125 seconds.
+✔ Test invalidDatesMeasurementsAndMissingAttachmentsAreRejected() passed after 0.125 seconds.
+✔ Test corruptOrNewerFileIsNeverOverwritten() passed after 0.126 seconds.
+✔ Test repeatedResultIntentCannotCreateDuplicateIdentity() passed after 0.125 seconds.
+✔ Test unavailablePhotoDoesNotBlockUnrelatedCalculatorWork() passed after 0.129 seconds.
+✔ Test disappearingKnownDatasetCannotBeReplacedWithDefaults() passed after 0.128 seconds.
+✔ Test photosCertificatesDatesAndMeasurementsSurviveRelaunchAndDeletion() passed after 0.129 seconds.
+✔ Test cancelledRecoveryRetainsThePreviousReadyState() passed after 0.129 seconds.
+✔ Test missingSoldierAndIncompleteScoresCannotSave() passed after 0.129 seconds.
+✔ Test invalidRecordsAndFailedWritesDoNotChangeMemory() passed after 0.130 seconds.
+✔ Test staleEditorCannotOverwriteNewerRecord() passed after 0.132 seconds.
+✔ Test sharedReferencesSurviveUntilTheirLastOwnerIsDeleted() passed after 0.133 seconds.
+✔ Test cancelledAndReplacedOperationsCannotPublishStaleResults() passed after 0.132 seconds.
+✔ Suite AttachmentTests passed after 0.133 seconds.
+✔ Suite GovernanceTests passed after 0.133 seconds.
+✔ Test soldierDraftAndHistorySurviveRelaunch() passed after 0.133 seconds.
+✔ Test exportsRequireFreshAuthenticationAndRejectLateCompletion() passed after 0.133 seconds.
+✔ Test lockedRoutesRejectAccessAndPreserveRecords() passed after 0.137 seconds.
+✔ Suite RecordAccessTests passed after 0.137 seconds.
+✔ Test deletionRemovesLinkedResultsAndDraftAssignmentOnly() passed after 0.137 seconds.
+✔ Suite LeaderStoreTests passed after 0.137 seconds.
+✔ Test restoredRevisionCannotOverwriteAnotherWindow() passed after 0.137 seconds.
+✔ Suite SoldierEditTests passed after 0.137 seconds.
+✔ Test run with 50 tests in 8 suites passed after 0.138 seconds.

@@ -1,0 +1,152 @@
+{
+  "comparison": "pre-correction working-tree snapshot, not Git HEAD; previous Git baseline 9e97fca",
+  "file_count": 18,
+  "added_lines": 555,
+  "removed_lines": 58,
+  "files": [
+    {
+      "file": "LeadersBook/App/DeviceAuthenticator.swift",
+      "baseline_sha256": "ca8f5e61fcc8ba08d67e2f6958163710ee021a2fb4199d002606b9d458156264",
+      "current_sha256": "578fcd255e0c2197e62efc632a5a3fce11527040935af12e41b8921b66f2dee8",
+      "added": 10,
+      "removed": 4,
+      "diff": "patches/LeadersBook__App__DeviceAuthenticator.swift.diff"
+    },
+    {
+      "file": "LeadersBook/Core/LeaderStore.swift",
+      "baseline_sha256": "457be333ca494c1b24690d7c4e294211912a3f78a1182263e79fcbb65d3fb555",
+      "current_sha256": "2abca8aff7dbc6095604389dd6b5e268844ca057fd603acf25c05b34da750779",
+      "added": 34,
+      "removed": 12,
+      "diff": "patches/LeadersBook__Core__LeaderStore.swift.diff"
+    },
+    {
+      "file": "LeadersBook/Core/RecordAccess.swift",
+      "baseline_sha256": "4f90a7d0879a46b7aeba12671d9499b1d30d7edc7322f84c7fd0a063d4c8aa5d",
+      "current_sha256": "73256cda399a131d9a2a9063c09bfa64931b9806467b8db289b7ce1ceeced893",
+      "added": 15,
+      "removed": 1,
+      "diff": "patches/LeadersBook__Core__RecordAccess.swift.diff"
+    },
+    {
+      "file": "LeadersBook/Core/Soldier.swift",
+      "baseline_sha256": "b74b496ba4d529c3f835e3d03ed74256fee4cfb3b8a432c56937d161662df629",
+      "current_sha256": "008227b72510b652909167ac3b4b9de88aeac9cbe5285ac05b9fca9557f4c792",
+      "added": 11,
+      "removed": 0,
+      "diff": "patches/LeadersBook__Core__Soldier.swift.diff"
+    },
+    {
+      "file": "LeadersBook/Views/ContentView.swift",
+      "baseline_sha256": "d7c27869dd49a11c199cfc2a1b837988e3436f156dfb6c5f9e0b9ee9e7351c8f",
+      "current_sha256": "333981c5c802acac2cbf317b055dbc2e94f6c463df90d8695f38ff39dae22030",
+      "added": 5,
+      "removed": 5,
+      "diff": "patches/LeadersBook__Views__ContentView.swift.diff"
+    },
+    {
+      "file": "LeadersBook/Views/LockedRecordsView.swift",
+      "baseline_sha256": "4a52b3afaf13e3d56cb28c22cacf2a1fa3d4f5cf25013dfa5ddece261b1d8f49",
+      "current_sha256": "330f2f68340d46e2aa06422a89b4bed1b1c4811b5703a4c7cfbbe27fd583345e",
+      "added": 3,
+      "removed": 1,
+      "diff": "patches/LeadersBook__Views__LockedRecordsView.swift.diff"
+    },
+    {
+      "file": "LeadersBook/Views/PrivacyControls.swift",
+      "baseline_sha256": null,
+      "current_sha256": "c5b9f343de2bf7ef17a6894bac8913666dde939f5f2788e59d75f2343619bbb2",
+      "added": 164,
+      "removed": 0,
+      "diff": "patches/LeadersBook__Views__PrivacyControls.swift.diff"
+    },
+    {
+      "file": "LeadersBook/Views/PrivacyShield.swift",
+      "baseline_sha256": "51d067be5f5207530b63db34b313d0e0adaa70032bc6132d5264b63069ede72c",
+      "current_sha256": "ffc0510b3325b89d233d1bc0187fd392e956bd90fd50ba5f6c7e0e38d0c81404",
+      "added": 11,
+      "removed": 0,
+      "diff": "patches/LeadersBook__Views__PrivacyShield.swift.diff"
+    },
+    {
+      "file": "LeadersBook/Views/SoldierEditor.swift",
+      "baseline_sha256": "09a043fbeb93528a082190ccb82d854a16c9762812d9eb7287c70ea5805c63e2",
+      "current_sha256": "d7ac70b348a12fcae4f8bed0e36127e745c878d1b3799dadeb64855a0137f080",
+      "added": 3,
+      "removed": 3,
+      "diff": "patches/LeadersBook__Views__SoldierEditor.swift.diff"
+    },
+    {
+      "file": "LeadersBook/Views/SoldiersView.swift",
+      "baseline_sha256": "58a4b1f712b71902c425b3f3bcca1cd9b794a7a2baa0ce5b87a93f21d9e15ccf",
+      "current_sha256": "82b9d3e5712891ca62bd7464d876f411cc40df137aa1f480fda1f01fb402cfef",
+      "added": 18,
+      "removed": 6,
+      "diff": "patches/LeadersBook__Views__SoldiersView.swift.diff"
+    },
+    {
+      "file": "LeadersBook/Views/TodayView.swift",
+      "baseline_sha256": "d85d2d1043ecfa2b1da67f3f80c5dd8b3a80a13c962a25c9e1536e03808db676",
+      "current_sha256": "d22170adf7bf2d9b6b743ead27e281b0a66235e85ba376f4aadeb313082927fa",
+      "added": 11,
+      "removed": 1,
+      "diff": "patches/LeadersBook__Views__TodayView.swift.diff"
+    },
+    {
+      "file": "LeadersBook.xcodeproj/project.pbxproj",
+      "baseline_sha256": "95fac9a27116a345d508f2139e91168a1b8bcb0269b70116f73cf569426e83fc",
+      "current_sha256": "27d0656e1633c80ecf436469dee65872a36960a3354ee849c70782c4fc4da617",
+      "added": 4,
+      "removed": 2,
+      "diff": "patches/LeadersBook.xcodeproj__project.pbxproj.diff"
+    },
+    {
+      "file": "Tests/LeadersBookCoreTests/RecordAccessTests.swift",
+      "baseline_sha256": "6dd6d2b2dc7747c5451aa2565986012b810515a50c11728581a1a14018692375",
+      "current_sha256": "2173f3c9f1bd8655903955732124cfcb8ed149b0db51a8ce090be4d8ac7f2bb3",
+      "added": 68,
+      "removed": 15,
+      "diff": "patches/Tests__LeadersBookCoreTests__RecordAccessTests.swift.diff"
+    },
+    {
+      "file": "Tests/LeadersBookCoreTests/SoldierEditTests.swift",
+      "baseline_sha256": "362867fcbdd47a62ca495e2a5b06a2a9518474e8fc20538082602cdc06b8fc78",
+      "current_sha256": "d3ea1310d4def3193bd34a64b8b6a978f8872ee07c9718c1b4a0283977130f73",
+      "added": 17,
+      "removed": 0,
+      "diff": "patches/Tests__LeadersBookCoreTests__SoldierEditTests.swift.diff"
+    },
+    {
+      "file": "Tests/LeadersBookUITests/LeadersBookUITests.swift",
+      "baseline_sha256": "beb088b143d903c72a0661111f50666a0f2d2cc1130b42ce6865ed23c74a82c8",
+      "current_sha256": "0e63ccd05aa4474aa05978ceb3f3a8671d377db757dec36d617a5e526304f308",
+      "added": 38,
+      "removed": 0,
+      "diff": "patches/Tests__LeadersBookUITests__LeadersBookUITests.swift.diff"
+    },
+    {
+      "file": "Tests/ThemeAdapterTests/ThemeAdapterTests.swift",
+      "baseline_sha256": "2fa0cece8fd0e97b6cc8d7b69faf014af4877486ac217a4e29a3f16ce295f4fa",
+      "current_sha256": "2eabc9e1c7e80216a451620f28807c91da393480f89a0185534248c3574b4b0e",
+      "added": 64,
+      "removed": 1,
+      "diff": "patches/Tests__ThemeAdapterTests__ThemeAdapterTests.swift.diff"
+    },
+    {
+      "file": "docs/ARCHITECTURE-AUDIT.md",
+      "baseline_sha256": "ca2a7f7315154fd4aeec224eab61af5c619185758f2acb20e481b67d338fadd6",
+      "current_sha256": "e4220d26f4507416265ca7822ebe73bcb195e4ba50f50cc28f38539084d0d693",
+      "added": 12,
+      "removed": 1,
+      "diff": "patches/docs__ARCHITECTURE-AUDIT.md.diff"
+    },
+    {
+      "file": "docs/AUTHENTICATION-FINDINGS.md",
+      "baseline_sha256": "e00c404ec5a93f2e2fb11132ffceb1e641457b72f0bfc7198c296ff14bbdcc5b",
+      "current_sha256": "d152fd5836dff1a3bdb3202ebd9c9e051902119d6c8b1ec19dd4df5947c3c4f3",
+      "added": 67,
+      "removed": 6,
+      "diff": "patches/docs__AUTHENTICATION-FINDINGS.md.diff"
+    }
+  ]
+}

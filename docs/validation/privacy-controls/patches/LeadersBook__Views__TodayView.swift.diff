@@ -1,0 +1,37 @@
+--- a/LeadersBook/Views/TodayView.swift
++++ b/LeadersBook/Views/TodayView.swift
+@@ -7,6 +7,7 @@
+     @Binding var selectedTab: Int
+     @State private var confirmingReload = false
+ 
++    private var retentionDue: Int { records.soldiers.filter { $0.requiresRetentionReview() }.count }
+     private var overdue: Int { records.soldiers.reduce(0) { $0 + $1.overdueCount } }
+ 
+     var body: some View {
+@@ -30,6 +31,14 @@
+                         LBStatusLabel(text: overdue == 0 ? "No Overdue Training" : "\(overdue) Overdue Training Items", status: overdue == 0 ? .success : .failure)
+                     }.buttonStyle(LBActionButtonStyle())
+                 }.leadersBookRow()
++                if retentionDue > 0 {
++                    Section("Retention Review") {
++                        Button { selectedTab = 1 } label: {
++                            LBStatusLabel(text: "\(retentionDue) Records Need Retention Review", status: .warning)
++                        }
++                        Text("Review records past one year since their last saved update, or with an unavailable retention date. Deletion always requires confirmation.").font(.caption)
++                    }.leadersBookRow()
++                }
+                 Section("Today’s Tools") {
+                     Button { openFitness(.aft) } label: { Label("Score an AFT", systemImage: "figure.strengthtraining.traditional") }.buttonStyle(LBActionButtonStyle())
+                     Button { openFitness(.ratio) } label: { Label("HT/WT Calculator", systemImage: "ruler") }.buttonStyle(LBActionButtonStyle())
+@@ -51,9 +60,10 @@
+                     }.leadersBookRow()
+                 }
+                 Section {
+-                    Text("Saved on this device. No account or network connection is needed for records, guides, or calculators.")
++                    Text("Saved in this app’s storage. System backups may include these records. No account or network is needed for records, guides, or calculators.")
+                         .font(.footnote)
+                         .foregroundStyle(Color.lbTextSecondary)
++                    NavigationLink("Privacy and Data Controls") { DataPolicyView() }
+                 }.leadersBookRow()
+             }.leadersBookList()
+             .navigationTitle("Today")

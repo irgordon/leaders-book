@@ -1,0 +1,24 @@
+--- a/LeadersBook/Views/ContentView.swift
++++ b/LeadersBook/Views/ContentView.swift
+@@ -62,16 +62,16 @@
+                 }
+             }
+         }
+-         .task {
+-            await store.prepareForPresentation()
+-            #if AUTHENTICATION_TEST_DOUBLE
++        #if AUTHENTICATION_TEST_DOUBLE
++        .task {
+             if ProcessInfo.processInfo.arguments.contains("--authentication-test-simultaneous-errors") {
+                 store.draftSave.start("Test Draft") { throw CocoaError(.fileWriteNoPermission) }
+                 store.operationFailure = AppFailure("Unlock Records", underlying: RecordAccessError.cancelled)
+             }
+-            #endif
+         }
+-        .background(PrivacyShield(locked: !store.isUnlocked, active: scenePhase == .active))
++        #endif
++        .background(PrivacyShield(locked: !store.isUnlocked, active: scenePhase == .active,
++                                  onDisconnect: { store.disconnectEditorWindow(editorWindow) }))
+         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in store.lock() }
+         .onReceive(NotificationCenter.default.publisher(for: UIApplication.protectedDataWillBecomeUnavailableNotification)) { _ in store.lock() }
+         .safeAreaInset(edge: .top) {

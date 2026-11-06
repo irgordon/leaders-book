@@ -1,0 +1,8 @@
+{
+  "source_result": "/private/tmp/leaders-controls-export-ui3",
+  "source_attachment": "63933F7C-F972-4A23-8F07-1E778CE14E3B.png",
+  "test": "LeadersBookUITests/testExportDenialAndPublicBackupPolicy",
+  "device": "iPhone 18 Pro simulator, iOS 27.0",
+  "authentication": "Testing authenticator; not hardware LocalAuthentication",
+  "observed": "Copy and Save to Files available for the authenticated text export."
+}

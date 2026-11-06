@@ -1,0 +1,252 @@
+{
+  "date": "2026-11-04",
+  "device": "iPhone 18 Pro / iOS 27",
+  "layout": "Compact front-cover preview; not a Duo capture",
+  "authentication": "Testing configuration substitutes only system authentication",
+  "capture": "Actual simulator screenshots before/after real XCTest taps; orange rings annotate tap targets",
+  "app_source_changed": false,
+  "frames": [
+    {
+      "step": 1,
+      "tap_point": null,
+      "label": "Compact Front Cover"
+    },
+    {
+      "step": 2,
+      "tap_point": [
+        201,
+        352
+      ],
+      "label": "Soldiers Summary"
+    },
+    {
+      "step": 3,
+      "tap_point": null,
+      "label": "Soldiers Summary \u2014 Opened"
+    },
+    {
+      "step": 4,
+      "tap_point": [
+        201,
+        404
+      ],
+      "label": "Overdue Training Summary"
+    },
+    {
+      "step": 5,
+      "tap_point": null,
+      "label": "Overdue Training Summary \u2014 Opened"
+    },
+    {
+      "step": 6,
+      "tap_point": [
+        201,
+        514
+      ],
+      "label": "Score an AFT"
+    },
+    {
+      "step": 7,
+      "tap_point": null,
+      "label": "Score an AFT \u2014 Opened"
+    },
+    {
+      "step": 8,
+      "tap_point": [
+        201,
+        566
+      ],
+      "label": "HTWT Calculator"
+    },
+    {
+      "step": 9,
+      "tap_point": null,
+      "label": "HTWT Calculator \u2014 Opened"
+    },
+    {
+      "step": 10,
+      "tap_point": [
+        201,
+        618
+      ],
+      "label": "Troop Leading Procedures"
+    },
+    {
+      "step": 11,
+      "tap_point": null,
+      "label": "Troop Leading Procedures \u2014 Opened"
+    },
+    {
+      "step": 12,
+      "tap_point": [
+        201,
+        670
+      ],
+      "label": "Army Guides"
+    },
+    {
+      "step": 13,
+      "tap_point": null,
+      "label": "Army Guides \u2014 Opened"
+    },
+    {
+      "step": 14,
+      "tap_point": [
+        201,
+        722
+      ],
+      "label": "Army Resources"
+    },
+    {
+      "step": 15,
+      "tap_point": null,
+      "label": "Army Resources \u2014 Opened"
+    },
+    {
+      "step": 16,
+      "tap_point": [
+        122,
+        629
+      ],
+      "label": "Last Saved AFT"
+    },
+    {
+      "step": 17,
+      "tap_point": null,
+      "label": "Last Saved AFT \u2014 Opened"
+    },
+    {
+      "step": 18,
+      "tap_point": [
+        364,
+        83
+      ],
+      "label": "Reload Records"
+    },
+    {
+      "step": 19,
+      "tap_point": null,
+      "label": "Reload Records \u2014 Opened"
+    },
+    {
+      "step": 20,
+      "tap_point": null,
+      "label": "Dismiss Reload \u2014 Tap Outside"
+    },
+    {
+      "step": 21,
+      "tap_point": null,
+      "label": "Reload Dismissed"
+    },
+    {
+      "step": 22,
+      "tap_point": [
+        364,
+        83
+      ],
+      "label": "Reload Records"
+    },
+    {
+      "step": 23,
+      "tap_point": null,
+      "label": "Reload Records \u2014 Opened"
+    },
+    {
+      "step": 24,
+      "tap_point": [
+        201,
+        214
+      ],
+      "label": "Confirm Reload"
+    },
+    {
+      "step": 25,
+      "tap_point": null,
+      "label": "Confirm Reload \u2014 Opened"
+    },
+    {
+      "step": 26,
+      "tap_point": [
+        158,
+        822
+      ],
+      "label": "Soldiers Tab"
+    },
+    {
+      "step": 27,
+      "tap_point": null,
+      "label": "Soldiers Tab \u2014 Opened"
+    },
+    {
+      "step": 28,
+      "tap_point": [
+        243,
+        822
+      ],
+      "label": "Guides Tab"
+    },
+    {
+      "step": 29,
+      "tap_point": null,
+      "label": "Guides Tab \u2014 Opened"
+    },
+    {
+      "step": 30,
+      "tap_point": [
+        328,
+        822
+      ],
+      "label": "Fitness Tab"
+    },
+    {
+      "step": 31,
+      "tap_point": null,
+      "label": "Fitness Tab \u2014 Opened"
+    },
+    {
+      "step": 32,
+      "tap_point": [
+        74,
+        822
+      ],
+      "label": "Today Tab"
+    },
+    {
+      "step": 33,
+      "tap_point": null,
+      "label": "Today Tab \u2014 Opened"
+    },
+    {
+      "step": 34,
+      "tap_point": [
+        202,
+        80
+      ],
+      "label": "Lock Records"
+    },
+    {
+      "step": 35,
+      "tap_point": null,
+      "label": "Lock Records \u2014 Opened"
+    },
+    {
+      "step": 36,
+      "tap_point": [
+        201,
+        612
+      ],
+      "label": "Unlock \u2014 Testing Authentication"
+    },
+    {
+      "step": 37,
+      "tap_point": null,
+      "label": "Unlock \u2014 Testing Authentication \u2014 Opened"
+    },
+    {
+      "step": 38,
+      "tap_point": null,
+      "label": "Front Cover \u2014 Complete"
+    }
+  ],
+  "gif_sha256": "4c6026c2b35bc78337465a84592280c9cb6db00dfc914a5645369eb1a39e9548"
+}

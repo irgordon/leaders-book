@@ -1,0 +1,126 @@
+{
+  "base_commit": "9e97fca",
+  "branch": "mothra/protected-soldier-edits",
+  "source_file_count": 12,
+  "added_non_generated_lines": 359,
+  "source_files": [
+    {
+      "path": "LeadersBook.xcodeproj/project.pbxproj",
+      "before_sha256": "2b439ea117cdf0dd2cd344bc2e02e6e44c68be34ed46d479da28792461e9d5f6",
+      "after_sha256": "95fac9a27116a345d508f2139e91168a1b8bcb0269b70116f73cf569426e83fc"
+    },
+    {
+      "path": "LeadersBook/Core/BookRepository.swift",
+      "before_sha256": "eb6d26c5a02e9ed1779a9d54f3ef29a44d4d2d6d9fc1b13f7a01da17535f1b10",
+      "after_sha256": "430b81bbfc801b069a6f3c382b5dd4f0a40c44ff01d697ccbad254fb8de7ed51"
+    },
+    {
+      "path": "LeadersBook/Core/LeaderStore.swift",
+      "before_sha256": "8aa0b782ef41d8ecd5c19533ca05c0f6d070a60766ef83c4022065f535b0c44d",
+      "after_sha256": "457be333ca494c1b24690d7c4e294211912a3f78a1182263e79fcbb65d3fb555"
+    },
+    {
+      "path": "LeadersBook/Core/SoldierEditSession.swift",
+      "before_sha256": null,
+      "after_sha256": "153fc74bf51c7fb40a5ee9a4278e457e0e0afaa45cc4cc87e6be03e54febd73f"
+    },
+    {
+      "path": "LeadersBook/Views/ContentView.swift",
+      "before_sha256": "d42e09f1727d2b24c2da20f609aaa2c401149f53be10d7e0aa3ff808831d369d",
+      "after_sha256": "d7c27869dd49a11c199cfc2a1b837988e3436f156dfb6c5f9e0b9ee9e7351c8f"
+    },
+    {
+      "path": "LeadersBook/Views/SoldierEditor.swift",
+      "before_sha256": "36031c1961d869a862b1d54560b05966dd7e56699db29a82f8681ee8e4b0aba0",
+      "after_sha256": "09a043fbeb93528a082190ccb82d854a16c9762812d9eb7287c70ea5805c63e2"
+    },
+    {
+      "path": "LeadersBook/Views/SoldiersView.swift",
+      "before_sha256": "c7825245cd3d64c82b9844fd920a4c616c3545ae27fc01428df91804feae0097",
+      "after_sha256": "58a4b1f712b71902c425b3f3bcca1cd9b794a7a2baa0ce5b87a93f21d9e15ccf"
+    },
+    {
+      "path": "Tests/LeadersBookCoreTests/SoldierEditTests.swift",
+      "before_sha256": null,
+      "after_sha256": "362867fcbdd47a62ca495e2a5b06a2a9518474e8fc20538082602cdc06b8fc78"
+    },
+    {
+      "path": "Tests/LeadersBookUITests/LeadersBookUITests.swift",
+      "before_sha256": "2ae8f770f64313e17edc4cb557298abc086742dffe58661bc2a86dcf9ac0488d",
+      "after_sha256": "beb088b143d903c72a0661111f50666a0f2d2cc1130b42ce6865ed23c74a82c8"
+    },
+    {
+      "path": "docs/ARCHITECTURE-AUDIT.md",
+      "before_sha256": "fb33b9d82a2b72453810ebdea3e86bf75821ad746d42b31691663c70c235b9a3",
+      "after_sha256": "7db4d4614f92b75bbf262545017b3baffe7ba04cbef6ce931315df18871db030"
+    },
+    {
+      "path": "docs/AUTHENTICATION-FINDINGS.md",
+      "before_sha256": "1dcfbf3af1d3580f3cdc06361e46f34ae68d27f07ed9f7166d6991e65c7c631c",
+      "after_sha256": "e00c404ec5a93f2e2fb11132ffceb1e641457b72f0bfc7198c296ff14bbdcc5b"
+    },
+    {
+      "path": "script/build_and_run.sh",
+      "before_sha256": "3dff8c6793f363146db2755743fa2389dd921e390c124a162ec3fe20b1cb551a",
+      "after_sha256": "17694c66e5bdf9baf13ee7067a643b8d82ca462f8c53b89baa6d6c6ce21b7825"
+    }
+  ],
+  "artifacts": {
+    "release-gate.log": "c844d401163c5652f4c10118adfc3bdfb170be2d5c90ce3355a55f3960c0ce4e",
+    "release.log": "b64591e4f7288b3e759e515c18dce2cbc7e23c10e16aaea35e0e4567542b2669",
+    "protected-edits.patch": "1ee0ff8732d4ef7974aad317a609a0f0b457efab533b2003e1b51cfc1d609494",
+    "core.log": "ddc2a86eeabae0dddf4b5ef12ee4afe7c64e2f51e1729ad6592f9e5004e8b831",
+    "targeted.log": "b0152d9e7e72052904c921dbd0365ceffd4a590b0ab03470b1f530bbcab59337",
+    "native.log": "ff9f828dc41c574debe4ea091941d33d93e517396793c32febe0bc9bf5874162",
+    "native-summary.json": "07b1be7f90c538f9b344f06f76cd87142544388cdd8fd160060f8fed0eed0187",
+    "patches/LeadersBook__Views__ContentView.swift.diff": "ddab64665e3244b9a5723a35ae605f915ef9dd18ad03cd2c3102e4661884b744",
+    "patches/Tests__LeadersBookUITests__LeadersBookUITests.swift.diff": "d51100251a10a9687a722262610d7335ddd4cfa7c6ed0a7ac3ff7e04deb71372",
+    "patches/Tests__LeadersBookCoreTests__SoldierEditTests.swift.diff": "4e117911a1f3f308b1f1b5649b18f94c067d2ffa160a8e9585fc9c6144ed71c1",
+    "patches/LeadersBook__Views__SoldiersView.swift.diff": "a7ec0d60d710140433f6e413f856c28b7173395b347b40f2c8792e8687bd0d3e",
+    "patches/script__build_and_run.sh.diff": "093961d98a0aa24e618b213e6ff2fbd664d072bf56175364ff71a9863dba4fbf",
+    "patches/LeadersBook__Core__LeaderStore.swift.diff": "bda0a4908338903e442fb0dc78cbec857d53c4d90c664984e4260a1f31ed9b8f",
+    "patches/LeadersBook__Views__SoldierEditor.swift.diff": "b91e269618c98f5ff9eaed28cb1a6e78fe0ca2da5ae87fe63025bb3bd243f5c2",
+    "patches/LeadersBook.xcodeproj__project.pbxproj.diff": "a25e663e0759b00d465d8f955c6b97fc150f66330b5f4be1b4eaae858391a07c",
+    "patches/docs__ARCHITECTURE-AUDIT.md.diff": "3d66e32d1f2b7883a6603098ece075c3af672c07bf8d5d91acc3c099b884bc0d",
+    "patches/docs__AUTHENTICATION-FINDINGS.md.diff": "2ed519486333d4bf053bcb13e448835adb3cd5dcc8f748a8be13f1961378e1b2",
+    "patches/LeadersBook__Core__SoldierEditSession.swift.diff": "03efd06c51b343956ef93363d60119695ab127046d3796773dd19108459cdd37",
+    "patches/LeadersBook__Core__BookRepository.swift.diff": "de861ec5a74953d87bfb00b680c78b93528af528dd987599316c77a785b48237",
+    "attachments/8DFC5326-28C5-4EB7-8D6B-C38F6B0571CB.png": "1833d41337607fdcaaf3583375e83e76920172d2e2474fec0e6219fadec74b0a",
+    "attachments/655B3D24-33A1-4C10-8231-29B7AB9B841C.png": "09af15ace3041d70b7785293d5503e599403c2e4d886a1f097693e400b6f02a3",
+    "attachments/CBA261FB-FE94-4454-857E-DD82C2F15062.png": "41f390df10aeb098d035eec6dc37a3e884bea2cd59bebaa6acbfb9dbe63d0d83",
+    "attachments/AB1D40EB-0A42-4AFC-B2A2-5DB02BA81431.txt": "0c95dcf3b451e2cd7439101987a52042c02c8e6333c44e40135b778faf969505",
+    "attachments/96685BBA-8975-45DA-B93F-557B701BC76A.png": "00354706ba545b484749970cb794bacbae157eff0e94da8f6cc330feeaf4d78f",
+    "attachments/4079FCC3-53E8-4A0D-BF78-90737720966E.png": "00354706ba545b484749970cb794bacbae157eff0e94da8f6cc330feeaf4d78f",
+    "attachments/FDA40EC5-A51D-4B02-A59B-94DB6601B80A.txt": "940d6e4a2acb0b6a3b63508e3a4d97cb6b3d2eed9c8bd663fee16f3110aa0eff",
+    "attachments/49107AC3-5A69-4983-8A32-E6533D73A049.png": "d288c048b75141db21492da728cb7dbe097eee02155c72e7a9ace3371f3139d7",
+    "attachments/E397A0A4-4CBD-4160-9FD8-9390FFD151EE.png": "00354706ba545b484749970cb794bacbae157eff0e94da8f6cc330feeaf4d78f",
+    "attachments/A51E7E3E-C4C9-4BCF-9D4B-E07239708AC7.png": "09af15ace3041d70b7785293d5503e599403c2e4d886a1f097693e400b6f02a3",
+    "attachments/FBC90496-3308-4722-8915-D13B6A0E0DDD.txt": "26b6eb698c57bffd4dbd9b4485a8d08cbb06465fce0b97066c2465cc3928bb81",
+    "attachments/62527511-0B13-48A1-92DB-11D29667A808.png": "09af15ace3041d70b7785293d5503e599403c2e4d886a1f097693e400b6f02a3",
+    "attachments/1D0A2396-B55A-4D06-81A2-F55DC7090A02.png": "1cee4883f838905759c9cb9962ed8e3bd5c002a3a55058f4d85a13bad22b537a",
+    "attachments/0EF9CE82-D014-42DC-A745-9470885AD401.txt": "715a207fd887923544d980f965d9b286289e9f285548e17740510a6e0f30c428",
+    "attachments/6E5805C8-4684-4585-9A8B-5844A243B2CC.png": "00354706ba545b484749970cb794bacbae157eff0e94da8f6cc330feeaf4d78f",
+    "attachments/96E4880A-83C4-42F7-8171-FE929F59DA77.txt": "afecfebc01455fd763c47f6c02ad9998557a21853406529ef356877b41c29dfc",
+    "attachments/DB01A88E-30FA-47B0-9619-EC0D969CF7C7.png": "3a096bf4a2af9c299054e6923bf9e379893dff35ed43ce703df04a4c2f4f8c8c",
+    "attachments/6B1FFAA7-E77A-4C9A-B5FF-E71597D86332.png": "eeff9d12fc45f6e9e472d6516dbf69967670c44f2321811094e6bc98af7df622",
+    "attachments/0C034D77-702A-49BE-A621-02A374B03900.png": "de4227d932711a7c552bc7f750b2c32511a58fe04d998fe33b683cabb4ab40ae",
+    "attachments/DE0BC98C-5603-46FB-92E1-5724B609DA29.txt": "46572b9ff74d95138dae2eab88d662d02663fb95dca8bd9326318f0a286349be",
+    "attachments/manifest.json": "41e53320372e51c4691bf10c35e9f3a8635235b4ae6c57a245181b75495cb595",
+    "attachments/4644D78E-7303-4261-99F1-E1C1625A26E0.txt": "4e18d8f774fbed55c08425d35517aef046aecfc6a1eab31d27c9c59f82112164",
+    "attachments/42BC9B56-D293-483A-971E-7BE7F5726693.txt": "e14b1dad6037f2a90bbd16c8a6a780675e50c4adf53d3680303c05dc1ca0544c",
+    "attachments/CEF6A99B-49B3-4E4A-83C9-D266C877B4FE.png": "c7ff484718c29852257529e9e1f712fd63111c455c8d1a742bcaaa0999d39e61",
+    "attachments/B256BD83-EAD8-4953-9424-B53A124F1EF1.png": "09af15ace3041d70b7785293d5503e599403c2e4d886a1f097693e400b6f02a3",
+    "attachments/76157AE7-E855-4829-8496-22F16E20677C.png": "a030187dda372f1aeb55fc05f9fac07cdf3ef47c3c34e05c96774118b9d60969",
+    "attachments/B66BE6A6-B4CB-410C-A737-69C722A95A32.png": "e2c386f0526d8d3e463ec3b5a7019fb46239c4bb9f1e4d4cb7a904f5e468b095",
+    "attachments/A3C9C05D-FB3D-47A6-8986-B27E31409D39.txt": "5c20b3d875d0427e5ea9e56304062898b584fc9b6d5b9beb1fc4c0797651b9b9",
+    "attachments/78D62694-578E-4B3A-8EED-CBE996DC8639.png": "00354706ba545b484749970cb794bacbae157eff0e94da8f6cc330feeaf4d78f",
+    "attachments/94370639-D5AF-4E04-A551-5AFE92822D9E.txt": "b8e2e8095ae40798e6a8fdc0d1b6ff671fa8ea58c2cbeb2c87b0a5de4ba14a33",
+    "attachments/238A8E66-1C72-4FD0-AB45-726204B2B5C5.txt": "c87dbb9e96d49e7bce5b94ccf168642456a4ded05725e2c0631dfd0420f6c7cb",
+    "attachments/F2704B7E-2E7C-449C-B6D5-D6F9A18B6037.txt": "f5f679ce6ea2550856118c9b6038a1ecb6a110f005f75a5e35fc6b7d2edc3d80",
+    "attachments/CC9F7514-1AC4-496B-9E9E-436CDAEF4039.png": "483a6c2184af3484e4d2ff7ca74dd20903fe8edd54f2f2d5f6b8d4416c8543cb",
+    "attachments/47997498-4C70-4DBF-ABCE-5D0073A1B21A.txt": "bb5181199d837a2559aa2dfcf48ad825660f6eda9f1efe555808e2c4508d1f64",
+    "attachments/1C51AB4C-31A8-4E48-8999-B2FDD0CE3384.txt": "975847dd8aaae6f807594c11ff745a58c639e9d4e817143540fa7b81d236e9bd",
+    "attachments/070BE931-1DE5-4E86-8DFD-AFAC961A7EE6.txt": "c811a0e4b26cfa8b10af4ea0dffe7608e716a5b4f85e47e66eb9b7e094fd2223",
+    "attachments/27FB73BE-DE9B-4544-AA8D-00EF8685CCB7.txt": "19b671c403920bc6a26888dfd43d15f503c17d1875a0a8afefdaf98195f08a12"
+  }
+}

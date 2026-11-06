@@ -1,0 +1,52 @@
+--- a/Tests/LeadersBookUITests/LeadersBookUITests.swift
++++ b/Tests/LeadersBookUITests/LeadersBookUITests.swift
+@@ -2,6 +2,49 @@
+ 
+ @MainActor
+ final class LeadersBookUITests: XCTestCase {
++    func testSoldierEditsRestoreAfterUnlockAndClearAfterSaveOrDiscard() {
++        continueAfterFailure = false
++        let app = XCUIApplication()
++        launchUnlocked(app)
++        selectTab("Soldiers", in: app)
++        if app.buttons["BackButton"].exists { app.buttons["BackButton"].tap() }
++        app.buttons.matching(identifier: "Add Soldier").firstMatch.tap()
++        let name = app.textFields["soldierName"]
++        XCTAssertTrue(name.waitForExistence(timeout: 5))
++        name.tap(); name.typeText("Memory Draft")
++        let notes = app.descendants(matching: .any).matching(identifier: "soldierNotes").firstMatch
++        reveal(notes, in: app)
++        notes.tap(); notes.typeText("Unsaved notes survive locking")
++        XCUIDevice.shared.press(.home)
++        app.activate()
++        XCTAssertTrue(app.buttons["unlockRecords"].waitForExistence(timeout: 5))
++        XCTAssertFalse(name.exists)
++        app.buttons["unlockRecords"].tap()
++        XCTAssertTrue(app.buttons["saveSoldier"].waitForExistence(timeout: 5))
++        reveal(notes, in: app)
++        XCTAssertEqual(notes.value as? String, "Unsaved notes survive locking")
++        app.buttons["saveSoldier"].tap()
++        XCTAssertTrue(app.navigationBars.staticTexts["PVT Memory Draft"].waitForExistence(timeout: 5))
++        let delete = app.buttons["Delete Soldier"]
++        reveal(delete, in: app); delete.tap()
++        app.buttons["Delete Soldier and Results"].tap()
++        XCTAssertTrue(app.buttons.matching(identifier: "Add Soldier").firstMatch.waitForExistence(timeout: 5))
++        app.buttons.matching(identifier: "Add Soldier").firstMatch.tap()
++        XCTAssertTrue(name.waitForExistence(timeout: 5))
++        name.tap(); name.typeText("Discarded Draft")
++        XCUIDevice.shared.press(.home); app.activate()
++        XCTAssertTrue(app.buttons["unlockRecords"].waitForExistence(timeout: 5))
++        app.buttons["unlockRecords"].tap()
++        XCTAssertTrue(name.waitForExistence(timeout: 5))
++        XCTAssertEqual(name.value as? String, "Discarded Draft")
++        app.buttons["Cancel"].tap()
++        app.buttons["Discard Changes"].tap()
++        app.buttons["lockRecords"].tap()
++        app.buttons["unlockRecords"].tap()
++        XCTAssertTrue(app.buttons["lockRecords"].waitForExistence(timeout: 5))
++        XCTAssertFalse(name.exists)
++    }
++
+     func testSimultaneousFailuresAreBothPresented() {
+         let app = XCUIApplication()
+         app.launchArguments = ["--authentication-test-simultaneous-errors"]

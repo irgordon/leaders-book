@@ -1,0 +1,368 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "043E92BC-674B-4F7C-B547-3386F4DE200C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Saved AFT result_0_DEFB8E35-3058-4A74-9D5A-DBBD425DBA6E.png",
+        "timestamp" : 1793918335.109
+      }
+    ],
+    "testIdentifier" : "LeadersBookUITests/testAFTCalculationSavingAndHistory()",
+    "testIdentifierURL" : "test://com.apple.xcode/LeadersBook/LeadersBookUITests/LeadersBookUITests/testAFTCalculationSavingAndHistory"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "02E88CEC-C58D-4CFA-A4A1-2CE7FC24601A.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "AFT Event Failure — Icon and Text_0_3C09E258-B49E-4B9E-8B39-F397F0B1B835.png",
+        "timestamp" : 1793918367.803
+      }
+    ],
+    "testIdentifier" : "LeadersBookUITests/testAFTEventFailureExplanation()",
+    "testIdentifierURL" : "test://com.apple.xcode/LeadersBook/LeadersBookUITests/LeadersBookUITests/testAFTEventFailureExplanation"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "CA9C46B1-2F13-4FD0-A4E0-1B090E8317AC.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Fresh Authentication — Authorized Notes Export_0_6E07E0F5-74F3-4234-9D39-53182636A70D.png",
+        "timestamp" : 1793918405.834
+      }
+    ],
+    "testIdentifier" : "LeadersBookUITests/testExportDenialAndPublicBackupPolicy()",
+    "testIdentifierURL" : "test://com.apple.xcode/LeadersBook/LeadersBookUITests/LeadersBookUITests/testExportDenialAndPublicBackupPolicy"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "9B4DCEFD-7B93-447B-ABB7-04D6FBD73496.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Locked Summary — Manual Lock_0_4FB46982-C900-4534-9574-CDD9C7553145.png",
+        "timestamp" : 1793918427.074
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "7E1D4A6C-A5A6-4506-BA43-CD0A2F00FA74.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Locked Summary — Denied Authentication_0_6C97BA75-0501-4D7F-8685-9E35D67CD713.png",
+        "timestamp" : 1793918415.497
+      }
+    ],
+    "testIdentifier" : "LeadersBookUITests/testLockedSummaryAndRejectedAuthentication()",
+    "testIdentifierURL" : "test://com.apple.xcode/LeadersBook/LeadersBookUITests/LeadersBookUITests/testLockedSummaryAndRejectedAuthentication"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "AC0CEFA2-FE95-4AAC-BDCD-826712C17C7C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Open Record — Layout Preview_0_57DD4784-E46D-4CF3-95EA-0BBF12D88B16.png",
+        "timestamp" : 1793918495.055
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "7A4B3320-3ED7-491D-8158-4A8B216219BD.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Training Rows — Layout Preview_0_D5AAA1EA-7F85-4249-9A3D-A26C753DD602.png",
+        "timestamp" : 1793918493.624
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "ECBDF70C-4066-4446-A2B1-FA165E5AA8E7.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Front Cover — Layout Preview_0_1F879308-0850-41FC-AE22-391E498721DC.png",
+        "timestamp" : 1793918436.16
+      }
+    ],
+    "testIdentifier" : "LeadersBookUITests/testPhotoTrainingAndHeightWeightWorkflow()",
+    "testIdentifierURL" : "test://com.apple.xcode/LeadersBook/LeadersBookUITests/LeadersBookUITests/testPhotoTrainingAndHeightWeightWorkflow"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "EB10DA5D-BADA-47DC-B0A1-3C6147790708.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Theme Soldier Profile — Dark_0_E993FB94-5830-47A2-80DE-161000BEDFD1.png",
+        "timestamp" : 1793918572.324
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "C2161C9D-91A8-4526-AA9C-8DC6E2F729BD.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Theme Front Cover — Dark_0_42CFD99F-4F2A-4F11-BB70-31B1F68116A5.png",
+        "timestamp" : 1793918561.631
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "64137BDD-3EE9-4DC1-89EE-77E06CCF9C77.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Theme Soldier Profile — Light_0_4543FF69-9E57-4757-8CF1-2BAC80FC58B2.png",
+        "timestamp" : 1793918550.826
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "5D0A11E4-9298-46D8-BFE1-4597DBCD8FFD.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Theme Front Cover — Light_0_6DBB59D8-DF43-4B4D-9291-2196C5BB24AE.png",
+        "timestamp" : 1793918540.162
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "47AF29AE-050B-4524-B033-503997ACA7CF.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Training Rows — Layout Preview_0_B31940E1-1625-4DD3-BD03-B5396B79DDD2.png",
+        "timestamp" : 1793918531.473
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "A234CD9F-CDA9-4C05-90AC-C9DCF244E22C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Open Record — Layout Preview_0_4F695706-B844-416A-A6F6-346C587C2E69.png",
+        "timestamp" : 1793918524.723
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "B7B59D1F-A3EC-48B7-90BE-2754C05A3519.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Front Cover — Layout Preview_0_BE074196-F2D4-4C28-AFB6-9941CE7EDAF9.png",
+        "timestamp" : 1793918517.997
+      }
+    ],
+    "testIdentifier" : "LeadersBookUITests/testRankAndPlaceholderPreviews()",
+    "testIdentifierURL" : "test://com.apple.xcode/LeadersBook/LeadersBookUITests/LeadersBookUITests/testRankAndPlaceholderPreviews"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "C861B639-625C-440F-98C4-DCD28D155DC8.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Accessibility Text — Rank Spacing_0_2713A287-A590-4939-9028-B48A6A9ABAF5.png",
+        "timestamp" : 1793918586.786
+      }
+    ],
+    "testIdentifier" : "LeadersBookUITests/testRankSpacingAtAccessibilityTextSize()",
+    "testIdentifierURL" : "test://com.apple.xcode/LeadersBook/LeadersBookUITests/LeadersBookUITests/testRankSpacingAtAccessibilityTextSize"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "28083A8D-8ACD-4663-8C7C-DB9ACFDB008B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "HTWT Calculator_0_FCB45065-CFCF-4C55-8FB4-F5606E4EDA64.png",
+        "timestamp" : 1793918621.541
+      }
+    ],
+    "testIdentifier" : "LeadersBookUITests/testRatioShortcutCalculationAndRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/LeadersBook/LeadersBookUITests/LeadersBookUITests/testRatioShortcutCalculationAndRelaunch"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "CC1AF197-8263-42BB-A8CA-283987CCF78B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Persistent soldier record_0_95C93265-5EA4-4DD2-B6E5-CC3BE42F3A17.png",
+        "timestamp" : 1793918661.602
+      }
+    ],
+    "testIdentifier" : "LeadersBookUITests/testSoldierCreationEditingRelaunchAndDeletion()",
+    "testIdentifierURL" : "test://com.apple.xcode/LeadersBook/LeadersBookUITests/LeadersBookUITests/testSoldierCreationEditingRelaunchAndDeletion"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "E613E4C4-3CE8-4B68-A6FC-B34E6C85BE8E.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "dark-increased-selected-true-enabled-true_0_E31DE323-899D-4779-8162-6FD122AAEDAD.png",
+        "timestamp" : 1793918297.117
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "3AA47E4A-DB28-460F-8FF6-69A5EE2B3586.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "dark-increased-selected-true-enabled-false_0_44D9DF85-3722-40E3-BAC4-A0D72A9B4C3A.png",
+        "timestamp" : 1793918296.998
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "28DCD41E-1D39-46D4-9C76-E9A35AC1544B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "dark-increased-selected-false-enabled-true_0_AD23577C-948F-489B-B199-CF8072C03B8F.png",
+        "timestamp" : 1793918296.879
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "5CD215F1-76DA-4B21-A191-0E61C6CE31B1.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "dark-increased-selected-false-enabled-false_0_BCCAE41F-C42D-4B0B-9B24-6DDCB50D21ED.png",
+        "timestamp" : 1793918296.759
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "7987D006-0910-41EA-A3B6-0AFDCB36DD2E.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "dark-standard-selected-true-enabled-true_0_F2973188-0E2C-4EC9-A635-8D7F433C889A.png",
+        "timestamp" : 1793918296.641
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "B9CCB137-7353-4FDB-872F-4220986EA2A9.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "dark-standard-selected-true-enabled-false_0_F542D288-C36A-49F2-8E8D-DC03E06E93AF.png",
+        "timestamp" : 1793918296.523
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "3CD26FBF-2E57-4516-B577-06A13081A3C7.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "dark-standard-selected-false-enabled-true_0_54FA4235-4536-4A16-A366-6A3263D632D1.png",
+        "timestamp" : 1793918296.403
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "50A7DAF5-3A73-4945-907C-55D4C3E14571.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "dark-standard-selected-false-enabled-false_0_55637E11-D3B4-45FD-B8C5-EE1CF098334E.png",
+        "timestamp" : 1793918296.285
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "57136D44-D63D-4606-AB14-D65B5B0BC980.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "light-increased-selected-true-enabled-true_0_735C1F1B-BF5A-4FC3-BF12-8A38FBC0AA6E.png",
+        "timestamp" : 1793918296.167
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "ECFD9F04-06F5-42DA-BE44-EE1C18222CBB.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "light-increased-selected-true-enabled-false_0_FE51163A-4ED7-411E-B6D8-D6D42BB67785.png",
+        "timestamp" : 1793918296.051
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "E08B0607-75B5-427B-AA7C-BC75F8355035.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "light-increased-selected-false-enabled-true_0_62ABABE3-F51C-41EA-B219-96D48C7ADE29.png",
+        "timestamp" : 1793918295.933
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "F9BBDA5A-3326-45D7-BF6B-3B4C6C0F790A.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "light-increased-selected-false-enabled-false_0_E4860B13-F15B-41E5-9217-0FB79C1BC4CF.png",
+        "timestamp" : 1793918295.816
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "B3EDAA8C-3F4F-4AB9-9357-2A8517C3D630.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "light-standard-selected-true-enabled-true_0_7280A447-5530-4BE7-B381-0FC024CB25FA.png",
+        "timestamp" : 1793918295.694
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "D1B7F6D4-B3BD-4EA1-935D-3E6DD2C64FA6.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "light-standard-selected-true-enabled-false_0_A9C169C3-8521-4470-BE50-08ECC006113C.png",
+        "timestamp" : 1793918295.577
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "D18EB2F3-4CD9-4290-8354-2F6942928A11.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "light-standard-selected-false-enabled-true_0_DCE8214B-442B-433C-8D22-EAB9D4D75B2C.png",
+        "timestamp" : 1793918295.452
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "60C3F92F-83C2-43AE-9856-2FACD1FA3504.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "light-standard-selected-false-enabled-false_0_66FB377D-37CA-460D-8E75-46CE1B5B237E.png",
+        "timestamp" : 1793918295.332
+      }
+    ],
+    "testIdentifier" : "ThemeAdapterTests/testActionStyleUsesRowSelectionForRenderedLabel()",
+    "testIdentifierURL" : "test://com.apple.xcode/LeadersBook/ThemeAdapterTests/ThemeAdapterTests/testActionStyleUsesRowSelectionForRenderedLabel"
+  }
+]

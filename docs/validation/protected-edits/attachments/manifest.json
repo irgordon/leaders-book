@@ -1,0 +1,344 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "76157AE7-E855-4829-8496-22F16E20677C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Open Record — Layout Preview_0_70D37F5A-D339-402C-819D-7D82F6489C55.png",
+        "timestamp" : 1793833028.102
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "6B1FFAA7-E77A-4C9A-B5FF-E71597D86332.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Training Rows — Layout Preview_0_630C63A0-6629-42A5-B2C8-D6AA65FCDAC2.png",
+        "timestamp" : 1793833026.676
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "DB01A88E-30FA-47B0-9619-EC0D969CF7C7.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Front Cover — Layout Preview_0_C7CAFBFE-24FD-406E-B40D-4DAF39BB5FE9.png",
+        "timestamp" : 1793832967.67
+      }
+    ],
+    "testIdentifier" : "LeadersBookUITests/testPhotoTrainingAndHeightWeightWorkflow()",
+    "testIdentifierURL" : "test://com.apple.xcode/LeadersBook/LeadersBookUITests/LeadersBookUITests/testPhotoTrainingAndHeightWeightWorkflow"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "8DFC5326-28C5-4EB7-8D6B-C38F6B0571CB.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Persistent soldier record_0_B1A79118-B04D-4214-B2AA-F4A8D03B1B6A.png",
+        "timestamp" : 1793833064.861
+      }
+    ],
+    "testIdentifier" : "LeadersBookUITests/testSoldierCreationEditingRelaunchAndDeletion()",
+    "testIdentifierURL" : "test://com.apple.xcode/LeadersBook/LeadersBookUITests/LeadersBookUITests/testSoldierCreationEditingRelaunchAndDeletion"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "1C51AB4C-31A8-4E48-8999-B2FDD0CE3384.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "dark-increased-selected-true-enabled-true-metadata_0_DBE7E06B-B7BB-4203-80F6-86B193382590.txt",
+        "timestamp" : 1793832956.768
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "655B3D24-33A1-4C10-8231-29B7AB9B841C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "dark-increased-selected-true-enabled-true_0_7E474E49-7822-4339-B7FD-553CC6E4EFD2.png",
+        "timestamp" : 1793832956.767
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "47997498-4C70-4DBF-ABCE-5D0073A1B21A.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "dark-increased-selected-true-enabled-false-metadata_0_7E919DAD-4881-448E-AB5F-F482A93FE6F7.txt",
+        "timestamp" : 1793832956.643
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "A51E7E3E-C4C9-4BCF-9D4B-E07239708AC7.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "dark-increased-selected-true-enabled-false_0_84D9B183-46BA-4655-B397-82D47A83D27A.png",
+        "timestamp" : 1793832956.642
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "070BE931-1DE5-4E86-8DFD-AFAC961A7EE6.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "dark-increased-selected-false-enabled-true-metadata_0_275C868E-9F8D-430B-88F6-65A1E1A704B6.txt",
+        "timestamp" : 1793832956.525
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "0C034D77-702A-49BE-A621-02A374B03900.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "dark-increased-selected-false-enabled-true_0_B2C358AB-0012-4583-98FD-9B782165FFE2.png",
+        "timestamp" : 1793832956.524
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "4644D78E-7303-4261-99F1-E1C1625A26E0.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "dark-increased-selected-false-enabled-false-metadata_0_C8074208-11B5-4F85-A980-BCCD68D90A59.txt",
+        "timestamp" : 1793832956.405
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "4079FCC3-53E8-4A0D-BF78-90737720966E.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "dark-increased-selected-false-enabled-false_0_22360B60-202F-4EBF-A771-E95DAB40FBE7.png",
+        "timestamp" : 1793832956.403
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "AB1D40EB-0A42-4AFC-B2A2-5DB02BA81431.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "dark-standard-selected-true-enabled-true-metadata_0_AEC1671F-EC02-421F-8E3C-22335A6C6618.txt",
+        "timestamp" : 1793832956.285
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "B256BD83-EAD8-4953-9424-B53A124F1EF1.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "dark-standard-selected-true-enabled-true_0_7E6FA127-BE33-413E-8F68-447707D387D2.png",
+        "timestamp" : 1793832956.283
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "DE0BC98C-5603-46FB-92E1-5724B609DA29.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "dark-standard-selected-true-enabled-false-metadata_0_33591A58-651A-4275-ACE0-EBC23429AE64.txt",
+        "timestamp" : 1793832956.166
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "62527511-0B13-48A1-92DB-11D29667A808.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "dark-standard-selected-true-enabled-false_0_78E26C19-275C-4495-9B75-2EB80AED6093.png",
+        "timestamp" : 1793832956.165
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "0EF9CE82-D014-42DC-A745-9470885AD401.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "dark-standard-selected-false-enabled-true-metadata_0_261BB6D7-CFBE-477A-BCB2-34E51C6F98DE.txt",
+        "timestamp" : 1793832956.045
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "CEF6A99B-49B3-4E4A-83C9-D266C877B4FE.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "dark-standard-selected-false-enabled-true_0_B727FBF0-9736-42EE-BC36-4E32129BE836.png",
+        "timestamp" : 1793832956.044
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "F2704B7E-2E7C-449C-B6D5-D6F9A18B6037.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "dark-standard-selected-false-enabled-false-metadata_0_BC810310-7F89-43AE-B212-A46A2CC8419C.txt",
+        "timestamp" : 1793832955.927
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "49107AC3-5A69-4983-8A32-E6533D73A049.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "dark-standard-selected-false-enabled-false_0_ACB8460D-B161-4C49-BCF4-2E5CAF999185.png",
+        "timestamp" : 1793832955.926
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "96E4880A-83C4-42F7-8171-FE929F59DA77.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "light-increased-selected-true-enabled-true-metadata_0_29583F36-F645-42D8-A5CD-ADD61EE92FC5.txt",
+        "timestamp" : 1793832955.804
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "96685BBA-8975-45DA-B93F-557B701BC76A.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "light-increased-selected-true-enabled-true_0_15E76200-7890-4FB6-8DAC-B8C66C271DC1.png",
+        "timestamp" : 1793832955.802
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "94370639-D5AF-4E04-A551-5AFE92822D9E.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "light-increased-selected-true-enabled-false-metadata_0_55C93811-D5A2-44E2-82D0-DC236B3854DB.txt",
+        "timestamp" : 1793832955.684
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "6E5805C8-4684-4585-9A8B-5844A243B2CC.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "light-increased-selected-true-enabled-false_0_581CDFE9-EC66-4FFC-991E-A7DEDC374402.png",
+        "timestamp" : 1793832955.683
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "238A8E66-1C72-4FD0-AB45-726204B2B5C5.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "light-increased-selected-false-enabled-true-metadata_0_6E1832A2-B542-4CA7-84B5-9ED34CE48398.txt",
+        "timestamp" : 1793832955.567
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "CC9F7514-1AC4-496B-9E9E-436CDAEF4039.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "light-increased-selected-false-enabled-true_0_18EB8DA6-F899-4A87-8B6F-D27AF29491DF.png",
+        "timestamp" : 1793832955.566
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "27FB73BE-DE9B-4544-AA8D-00EF8685CCB7.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "light-increased-selected-false-enabled-false-metadata_0_851ECDAB-AF81-4BE2-9E8B-348A77BC0E1F.txt",
+        "timestamp" : 1793832955.441
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "CBA261FB-FE94-4454-857E-DD82C2F15062.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "light-increased-selected-false-enabled-false_0_CA0D2885-70E7-403D-89EF-6F3AB2CD997C.png",
+        "timestamp" : 1793832955.439
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "42BC9B56-D293-483A-971E-7BE7F5726693.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "light-standard-selected-true-enabled-true-metadata_0_5FFEA285-07FF-400F-BD92-D496ACB475DC.txt",
+        "timestamp" : 1793832955.307
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "E397A0A4-4CBD-4160-9FD8-9390FFD151EE.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "light-standard-selected-true-enabled-true_0_45364975-512D-4092-8243-CC9D89F3F9EA.png",
+        "timestamp" : 1793832955.304
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "A3C9C05D-FB3D-47A6-8986-B27E31409D39.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "light-standard-selected-true-enabled-false-metadata_0_3E9331B1-08C3-445B-865F-B1D3DFD4D391.txt",
+        "timestamp" : 1793832955.162
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "78D62694-578E-4B3A-8EED-CBE996DC8639.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "light-standard-selected-true-enabled-false_0_9EC037C4-3974-4974-AEFC-7955765567D7.png",
+        "timestamp" : 1793832955.159
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "FDA40EC5-A51D-4B02-A59B-94DB6601B80A.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "light-standard-selected-false-enabled-true-metadata_0_A916E83C-4992-46FB-8ED5-A71CE89C8A45.txt",
+        "timestamp" : 1793832955.026
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "B66BE6A6-B4CB-410C-A737-69C722A95A32.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "light-standard-selected-false-enabled-true_0_0C8AA21F-CC3C-4D91-B735-01BD4F616849.png",
+        "timestamp" : 1793832955.024
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "FBC90496-3308-4722-8915-D13B6A0E0DDD.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "light-standard-selected-false-enabled-false-metadata_0_2B038245-ABB4-4221-8117-459FEF0219D1.txt",
+        "timestamp" : 1793832954.897
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "042F1B65-E9EF-413F-B09B-9B6E3F191ABC",
+        "deviceName" : "Leaders Book Governance Verification",
+        "exportedFileName" : "1D0A2396-B55A-4D06-81A2-F55DC7090A02.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "light-standard-selected-false-enabled-false_0_6B0DBAF0-4D20-44D5-8E30-02CAE80E0E57.png",
+        "timestamp" : 1793832954.896
+      }
+    ],
+    "testIdentifier" : "ThemeAdapterTests/testActionStyleUsesRowSelectionForRenderedLabel()",
+    "testIdentifierURL" : "test://com.apple.xcode/LeadersBook/ThemeAdapterTests/ThemeAdapterTests/testActionStyleUsesRowSelectionForRenderedLabel"
+  }
+]

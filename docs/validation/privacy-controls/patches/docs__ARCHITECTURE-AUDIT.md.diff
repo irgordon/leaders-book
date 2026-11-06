@@ -1,0 +1,23 @@
+--- a/docs/ARCHITECTURE-AUDIT.md
++++ b/docs/ARCHITECTURE-AUDIT.md
+@@ -141,8 +141,19 @@
+ 
+ Protected Soldier edit policy update: locks remain immediate, while incomplete Soldier form state and pending photo bytes are retained in an authenticated, revocable process-memory buffer and restored after unlock. Other forms retain their prior policy. All 47 core tests, ten selected native checks, and the release gate/Release build passed. Original revisions and deleted-record conflicts prevent stale restoration from overwriting newer state. [Updated findings, coding-practices review, and Git-based file diffs](AUTHENTICATION-FINDINGS.md) document scope and limits.
+ 
+-Correction policy clarification: immediate locking remains required. Soldier editor drafts are retained in protected process memory; Training Record and HT/WT forms deliberately discard unsaved state on lock. This is the current scope decision, not a claim that all editor types have restoration. Backup, sharing, and retention risks are not accepted by this audit on the owner’s behalf. Hardware results are recorded separately from simulator evidence; see the findings report’s run/provenance tables.
++Correction policy clarification: immediate locking remains required. Soldier editor drafts are retained in protected process memory; Training Record and HT/WT forms deliberately discard unsaved state on lock. This is the current scope decision, not a claim that all editor types have restoration. The owner subsequently selected system-backup eligibility with disclosure, fresh authentication for export, and one-year retention review with confirmed deletion; the November 5 section records implementation. Hardware results are recorded separately from simulator evidence; see the findings report’s run/provenance tables.
+ 
+ ## App Store Release Audit — November 5, 2026
+ 
+ [Current P0–P5 release audit](APP-STORE-RELEASE-AUDIT-2026-11-05.md) identifies the absent in-app privacy-policy link and separates incomplete signed-distribution/device-validation gates from conditional metadata risks and nonblocking engineering backlog. Fresh unsigned Release archiving passes; compiled icons are opaque and test-only flags are absent. The Medium page could not be fetched; the supplied summary was checked against current Apple sources. No application code changed in this audit.
++
++
++## Privacy-Control Corrections — November 5, 2026
++
++The approved boundary changes defer all private repository opening/recovery until successful unlock, revoke stale export authorization, and clean up per-scene protected Soldier drafts on real scene disconnect. Export data is an enum of trusted notes or validated certificate files. Presentation owns cancellation and user-facing failures; the store owns authorization and the repository retains transactional deletion/cleanup. No new dependency or persistent schema was introduced.
++
++Owner policy: keep system backup eligibility and disclose retained-copy risk; require fresh authentication before notes/certificate export; warn one calendar year after the Soldier record’s last saved update and delete only after explicit confirmation. Soldier editor drafts survive immediate lock in access-controlled process memory; Training Record and HT/WT drafts deliberately do not. Calendar-unavailable retention dates become a visible review state. In-app disclosure does not supply the still-missing published policy URL or App Store Connect metadata.
++
++[Current findings, exact commands, evidence and all edited-file diffs](AUTHENTICATION-FINDINGS.md#november-5--approved-privacy-control-corrections) distinguish real-filesystem core checks, native simulator checks and unavailable hardware checks. Two actual simulator UIWindowScenes now verify disconnect cleanup; physical-device multi-window editing is not inferred. Signed distribution, real authentication/protected-data behavior, provider snapshot routes, certificate accessibility and Duo-specific layout remain unverified.
++
++Fresh validation: **50 core tests, all 20 native tests, and one separate real-scene simulator test passed**. The unsigned Release archive passed and excludes test-authentication/preview flags. Authorization/data-lifecycle corrections pass the exercised boundaries; overall privacy/HIG/release compliance remains **Partial** pending the explicit hardware, provider-route and distribution checks above.

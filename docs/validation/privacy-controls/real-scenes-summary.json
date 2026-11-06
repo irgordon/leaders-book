@@ -1,0 +1,45 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "F1FF7FD1-E892-4445-B199-93E17FAA286A",
+        "deviceName" : "Leaders Book Expanded Preview",
+        "modelName" : "iPad Pro 11-inch (M5)",
+        "osBuildNumber" : "24A434",
+        "osVersion" : "27.0",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 0,
+      "passedTests" : 1,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "LeadersBook · Built with macOS 27.2",
+  "expectedFailures" : 0,
+  "failedTests" : 0,
+  "finishTime" : 1793917539.429,
+  "passedTests" : 1,
+  "result" : "Passed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1793917528.183,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+
+  ],
+  "title" : "Test - LeadersBook",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 1
+}

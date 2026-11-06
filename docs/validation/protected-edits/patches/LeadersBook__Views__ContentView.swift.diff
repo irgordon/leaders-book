@@ -1,0 +1,19 @@
+--- a/LeadersBook/Views/ContentView.swift
++++ b/LeadersBook/Views/ContentView.swift
+@@ -4,6 +4,7 @@
+     @Bindable var store: LeaderStore
+     let scorer: AFTScoring
+     @SceneStorage("selectedTab") private var selectedTab = 0
++    @State private var editorWindow = UUID()
+     @State private var recoveryOperation = OwnedOperation()
+     @Environment(\.scenePhase) private var scenePhase
+ 
+@@ -50,7 +51,7 @@
+                         TodayView(store: store, records: book.snapshot, scorer: scorer, selectedTab: $selectedTab)
+                     }
+                     Tab("Soldiers", systemImage: "person.2", value: 1) {
+-                        SoldiersView(store: store, records: book.snapshot, scorer: scorer)
++                        SoldiersView(store: store, records: book.snapshot, scorer: scorer, editorWindow: editorWindow)
+                     }
+                     Tab("Guides", systemImage: "books.vertical", value: 2) {
+                         GuidesView()

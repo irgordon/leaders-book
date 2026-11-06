@@ -1,0 +1,43 @@
+Building for debugging...
+[Planning deferred tasks]
+[44 / 75]
+[45 / 76] LeadersBookCore
+[56 / 127]
+[64 / 127]
+[66 / 127] LeadersBookCore_LeadersBookCore
+[71 / 127]
+[76 / 127]
+[80 / 127]
+[84 / 127]
+[87 / 127]
+[88 / 127]
+[101 / 127] LeadersBookCore
+[109 / 127] LeadersBookCore
+[116 / 128] LeadersBookCoreTests-product
+[117 / 141]
+[129 / 141] LeadersBookCoreTests-product
+[134 / 141] LeadersBookCoreTests-product
+[136 / 141] LeadersBookCoreTests-product
+Build complete! (5.72 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite RecordAccessTests started.
+◇ Test staleAuthenticationCannotUnlockAfterLock() started.
+◇ Test revokedLeasePreventsQueuedStorageAccess() started.
+◇ Test lockedReloadDoesNotReadOrRecoverPrivateFiles() started.
+◇ Test unavailableAuthenticationFailsClosed() started.
+◇ Test exportsRequireFreshAuthenticationAndRejectLateCompletion() started.
+◇ Test lockedRoutesRejectAccessAndPreserveRecords() started.
+◇ Test retentionUsesOneCalendarYearWithoutDeleting() started.
+◇ Test archiveConfigurationExcludesTestAuthentication() started.
+✔ Test lockedReloadDoesNotReadOrRecoverPrivateFiles() passed after 0.021 seconds.
+✔ Test unavailableAuthenticationFailsClosed() passed after 0.022 seconds.
+✔ Test archiveConfigurationExcludesTestAuthentication() passed after 0.022 seconds.
+✔ Test retentionUsesOneCalendarYearWithoutDeleting() passed after 0.022 seconds.
+✔ Test staleAuthenticationCannotUnlockAfterLock() passed after 0.022 seconds.
+✔ Test revokedLeasePreventsQueuedStorageAccess() passed after 0.022 seconds.
+✔ Test exportsRequireFreshAuthenticationAndRejectLateCompletion() passed after 0.023 seconds.
+✔ Test lockedRoutesRejectAccessAndPreserveRecords() passed after 0.023 seconds.
+✔ Suite RecordAccessTests passed after 0.023 seconds.
+✔ Test run with 8 tests in 1 suite passed after 0.023 seconds.

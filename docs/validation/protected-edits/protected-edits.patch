@@ -1,0 +1,645 @@
+--- a/LeadersBook.xcodeproj/project.pbxproj
++++ b/LeadersBook.xcodeproj/project.pbxproj
+@@ -32,8 +32,8 @@
+ 34278B7F7D9DDD6F0E8E0775 = { isa = PBXBuildFile; fileRef = E0B227FC1EFC3E7F2B08A758; };
+ 38A007151ABE87CC01A5B6E9 = { isa = PBXFileReference; explicitFileType = wrapper.application; path = LeadersBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
+ FBDC4F23F93125BBEEAE800C = { isa = PBXGroup; children = (D5379EB4B754A4196CC43E92,9D3AD977850B7EAC0E4F6585,38A007151ABE87CC01A5B6E9,); name = Products; sourceTree = "<group>"; };
+-B28B7AF69320201D1CF206EB = { isa = PBXGroup; children = (FE27ADEDBF2843F4844D1CE0,D8D5C14772EE04259FF9C5B8,A1EA2D2D4A9DA5259198D22A,940471BD022801B630D94F8C,5002B392BAF8DFECE64787A0,E07AE933A8F0B96A64B79954,D1901F83263DF6E8E2B8065B,337F9F6A54F396DF6AE43E56,6A2FD8E92F4DC1CB0D1528D6,AB47D718DC8A8C1874EF0C2E,65CEB14F8AA8FE85E88D6EDD,7CD1E9B8D07CBC9F49D34A06,57951BF245E87C6A1F9C3E47,4DDE1B02B46FB05CF1955EC0,42DDE13F4ADDF7C7B706005A,783E66044DED70EF09A3F910,0B86FC64DBA4CF52B4B28086,CD690099F02B4BA11EB858C1,9D205BE85742BAA9FD34F1EB,4C3A645AD05A22EFC5050D93,6CC795776B333465FE5175EC,5E4423043B2CADA337252854,54DC4E41BE491068816F3E5F,951BCFF6112CD861A4FC68C6,8671BBCEB1C912FBBE17DF86,E3C7D6A147592D54AC2393FF,FF9DC822CCE02F06A7FF962F,44F99F0B30A4675ED38E76B9,E0B227FC1EFC3E7F2B08A758,FBDC4F23F93125BBEEAE800C,); sourceTree = "<group>"; };
+-BCE16DD0260827ECF338C787 = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A9711BE78673898B1E2559ED,22816E5446FCF5E150029D52,5412969F527FD52A102FD49B,2363AE08BE3276C8EB38FD19,4C1AB48829E913E4BA8D6762,B6570B576A1E8889CFC03209,45463BD0778D26AB147E8526,913557893E58643457F7A87A,289111C77CFA37AD04A84A18,8E6DC83FD7E4648E7C1FC9B6,E74E70A1ADF2E71403328F54,3E5BBB6E43B099AB295EF01D,BDFF218D1B00907FE316819B,D7D4BAA1BACEC343368A15FA,821CA36E85D124E49205A7E4,B68D85F617887EAF05CA37B2,5C202F50A131FF1EFD9EAD59,9B98E4FD5486969C6320FF4D,8408BAAA2AE336DD809BD722,D57F07E03C75B1479582EB81,4F7F6F69188F49B119EB80C6,C5C18604708873D40627B1FD,E85E96DAECE3410222A5E68F,E37278499B960148B2DD4592,); runOnlyForDeploymentPostprocessing = 0; };
++B28B7AF69320201D1CF206EB = { isa = PBXGroup; children = (254044912755CDADEA95B1E2,FE27ADEDBF2843F4844D1CE0,D8D5C14772EE04259FF9C5B8,A1EA2D2D4A9DA5259198D22A,940471BD022801B630D94F8C,5002B392BAF8DFECE64787A0,E07AE933A8F0B96A64B79954,D1901F83263DF6E8E2B8065B,337F9F6A54F396DF6AE43E56,6A2FD8E92F4DC1CB0D1528D6,AB47D718DC8A8C1874EF0C2E,65CEB14F8AA8FE85E88D6EDD,7CD1E9B8D07CBC9F49D34A06,57951BF245E87C6A1F9C3E47,4DDE1B02B46FB05CF1955EC0,42DDE13F4ADDF7C7B706005A,783E66044DED70EF09A3F910,0B86FC64DBA4CF52B4B28086,CD690099F02B4BA11EB858C1,9D205BE85742BAA9FD34F1EB,4C3A645AD05A22EFC5050D93,6CC795776B333465FE5175EC,5E4423043B2CADA337252854,54DC4E41BE491068816F3E5F,951BCFF6112CD861A4FC68C6,8671BBCEB1C912FBBE17DF86,E3C7D6A147592D54AC2393FF,FF9DC822CCE02F06A7FF962F,44F99F0B30A4675ED38E76B9,E0B227FC1EFC3E7F2B08A758,FBDC4F23F93125BBEEAE800C,); sourceTree = "<group>"; };
++BCE16DD0260827ECF338C787 = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (4B099B225349F389390E73EE,A9711BE78673898B1E2559ED,22816E5446FCF5E150029D52,5412969F527FD52A102FD49B,2363AE08BE3276C8EB38FD19,4C1AB48829E913E4BA8D6762,B6570B576A1E8889CFC03209,45463BD0778D26AB147E8526,913557893E58643457F7A87A,289111C77CFA37AD04A84A18,8E6DC83FD7E4648E7C1FC9B6,E74E70A1ADF2E71403328F54,3E5BBB6E43B099AB295EF01D,BDFF218D1B00907FE316819B,D7D4BAA1BACEC343368A15FA,821CA36E85D124E49205A7E4,B68D85F617887EAF05CA37B2,5C202F50A131FF1EFD9EAD59,9B98E4FD5486969C6320FF4D,8408BAAA2AE336DD809BD722,D57F07E03C75B1479582EB81,4F7F6F69188F49B119EB80C6,C5C18604708873D40627B1FD,E85E96DAECE3410222A5E68F,E37278499B960148B2DD4592,); runOnlyForDeploymentPostprocessing = 0; };
+ 0189424A5A60FED329FA868E = { isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (3D139655066D7AB9EC938DA0,CCD5B0F735FCC38C3DDFF5AE,34278B7F7D9DDD6F0E8E0775,); runOnlyForDeploymentPostprocessing = 0; };
+ 7561BFB015D8F536760CB671 = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+ 89E1FD6268CC0F221A2BE178 = { isa = XCBuildConfiguration; name = Debug; buildSettings = {
+@@ -173,4 +173,6 @@
+ 7D2F8483F4F51AD1F903B97C = { isa = XCBuildConfiguration; name = Testing; buildSettings = { GENERATE_INFOPLIST_FILE = YES; PRODUCT_BUNDLE_IDENTIFIER = com.leadersbook.app.uitests; PRODUCT_NAME = "$(TARGET_NAME)"; TARGETED_DEVICE_FAMILY = "1,2"; CODE_SIGN_STYLE = Automatic; TEST_TARGET_NAME = LeadersBook; }; };
+ 254A293FC7BBA9E73D9426C3 = { isa = XCBuildConfiguration; name = Testing; buildSettings = { GENERATE_INFOPLIST_FILE = YES; PRODUCT_BUNDLE_IDENTIFIER = com.leadersbook.app.themeadaptertests; PRODUCT_NAME = "$(TARGET_NAME)"; CODE_SIGN_STYLE = Automatic; TARGETED_DEVICE_FAMILY = "1,2"; TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LeadersBook.app/LeadersBook"; BUNDLE_LOADER = "$(TEST_HOST)"; }; };
+ 16176F017385A5B4FC49A4C6 = { isa = PBXShellScriptBuildPhase; alwaysOutOfDate = 1; buildActionMask = 2147483647; files = (); inputPaths = (); outputPaths = (); runOnlyForDeploymentPostprocessing = 0; shellPath = /bin/sh; shellScript = "if [ \"$CONFIGURATION\" = \"Testing\" ] && [ \"$ACTION\" = \"install\" ]; then\n  echo \"error: Testing authentication cannot be archived. Use Release.\"\n  exit 1\nfi\n"; };
++254044912755CDADEA95B1E2 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LeadersBook/Core/SoldierEditSession.swift"; sourceTree = "<group>"; };
++4B099B225349F389390E73EE = { isa = PBXBuildFile; fileRef = 254044912755CDADEA95B1E2; };
+ }; rootObject = 98F54143AB4E86B28C3AFEE0; }
+--- a/LeadersBook/Core/BookRepository.swift
++++ b/LeadersBook/Core/BookRepository.swift
+@@ -205,7 +205,10 @@
+                 guard soldiers[index].revision == expectedRevision else { throw RecordError.conflict }
+                 soldiers[index] = soldier.committedVersion()
+             }
+-            else { soldiers.append(soldier.committedVersion()) }
++            else {
++                guard expectedRevision == nil else { throw RecordError.conflict }
++                soldiers.append(soldier.committedVersion())
++            }
+             uploads = files
+         case .deleteSoldier(let id):
+             soldiers.removeAll { $0.id == id }; results.removeAll { $0.soldierID == id }
+--- a/LeadersBook/Core/LeaderStore.swift
++++ b/LeadersBook/Core/LeaderStore.swift
+@@ -16,6 +16,7 @@
+     private enum InitialSummary { case pending, consumed }
+     private var initialSummary: InitialSummary = .pending
+     private var summary: LockedSummary?
++    private var soldierEdits: [UUID: SoldierEditSession] = [:]
+     private let authenticator: any RecordAuthenticating
+     private var epoch = UUID()
+     private var lease: RecordAccessLease?
+@@ -78,6 +79,7 @@
+         draftSave.cancel()
+         for task in operations.values { task.cancel() }
+         draft = FitnessDraft()
++        soldierEdits = soldierEdits.filter { $0.value.hasChanges }
+         operationFailure = nil
+         state = .locked(summary)
+     }
+@@ -163,6 +165,41 @@
+             throw error
+         }
+     }
++    func beginSoldierEdit(_ soldier: SoldierDraft, window: UUID) throws -> SoldierEditSession {
++        if let existing = try restoreSoldierEdit(window: window) { return existing }
++        let edit = SoldierEditSession(id: UUID(), window: window, original: soldier,
++                                      soldier: soldier, files: [], permit: try accessLease())
++        soldierEdits[window] = edit
++        return edit
++    }
++    func restoreSoldierEdit(window: UUID) throws -> SoldierEditSession? {
++        try requireReady()
++        guard let retained = soldierEdits[window] else { return nil }
++        let restored = SoldierEditSession(id: retained.id, window: window, original: retained.original,
++                                         soldier: retained.soldier, files: retained.files, permit: try accessLease())
++        soldierEdits[window] = restored
++        return restored
++    }
++    func updateSoldierEdit(_ edit: SoldierEditSession) throws {
++        try requireReady()
++        try edit.permit.check()
++        guard let retained = soldierEdits[edit.window], retained.id == edit.id,
++              retained.original == edit.original, retained.original.id == edit.soldier.id,
++              edit.soldier.revision == retained.original.revision else { throw RecordError.conflict }
++        soldierEdits[edit.window] = edit
++    }
++    func discardSoldierEdit(_ edit: SoldierEditSession) throws {
++        try requireReady()
++        try edit.permit.check()
++        guard let retained = soldierEdits[edit.window] else { return } // Already saved/closed is an idempotent outcome.
++        guard retained.id == edit.id else { throw RecordError.conflict }
++        soldierEdits[edit.window] = nil
++    }
++    func saveSoldierEdit(_ edit: SoldierEditSession) async throws {
++        try updateSoldierEdit(edit)
++        try await saveSoldier(edit.soldier, importing: edit.files)
++        try discardSoldierEdit(edit)
++    }
+     func saveSoldier(_ input: SoldierDraft, importing files: [ImportedRecordFile] = []) async throws {
+         try requireReady()
+         let soldier = try Soldier(draft: input)
+--- /dev/null
++++ b/LeadersBook/Core/SoldierEditSession.swift
+@@ -0,0 +1,13 @@
++import Foundation
++
++/// Process-only editing state. The lease is revoked immediately when records lock.
++struct SoldierEditSession: Identifiable, Sendable {
++    let id: UUID
++    let window: UUID
++    let original: SoldierDraft
++    var soldier: SoldierDraft
++    var files: [ImportedRecordFile]
++    let permit: RecordAccessLease
++    var isNew: Bool { original.revision == nil }
++    var hasChanges: Bool { soldier != original || !files.isEmpty }
++}
+--- a/LeadersBook/Views/ContentView.swift
++++ b/LeadersBook/Views/ContentView.swift
+@@ -4,6 +4,7 @@
+     @Bindable var store: LeaderStore
+     let scorer: AFTScoring
+     @SceneStorage("selectedTab") private var selectedTab = 0
++    @State private var editorWindow = UUID()
+     @State private var recoveryOperation = OwnedOperation()
+     @Environment(\.scenePhase) private var scenePhase
+ 
+@@ -50,7 +51,7 @@
+                         TodayView(store: store, records: book.snapshot, scorer: scorer, selectedTab: $selectedTab)
+                     }
+                     Tab("Soldiers", systemImage: "person.2", value: 1) {
+-                        SoldiersView(store: store, records: book.snapshot, scorer: scorer)
++                        SoldiersView(store: store, records: book.snapshot, scorer: scorer, editorWindow: editorWindow)
+                     }
+                     Tab("Guides", systemImage: "books.vertical", value: 2) {
+                         GuidesView()
+--- a/LeadersBook/Views/SoldierEditor.swift
++++ b/LeadersBook/Views/SoldierEditor.swift
+@@ -1,34 +1,49 @@
+ import SwiftUI
+ 
+ struct SoldierEditor: View {
+-    @State var soldier: SoldierDraft
+-    let isNew: Bool
++    @State var edit: SoldierEditSession
+     let store: LeaderStore
+-    let save: (SoldierDraft, [ImportedRecordFile]) async throws -> Void
+-    @State private var files: [ImportedRecordFile] = []
++    let save: (SoldierEditSession) async throws -> Void
++    private var soldier: SoldierDraft {
++        get { edit.soldier }
++        nonmutating set { update(soldier: newValue, files: edit.files) }
++    }
++    private var soldierBinding: Binding<SoldierDraft> { Binding(get: { soldier }, set: { soldier = $0 }) }
++    private var filesBinding: Binding<[ImportedRecordFile]> {
++        Binding(get: { edit.files }, set: { update(soldier: soldier, files: $0) })
++    }
++    private func update(soldier: SoldierDraft, files: [ImportedRecordFile]) {
++        var updated = edit
++        updated.soldier = soldier; updated.files = files
++        do { try store.updateSoldierEdit(updated); edit = updated }
++        catch { if store.isUnlocked { store.operationFailure = AppFailure("Preserve Soldier Edits", underlying: error) } }
++    }
+     @State private var photoOperation = OwnedOperation()
+     @State private var saveOperation = OwnedOperation()
+     @Environment(\.dismiss) private var dismiss
+         @State private var confirmingCancel = false
+-    @State private var original: SoldierDraft?
+ 
++    private func discardAndDismiss() {
++        do { try store.discardSoldierEdit(edit); dismiss() }
++        catch { store.operationFailure = AppFailure("Discard Soldier Edits", underlying: error) }
++    }
+     var body: some View {
+         NavigationStack {
+             Form {
+-                SoldierPhotoPicker(attachment: $soldier.photo, files: $files, store: store, operation: photoOperation)
++                SoldierPhotoPicker(attachment: soldierBinding.photo, files: filesBinding, store: store, operation: photoOperation)
+                 Section("Soldier") {
+-                    TextField("Name", text: $soldier.name)
++                    TextField("Name", text: soldierBinding.name)
+                         .textContentType(.name)
+                         .accessibilityIdentifier("soldierName")
+-                    Picker("Rank", selection: $soldier.rank) {
++                    Picker("Rank", selection: soldierBinding.rank) {
+                         ForEach(Rank.allCases, id: \.self) { rank in Text(rank.rawValue).tag(rank) }
+                     }
+                     .accessibilityIdentifier("soldierRank")
+-                    TextField("Unit / Platoon", text: $soldier.unit)
+-                    TextField("Team", text: $soldier.team)
++                    TextField("Unit / Platoon", text: soldierBinding.unit)
++                    TextField("Team", text: soldierBinding.team)
+                 }.leadersBookRow()
+                 Section {
+-                    ForEach($soldier.training) { $item in
++                    ForEach(soldierBinding.training) { $item in
+                         VStack(alignment: .leading, spacing: 12) {
+                             TextField("Training title", text: $item.title)
+                             if item.completionDates == nil && item.certificate == nil {
+@@ -52,8 +67,8 @@
+                     Text("Use your unit’s requirements and due dates. This is a personal checklist, not an official training system.")
+                 }.leadersBookRow()
+                 Section {
+-                    TextField("Leadership notes", text: $soldier.notes, axis: .vertical)
+-                        .lineLimit(4...12)
++                    TextField("Leadership notes", text: soldierBinding.notes, axis: .vertical)
++                        .lineLimit(4...12).accessibilityIdentifier("soldierNotes")
+                 } header: {
+                     Text("Notes")
+                 } footer: {
+@@ -61,18 +76,18 @@
+                 }.leadersBookRow()
+             }.leadersBookList()
+             .disabled(saveOperation.phase.isRunning)
+-            .navigationTitle(isNew ? "Add Soldier" : "Edit Soldier")
++            .navigationTitle(edit.isNew ? "Add Soldier" : "Edit Soldier")
+             .navigationBarTitleDisplayMode(.inline)
+             .toolbar {
+                 ToolbarItem(placement: .cancellationAction) {
+                     Button("Cancel", systemImage: "xmark") {
+-                        if original == soldier { dismiss() } else { confirmingCancel = true }
++                        if !edit.hasChanges { discardAndDismiss() } else { confirmingCancel = true }
+                     }
+                 }
+                 ToolbarItem(placement: .confirmationAction) {
+                     Button("Save", systemImage: "checkmark") {
+                         saveOperation.start("Save Soldier") {
+-                            try await save(soldier, files)
++                            try await save(edit)
+                             dismiss()
+                         }
+                     }
+@@ -80,10 +95,9 @@
+                     .accessibilityIdentifier("saveSoldier")
+                 }
+             }
+-            .onAppear { if original == nil { original = soldier } }
+-            .interactiveDismissDisabled(original != nil && original != soldier)
++            .interactiveDismissDisabled(edit.hasChanges)
+             .confirmationDialog("Discard Unsaved Changes?", isPresented: $confirmingCancel, titleVisibility: .visible) {
+-                Button("Discard Changes", role: .destructive) { dismiss() }.foregroundStyle(Color.lbDanger)
++                Button("Discard Changes", role: .destructive) { discardAndDismiss() }.foregroundStyle(Color.lbDanger)
+             }
+             .onDisappear { photoOperation.cancel(); saveOperation.cancel() }
+             .alert(item: Binding(get: { saveOperation.phase.failure }, set: { if $0 == nil { saveOperation.dismissFailure() } })) { failure in
+--- a/LeadersBook/Views/SoldiersView.swift
++++ b/LeadersBook/Views/SoldiersView.swift
+@@ -5,10 +5,12 @@
+     let store: LeaderStore
+     let records: BookSnapshot
+     let scorer: AFTScoring
++    let editorWindow: UUID
+     @Environment(\.horizontalSizeClass) private var sizeClass
+     @SceneStorage("selectedSoldier") private var selectedSoldier = ""
+     @State private var query = ""
+-    @State private var editor: SoldierDraft?
++    @State private var editor: SoldierEditSession?
++    @State private var editorToClose: SoldierEditSession?
+     @State private var deleting: Soldier?
+     @State private var trainingSoldier: Soldier?
+     @State private var measuringSoldier: Soldier?
+@@ -18,6 +20,10 @@
+     @ScaledMetric private var rankWidth = 28
+     @ScaledMetric private var rankHeight = 36
+ 
++    private func openEditor(_ soldier: SoldierDraft) {
++        do { let edit = try store.beginSoldierEdit(soldier, window: editorWindow); editorToClose = edit; editor = edit }
++        catch { store.operationFailure = AppFailure("Open Soldier Editor", underlying: error) }
++    }
+     private var selection: Binding<UUID?> {
+         Binding(get: { UUID(uuidString: selectedSoldier) }, set: { selectedSoldier = $0?.uuidString ?? "" })
+     }
+@@ -57,7 +63,7 @@
+                     } description: {
+                         Text("Add a soldier to keep unit details, training, and fitness results together.")
+                     } actions: {
+-                        Button("Add Soldier", systemImage: "plus") { editor = SoldierDraft() }.buttonStyle(LBActionButtonStyle())
++                        Button("Add Soldier", systemImage: "plus") { openEditor(SoldierDraft()) }.buttonStyle(LBActionButtonStyle())
+                             .buttonStyle(LBPrimaryButtonStyle())
+                     }
+                 } else if soldiers.isEmpty {
+@@ -68,7 +74,7 @@
+             .navigationTitle("Soldiers")
+             .toolbar {
+                 ToolbarItem(placement: .primaryAction) {
+-                    Button("Add Soldier", systemImage: "plus") { editor = SoldierDraft() }
++                    Button("Add Soldier", systemImage: "plus") { openEditor(SoldierDraft()) }
+                 }
+             }
+         } detail: {
+@@ -76,7 +82,7 @@
+                 if let id = selection.wrappedValue,
+                    let soldier = records.soldiers.first(where: { $0.id == id }) {
+                     SoldierDetailView(soldier: soldier, store: store, records: records, scorer: scorer,
+-                                      onEdit: { editor = SoldierDraft(soldier) }, onDelete: { deleting = soldier },
++                                      onEdit: { openEditor(SoldierDraft(soldier)) }, onDelete: { deleting = soldier },
+                                       addTraining: { trainingSoldier = soldier }, addMeasurements: { measuringSoldier = soldier },
+                                       preview: { attachment in
+                                           previewOperation.start("Open Certificate") {
+@@ -92,11 +98,21 @@
+                 }
+             }
+         }
+-        .sheet(item: $editor) { soldier in
+-            SoldierEditor(soldier: soldier, isNew: !records.soldiers.contains(where: { $0.id == soldier.id }), store: store) { updated, files in
+-                try await store.saveSoldier(updated, importing: files)
+-                selectedSoldier = updated.id.uuidString
+-            }
++        .sheet(item: $editor, onDismiss: {
++            guard store.isUnlocked else { return }
++            do {
++                if let closed = editorToClose { try store.discardSoldierEdit(closed) }
++            } catch RecordAccessError.locked { /* A prior presenter cannot discard a restored session. */ }
++            catch { store.operationFailure = AppFailure("Close Soldier Editor", underlying: error) }
++        }) { edit in
++            SoldierEditor(edit: edit, store: store) { updated in
++                try await store.saveSoldierEdit(updated)
++                selectedSoldier = updated.soldier.id.uuidString
++            }
++        }
++        .onAppear {
++            do { let edit = try store.restoreSoldierEdit(window: editorWindow); editorToClose = edit; editor = edit }
++            catch { store.operationFailure = AppFailure("Restore Soldier Edits", underlying: error) }
+         }
+         .sheet(item: $trainingSoldier) { soldier in
+             TrainingRecordEditor(soldier: SoldierDraft(soldier)) { try await store.saveSoldier($0, importing: $1) }
+--- /dev/null
++++ b/Tests/LeadersBookCoreTests/SoldierEditTests.swift
+@@ -0,0 +1,106 @@
++import Foundation
++import Testing
++@testable import LeadersBookCore
++
++@MainActor private final class DraftAuthenticator: RecordAuthenticating {
++    var denied = false
++    func authenticate() async throws { if denied { throw RecordAccessError.cancelled } }
++    func cancel() {}
++}
++
++@MainActor struct SoldierEditTests {
++    @Test func failedUnlockDoesNotExposeOrLoseDraft() async throws {
++        let url = fixtureFile(); defer { cleanFixture(url) }
++        let auth = DraftAuthenticator()
++        let store = LeaderStore(fileURL: url, scorer: try AFTScoring(), authenticator: auth)
++        try await store.unlock()
++        var edit = try store.beginSoldierEdit(SoldierDraft(), window: UUID())
++        edit.soldier.notes = "Private"
++        try store.updateSoldierEdit(edit)
++        store.lock(); auth.denied = true
++        await #expect(throws: RecordAccessError.cancelled) { try await store.unlock() }
++        #expect(throws: RecordAccessError.locked) { try store.restoreSoldierEdit(window: edit.window) }
++        auth.denied = false; try await store.unlock()
++        #expect(try store.restoreSoldierEdit(window: edit.window)?.soldier.notes == "Private")
++    }
++
++    @Test func protectedDraftRestoresWithoutDiskWritesOrStaleAccess() async throws {
++        let url = fixtureFile(); defer { cleanFixture(url) }
++        let store = try await openStore(url)
++        try await store.saveSoldier(SoldierDraft(name: "Saved"))
++        let before = try Data(contentsOf: url)
++        let window = UUID()
++        var edit = try store.beginSoldierEdit(SoldierDraft(), window: window)
++        edit.soldier.notes = "Unsaved private notes"
++        edit.soldier.training = [TrainingDraft(title: "", tracksDueDate: true)]
++        let photo = try RecordAttachment(name: "Pending.jpg", kind: .jpeg)
++        edit.soldier.photo = photo
++        edit.files = [try ImportedRecordFile(attachment: photo, data: jpegFixture)]
++        try store.updateSoldierEdit(edit)
++        store.lock()
++        #expect(throws: RecordAccessError.locked) { try store.restoreSoldierEdit(window: window) }
++        #expect(throws: RecordAccessError.locked) { try store.updateSoldierEdit(edit) }
++        try await store.unlock()
++        let restored = try #require(try store.restoreSoldierEdit(window: window))
++        #expect(restored.soldier == edit.soldier)
++        #expect(restored.original == edit.original)
++        #expect(restored.files.first?.data == jpegFixture)
++        #expect(restored.hasChanges)
++        #expect(throws: RecordAccessError.locked) { try store.updateSoldierEdit(edit) }
++        #expect(throws: RecordAccessError.locked) { try store.discardSoldierEdit(edit) }
++        #expect(try Data(contentsOf: url) == before)
++        let freshProcess = try await openStore(url)
++        #expect(try freshProcess.restoreSoldierEdit(window: window) == nil)
++    }
++
++    @Test func windowsSaveAndDiscardIndependently() async throws {
++        let url = fixtureFile(); defer { cleanFixture(url) }
++        let store = try await openStore(url)
++        let first = UUID(), second = UUID()
++        var a = try store.beginSoldierEdit(SoldierDraft(), window: first)
++        a.soldier.name = "Discarded"
++        try store.updateSoldierEdit(a)
++        var b = try store.beginSoldierEdit(SoldierDraft(), window: second)
++        b.soldier.name = "Saved"; b.soldier.notes = "Retained"
++        let photo = try RecordAttachment(name: "Saved.jpg", kind: .jpeg)
++        b.soldier.photo = photo
++        b.files = [try ImportedRecordFile(attachment: photo, data: jpegFixture)]
++        try store.updateSoldierEdit(b)
++        store.lock(); try await store.unlock()
++        a = try #require(try store.restoreSoldierEdit(window: first))
++        b = try #require(try store.restoreSoldierEdit(window: second))
++        #expect(a.soldier.name == "Discarded")
++        try store.discardSoldierEdit(a)
++        #expect(try store.restoreSoldierEdit(window: first) == nil)
++        try await store.saveSoldierEdit(b)
++        #expect(try store.restoreSoldierEdit(window: second) == nil)
++        #expect((try store.records).soldiers.first?.notes == "Retained")
++        let bytes = try Data(contentsOf: store.attachmentURL(photo))
++        #expect(bytes == jpegFixture)
++        store.lock(); try await store.unlock()
++        #expect(try store.restoreSoldierEdit(window: second) == nil)
++    }
++
++    @Test func restoredRevisionCannotOverwriteAnotherWindow() async throws {
++        let url = fixtureFile(); defer { cleanFixture(url) }
++        let store = try await openStore(url)
++        try await store.saveSoldier(SoldierDraft(name: "Original"))
++        let soldier = try #require((try store.records).soldiers.first)
++        var edit = try store.beginSoldierEdit(SoldierDraft(soldier), window: UUID())
++        edit.soldier.notes = "Unsaved"
++        try store.updateSoldierEdit(edit)
++        var other = SoldierDraft(soldier); other.notes = "Other Window"
++        try await store.saveSoldier(other)
++        store.lock(); try await store.unlock()
++        let restored = try #require(try store.restoreSoldierEdit(window: edit.window))
++        await #expect(throws: RecordError.conflict) { try await store.saveSoldierEdit(restored) }
++        #expect((try store.records).soldiers.first?.notes == "Other Window")
++        #expect(try store.restoreSoldierEdit(window: edit.window)?.soldier.notes == "Unsaved")
++        var tampered = restored
++        tampered.soldier.revision = try #require((try store.records).soldiers.first).revision
++        #expect(throws: RecordError.conflict) { try store.updateSoldierEdit(tampered) }
++        try await store.deleteSoldier(id: soldier.id)
++        await #expect(throws: RecordError.conflict) { try await store.saveSoldierEdit(restored) }
++        #expect((try store.records).soldiers.isEmpty)
++    }
++}
+--- a/Tests/LeadersBookUITests/LeadersBookUITests.swift
++++ b/Tests/LeadersBookUITests/LeadersBookUITests.swift
+@@ -2,6 +2,49 @@
+ 
+ @MainActor
+ final class LeadersBookUITests: XCTestCase {
++    func testSoldierEditsRestoreAfterUnlockAndClearAfterSaveOrDiscard() {
++        continueAfterFailure = false
++        let app = XCUIApplication()
++        launchUnlocked(app)
++        selectTab("Soldiers", in: app)
++        if app.buttons["BackButton"].exists { app.buttons["BackButton"].tap() }
++        app.buttons.matching(identifier: "Add Soldier").firstMatch.tap()
++        let name = app.textFields["soldierName"]
++        XCTAssertTrue(name.waitForExistence(timeout: 5))
++        name.tap(); name.typeText("Memory Draft")
++        let notes = app.descendants(matching: .any).matching(identifier: "soldierNotes").firstMatch
++        reveal(notes, in: app)
++        notes.tap(); notes.typeText("Unsaved notes survive locking")
++        XCUIDevice.shared.press(.home)
++        app.activate()
++        XCTAssertTrue(app.buttons["unlockRecords"].waitForExistence(timeout: 5))
++        XCTAssertFalse(name.exists)
++        app.buttons["unlockRecords"].tap()
++        XCTAssertTrue(app.buttons["saveSoldier"].waitForExistence(timeout: 5))
++        reveal(notes, in: app)
++        XCTAssertEqual(notes.value as? String, "Unsaved notes survive locking")
++        app.buttons["saveSoldier"].tap()
++        XCTAssertTrue(app.navigationBars.staticTexts["PVT Memory Draft"].waitForExistence(timeout: 5))
++        let delete = app.buttons["Delete Soldier"]
++        reveal(delete, in: app); delete.tap()
++        app.buttons["Delete Soldier and Results"].tap()
++        XCTAssertTrue(app.buttons.matching(identifier: "Add Soldier").firstMatch.waitForExistence(timeout: 5))
++        app.buttons.matching(identifier: "Add Soldier").firstMatch.tap()
++        XCTAssertTrue(name.waitForExistence(timeout: 5))
++        name.tap(); name.typeText("Discarded Draft")
++        XCUIDevice.shared.press(.home); app.activate()
++        XCTAssertTrue(app.buttons["unlockRecords"].waitForExistence(timeout: 5))
++        app.buttons["unlockRecords"].tap()
++        XCTAssertTrue(name.waitForExistence(timeout: 5))
++        XCTAssertEqual(name.value as? String, "Discarded Draft")
++        app.buttons["Cancel"].tap()
++        app.buttons["Discard Changes"].tap()
++        app.buttons["lockRecords"].tap()
++        app.buttons["unlockRecords"].tap()
++        XCTAssertTrue(app.buttons["lockRecords"].waitForExistence(timeout: 5))
++        XCTAssertFalse(name.exists)
++    }
++
+     func testSimultaneousFailuresAreBothPresented() {
+         let app = XCUIApplication()
+         app.launchArguments = ["--authentication-test-simultaneous-errors"]
+--- a/docs/ARCHITECTURE-AUDIT.md
++++ b/docs/ARCHITECTURE-AUDIT.md
+@@ -138,3 +138,7 @@
+ Final authentication review validation: **43 core tests and all 14 native tests passed**, with no skips or weakened assertions. The Release build passed; explicit Testing archive validation was rejected by the intended build guard. The findings report now includes all 22 edited source/test/configuration/documentation files and regenerated individual/combined diffs. Real-device authentication and full privacy-surface verification remain separate acceptance checks; immediate background locking and unsaved-editor discard remain the stated policy.
+ 
+ Presenter review follow-up: the retained 16-configuration action render test passes. Two pending failure sources are presented sequentially and verified through binding and UI tests. All nine selected native tests pass, and a normal unsigned Release archive succeeds; Testing archive rejection remains in force. No additional view with stacked alert modifiers was found. Immediate background/manual/device-lock relocking with unsaved-editor discard remains the explicit policy. See the authentication findings addendum for coverage limits and commit-baseline provenance.
++
++Protected Soldier edit policy update: locks remain immediate, while incomplete Soldier form state and pending photo bytes are retained in an authenticated, revocable process-memory buffer and restored after unlock. Other forms retain their prior policy. All 47 core tests, ten selected native checks, and the release gate/Release build passed. Original revisions and deleted-record conflicts prevent stale restoration from overwriting newer state. [Updated findings, coding-practices review, and Git-based file diffs](AUTHENTICATION-FINDINGS.md) document scope and limits.
++
++Correction policy clarification: immediate locking remains required. Soldier editor drafts are retained in protected process memory; Training Record and HT/WT forms deliberately discard unsaved state on lock. This is the current scope decision, not a claim that all editor types have restoration. Backup, sharing, and retention risks are not accepted by this audit on the owner’s behalf. Hardware results are recorded separately from simulator evidence; see the findings report’s run/provenance tables.
+--- a/docs/AUTHENTICATION-FINDINGS.md
++++ b/docs/AUTHENTICATION-FINDINGS.md
+@@ -1,6 +1,6 @@
+ # Authentication Implementation Findings
+ 
+-Reviewed November 4, 2026. **Application-level validation passed.** All 43 core tests, all 14 native tests, and the unsigned physical-device Release build passed. The former denial-alert assertion passes unchanged. Actual hardware biometrics/passcode and end-to-end privacy capture checks remain unverified.
++Reviewed November 4, 2026. **Current validation: 47 core tests and all 17 current native tests passed.** The unfiltered native rerun covers the expanded suite. Earlier 14-, 9-, and 10-test runs are historical scopes identified below. These are simulator/application-level results; hardware authentication and privacy-surface checks remain unverified.
+ 
+ ## Implemented Boundary
+ 
+@@ -23,7 +23,7 @@
+ 
+ ## Background and Draft Policy
+ 
+-**Immediate relocking remains the implemented policy.** Unsaved editor state is discarded when protected views are removed; the in-memory calculator draft is cleared and pending autosave is cancelled. Already committed data is preserved. A grace period or protected restoration of unsaved forms is a product decision still open; neither was silently introduced. Switching apps mid-entry can therefore discard uncommitted edits.
++**Immediate relocking is the policy. Soldier editor drafts are retained in protected process memory and restored after successful unlock. All other editors discard unsaved state on lock.** The in-memory calculator draft is cleared and pending autosave cancelled; committed data is preserved. No grace period is used.
+ 
+ Locked summary loading remains count-only at the UI/service output, but loads the private repository and can run existing journal recovery before authentication. The repository retains decrypted data internally; this is not an application-managed encrypted vault or a guarantee of memory erasure. Previously returned values cannot be retroactively revoked; future service calls are blocked and protected UI is removed.
+ 
+@@ -32,12 +32,23 @@
+ | Check | Result | Evidence |
+ | --- | --- | --- |
+ | Denial-state diagnostic before presentation edits | PASS; expected failure and locked state asserted | [diagnostic log](validation/authentication/review/denial-diagnostic.log) |
+-| Full core suite | PASS: 43 tests | [core log](validation/authentication/review/core.log) |
+-| Full native suite | PASS: 14 tests, zero failures/skips | [summary](validation/authentication/review/native-summary.json), [log](validation/authentication/review/native.log) |
++| Authentication baseline core suite | PASS: 43 tests | [core log](validation/authentication/review/core.log) |
++| Authentication baseline native suite | PASS: 14 tests, zero failures/skips | [summary](validation/authentication/review/native-summary.json), [log](validation/authentication/review/native.log) |
+ | Native coverage | Six adapter/accessibility/cover tests plus eight UI workflows: denial/relock/background, CRUD/relaunch, photo/training, calculators/history, standard/accessibility previews | [attachments](validation/authentication/review/attachments/manifest.json) |
+ | Release build | PASS; unsigned physical-device compilation | [log](validation/authentication/review/release.log) |
+ | Release isolation / Face ID purpose string | PASS; no test authenticator/denial flag in strings; purpose string present | [inspection](validation/authentication/review/release-isolation.txt) |
+ | Testing archive rejection | PASS: expected `Testing authentication cannot be archived` error | [negative-check log](validation/authentication/review/archive-rejection.log) |
++
++### Run Scope and Counts
++
++| Run | Scope | Count / Result | Evidence |
++| --- | --- | --- | --- |
++| Authentication core baseline | Full core | 43 passed | `validation/authentication/review/core.log` |
++| Authentication native baseline | Full native suite at that revision | 14 passed | `validation/authentication/review/native-summary.json` |
++| Presenter follow-up | Filtered via `-only-testing` | 9 passed | `validation/authentication/presenter-review/summary.json` |
++| Protected-edit core | Full core | 47 passed | `validation/protected-edits/core.log` |
++| Protected-edit native | Filtered via `-only-testing` | 10 passed | `validation/protected-edits/native-summary.json` |
++| Current corrections verification | Full current native suite; no `-only-testing` filters | 17 passed; 0 failed/skipped | [summary](validation/corrections/full-native-summary.json), [log](validation/corrections/full-native.log) |
+ 
+ The previous stopped run and its exact failing command remain in [initial partial findings](validation/authentication/review/initial-partial-findings.txt) and the original evidence directory. The read-only diagnostic and focused core test preceded presentation edits. There were no test skips or removed assertions.
+ 
+@@ -47,11 +58,19 @@
+ 
+ The separate **Testing** configuration substitutes only the external OS authenticator. Real store/repository/filesystem gates and UI remain under test. Normal Debug and Release use the real system adapter. The normal Run action is Debug, Archive is Release, and Testing archives are rejected. A test-double success does not establish successful real biometric/passcode interaction.
+ 
+-Remaining checks: hardware Face ID/passcode cancellation/fallback/no-passcode cases, protected-data lock behavior, actual multi-window transitions, Quick Look/camera/editor app-switcher snapshots, full VoiceOver privacy, and Duo poses/reserved regions. The cover's native component test does not establish every system-controller capture path. Backup, sharing, retention, and organizational authorization findings remain open in the privacy audit.
++Remaining checks include nested child/parent alert routes. Hardware Face ID/passcode cancellation/fallback/no-passcode cases, protected-data lock behavior, actual multi-window transitions, Quick Look/camera/editor app-switcher snapshots, full VoiceOver privacy, and Duo poses/reserved regions. The cover's native component test does not establish every system-controller capture path. Detailed manual presenter checks and hardware availability are recorded separately in [hardware evidence](validation/hardware/evidence-2026-11-04.json). Backup, sharing, retention, and organizational authorization findings remain open in the privacy audit.
+ 
+ ## Every Edited File and Its Diff
+ 
+-Diffs compare the session-start snapshot with current files. The project was untracked, so these are **not Git HEAD diffs**. The former partial patch is retained separately. Generated logs, screenshots, result summaries, and patches are evidence artifacts.
++### Patch Provenance
++
++| Patch set | Comparison baseline |
++| --- | --- |
++| `validation/authentication/authentication.patch` and its per-file patches | Pre-authentication session-start snapshot, captured while the project was untracked; historical, not Git HEAD |
++| `validation/authentication/review/initial-partial.patch` | Same session-start snapshot; historical stopped implementation |
++| `validation/protected-edits/protected-edits.patch` and its per-file patches | Committed baseline `9e97fca` to the protected-edit working tree, including later documentation corrections |
++
++Generated logs, screenshots, summaries, and patches are evidence artifacts. Commit `9e97fca` established the repository baseline; the two patch sets intentionally have different provenance.
+ 
+ [Complete unified patch](validation/authentication/authentication.patch)
+ 
+@@ -60,10 +79,10 @@
+ - The original `testActionStyleUsesRowSelectionForRenderedLabel` was **fixed and retained**, not replaced by a role-choice test. It still renders the real style with a scene-attached window across 16 selected/enabled/appearance/contrast combinations, asserting exact RGBA and selected-label contrast. It passed again in the latest [native log](validation/authentication/presenter-review/native.log).
+ - Two failures from different sources are retained in their existing source slots. Operation failure has priority; the draft failure remains pending until the operation is acknowledged, then appears. Both the binding-level test and actual UI test pass this sequence. This is one slot per source, not a general FIFO for arbitrarily many failures.
+ - Positive archive validation passed with `xcodebuild -project LeadersBook.xcodeproj -scheme LeadersBook -configuration Release -destination 'generic/platform=iOS' -derivedDataPath /private/tmp/leaders-auth-release -archivePath /private/tmp/leaders-auth-release-positive.xcarchive CODE_SIGNING_ALLOWED=NO archive`. [Archive log](validation/authentication/presenter-review/release-archive.log) and [properties/hash](validation/authentication/presenter-review/archive-summary.json) preserve evidence. This is an unsigned archive, not signing/distribution approval.
+-- Alert scan: ContentView, FitnessView, SoldiersView, SoldierEditor, SoldierPhotoPicker, TrainingRecordEditor, and HeightWeightEditor each own one alert. The two alerts in TrainingRecordEditor.swift belong to separate view types. Nested child/parent alerts still need route-specific testing; no additional stacked modifiers on one view were found.
+-- Latest broader validation passed **nine native tests**: seven adapter/presenter/cover tests and two UI workflows. The earlier full 14-test run remains historical evidence; a full run of the now-expanded 16-test suite was not repeated. The simultaneous-error fixture exists only in Testing; its flag is absent from the Release archive.
+-- Immediate relocking on manual lock, protected-data lock, and ordinary backgrounding remains explicit policy. Unsaved editor discard is a known trade-off. A grace period or protected in-memory draft restoration requires a separate product decision; this review did not change it.
+-- The initial local baseline commit includes this report and its diff evidence. Resolve the baseline with Git history; no remote push is part of this work. Historical session-start patches remain useful provenance, while future audits can use commit-based diffs.
++- Alert scan: ContentView, FitnessView, SoldiersView, SoldierEditor, SoldierPhotoPicker, TrainingRecordEditor, and HeightWeightEditor each own one alert. The two alerts in TrainingRecordEditor.swift belong to separate view types. No additional stacked modifiers on one view were found.
++- Latest broader validation passed **nine native tests**: seven adapter/presenter/cover tests and two UI workflows. See the run table for full versus filtered coverage; this was a filtered run, not a full-suite claim. The simultaneous-error fixture exists only in Testing; its flag is absent from the Release archive.
++- The Background and Draft Policy section is the single current policy statement.
++- The Patch Provenance table defines each patch baseline.
+ 
+ | File | Diff |
+ | --- | --- |
+@@ -89,3 +108,61 @@
+ | `docs/ARCHITECTURE-AUDIT.md` | [Unified diff](validation/authentication/patches/docs__ARCHITECTURE-AUDIT.md.diff) |
+ | `docs/AUTHENTICATION-FINDINGS.md` | [Unified diff](validation/authentication/patches/docs__AUTHENTICATION-FINDINGS.md.diff) |
+ | `docs/PRIVACY-HIG-AUDIT.md` | [Unified diff](validation/authentication/patches/docs__PRIVACY-HIG-AUDIT.md.diff) |
++
++## Protected Soldier Edits — Approved Update
++
++Immediate manual/background/device locking is unchanged. `LeaderStore` privately retains one process-only editing session per window, including the original revision/baseline, incomplete form fields, checklist values, notes, and accepted pending photo bytes. Drafts are not encoded into records, UserDefaults, SceneStorage, or a draft file. This is access-controlled application memory, not cryptographic RAM protection, debugger resistance, or guaranteed secure erasure. App termination or memory-pressure termination loses the buffer.
++
++Bindings synchronously checkpoint into the protected buffer before updating local form state, including the final keystroke. Reads, updates, save, and discard require authenticated access. A lock revokes the lease immediately; a successful unlock refreshes the retained session's lease and automatically reopens the editor for that window. Failed unlocks cannot expose the draft. Old callbacks/dismissals cannot mutate or discard the restored session through revoked handles.
++
++Save and explicit discard clear the session; clean sessions are dropped on lock. Pending transfers are cancelled by the existing operation owners; photo bytes already accepted by the form are retained. A save failure keeps the edits. Original revisions cannot be replaced, stale saves conflict, and the repository now rejects recreation of an existing-revision record that another window deleted. Already-admitted atomic saves may finish across a lock; restored edits can then conflict instead of overwriting or duplicating committed data.
++
++The per-window key is root-view State, not persisted identity metadata. A closed window's retained buffer can remain until process termination; this implementation adds no expiration or encrypted draft persistence. The separate Training Record and HT/WT editors are outside this Soldier-editor retention scope.
++
++### Validation
++
++- **47 core tests passed**, including four protected-edit tests: failed unlock retention; no disk writes/revoked access/photo bytes/process-restart absence; independent windows/save/discard; stale revision, forged revision, and deletion conflict.
++- **10 filtered native adapter/UI checks passed**, covering the restored Soldier editor plus existing CRUD and photo/training workflows. The UI test backgrounds immediately after typing notes, unlocks, verifies restored values, saves, and separately verifies Discard prevents later restoration.
++- **Release build and release gate passed.** The gate now runs the entire core suite, including the new security/draft tests, rather than only the contrast selection. Authentication dependency substitution remains confined to Testing.
++- [Core log](validation/protected-edits/core.log), [targeted log](validation/protected-edits/targeted.log), [native summary](validation/protected-edits/native-summary.json), [native log](validation/protected-edits/native.log), [Release](validation/protected-edits/release.log), and [gate](validation/protected-edits/release-gate.log) preserve the evidence. No assertion or test was weakened, removed, or skipped.
++- Compile correction during iteration: throwing `restoreSoldierEdit` calls inside `#require` required their own `try`; application behavior was not changed to accommodate a failing assertion. Hardware authentication/privacy-surface, actual multi-window, and Duo verification remain open.
++
++Reproduce with `swift test --scratch-path /private/tmp/leaders-edit-core --filter SoldierEditTests`, then the broader core suite; native selection uses `-only-testing:ThemeAdapterTests` plus `LeadersBookUITests/LeadersBookUITests/testSoldierEditsRestoreAfterUnlockAndClearAfterSaveOrDiscard`, `LeadersBookUITests/LeadersBookUITests/testSoldierCreationEditingRelaunchAndDeletion`, and `LeadersBookUITests/LeadersBookUITests/testPhotoTrainingAndHeightWeightWorkflow`. The approval covered 8–12 source/config/test/document files and 350–550 added lines. The patch baseline is defined in Patch Provenance; the working branch is `mothra/protected-soldier-edits`.
++
++## Coding-Practices Review
++
++Reviewed [Pierre Janineh's article](https://dev.to/pierrejanineh/discussing-best-practices-for-ios-app-development-56ln) as guidance, not project instructions.
++
++| Theme | Assessment of This App |
++| --- | --- |
++| Native UI | SwiftUI navigation, forms, pickers, system authentication, and SF Symbols align. Army rank assets remain appropriate domain artwork. Native controls still need accessibility/device testing. |
++| Coding style | Descriptive types, typed errors, validated domains, actor isolation, and value semantics are strengths. Dense closures and inconsistent test indentation remain readability debt. |
++| Version control | A committed baseline and feature branch now support reproducible diffs. Peer review and hosted branch checks remain process gaps. |
++| Tooling | Core/native tests, archive isolation, a Release gate, and durable evidence exist. Hosted CI, signing/distribution automation, and Instruments memory/performance profiling remain unverified. |
++| Observables | `@Observable`, bindings, and async/await fit this app. Native delegate/callback boundaries remain useful; adding RxSwift solely to replace them is unwarranted. |
++
++Reactive abstractions do not remove state, cancellation, or race obligations. The explicit leases and session identities remain necessary. [Apple's Observation guidance](https://developer.apple.com/documentation/swiftui/migrating-from-the-observable-object-protocol-to-the-observable-macro) supports the current data-flow approach. No linter, analytics SDK, reactive library, or CI service was installed during this review.
++
++### Protected-Edit File Diffs
++
++The protected-edit patch set is defined in Patch Provenance; generated evidence is indexed by its manifest.
++
++
++
++
++| Protected-Edit File | Git Diff |
++| --- | --- |
++| `LeadersBook.xcodeproj/project.pbxproj` | [Unified diff](validation/protected-edits/patches/LeadersBook.xcodeproj__project.pbxproj.diff) |
++| `LeadersBook/Core/BookRepository.swift` | [Unified diff](validation/protected-edits/patches/LeadersBook__Core__BookRepository.swift.diff) |
++| `LeadersBook/Core/LeaderStore.swift` | [Unified diff](validation/protected-edits/patches/LeadersBook__Core__LeaderStore.swift.diff) |
++| `LeadersBook/Core/SoldierEditSession.swift` | [Unified diff](validation/protected-edits/patches/LeadersBook__Core__SoldierEditSession.swift.diff) |
++| `LeadersBook/Views/ContentView.swift` | [Unified diff](validation/protected-edits/patches/LeadersBook__Views__ContentView.swift.diff) |
++| `LeadersBook/Views/SoldierEditor.swift` | [Unified diff](validation/protected-edits/patches/LeadersBook__Views__SoldierEditor.swift.diff) |
++| `LeadersBook/Views/SoldiersView.swift` | [Unified diff](validation/protected-edits/patches/LeadersBook__Views__SoldiersView.swift.diff) |
++| `Tests/LeadersBookCoreTests/SoldierEditTests.swift` | [Unified diff](validation/protected-edits/patches/Tests__LeadersBookCoreTests__SoldierEditTests.swift.diff) |
++| `Tests/LeadersBookUITests/LeadersBookUITests.swift` | [Unified diff](validation/protected-edits/patches/Tests__LeadersBookUITests__LeadersBookUITests.swift.diff) |
++| `docs/ARCHITECTURE-AUDIT.md` | [Unified diff](validation/protected-edits/patches/docs__ARCHITECTURE-AUDIT.md.diff) |
++| `docs/AUTHENTICATION-FINDINGS.md` | [Unified diff](validation/protected-edits/patches/docs__AUTHENTICATION-FINDINGS.md.diff) |
++| `script/build_and_run.sh` | [Unified diff](validation/protected-edits/patches/script__build_and_run.sh.diff) |
++
++[Complete protected-edit patch](validation/protected-edits/protected-edits.patch) · [Integrity manifest](validation/protected-edits/manifest.json)
+--- a/script/build_and_run.sh
++++ b/script/build_and_run.sh
+@@ -33,7 +33,7 @@
+     # Keep signed build products outside document-provider folders with Finder metadata.
+     VALIDATION_ROOT="${TMPDIR:-/tmp}/LeadersBookValidation"
+     DERIVED="$VALIDATION_ROOT/DerivedData"
+-    swift test --scratch-path "$VALIDATION_ROOT/Core" --filter ThemeContrastTests
++    swift test --scratch-path "$VALIDATION_ROOT/Core"
+     xcodebuild -project "$PROJECT" -scheme LeadersBook -configuration Debug \
+         -destination "platform=iOS Simulator,id=$DEVICE" -derivedDataPath "$DERIVED" \
+         -only-testing:ThemeAdapterTests CODE_SIGNING_ALLOWED=NO test

@@ -1,0 +1,8 @@
+{
+  "date": "2026-11-06",
+  "scope": "source/configuration and stored evidence review; no runtime validation repeated",
+  "source_file": "docs/ARCHITECTURE-AUDIT.md",
+  "before_sha256": "e4220d26f4507416265ca7822ebe73bcb195e4ba50f50cc28f38539084d0d693",
+  "after_sha256": "b02e8e3b487a4e9d29e6f5d77aab0091a0c4c46c6d3eeaf88eb007dcd2341b75",
+  "added_lines": 27
+}

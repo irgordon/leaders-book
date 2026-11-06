@@ -1,0 +1,15 @@
+Working directory: /Users/godzilla/Documents/ChatGPT/Army App - Leaders Book
+Toolchain: Xcode 27.0 (27A266a), iOS 27.0 simulators; no physical iOS device connected.
+
+swift test --scratch-path /private/tmp/leaders-controls-core-build --filter RecordAccessTests
+swift test --scratch-path /private/tmp/leaders-controls-core-build
+
+xcodebuild -project LeadersBook.xcodeproj -scheme LeadersBook -configuration Testing -destination 'platform=iOS Simulator,id=042F1B65-E9EF-413F-B09B-9B6E3F191ABC' -derivedDataPath /private/tmp/leaders-controls-build -resultBundlePath /private/tmp/leaders-controls-export-ui3 -collect-test-diagnostics never -only-testing:LeadersBookUITests/LeadersBookUITests/testExportDenialAndPublicBackupPolicy CODE_SIGNING_ALLOWED=NO test
+
+xcodebuild -project LeadersBook.xcodeproj -scheme LeadersBook -configuration Testing -destination 'platform=iOS Simulator,id=F1FF7FD1-E892-4445-B199-93E17FAA286A' -derivedDataPath /private/tmp/leaders-controls-build -resultBundlePath /private/tmp/leaders-controls-real-scenes2 -collect-test-diagnostics never -only-testing:ThemeAdapterTests/ThemeAdapterTests/testPrivacyCoverThemeAndInactiveAttachment CODE_SIGNING_ALLOWED=NO test
+
+xcodebuild -project LeadersBook.xcodeproj -scheme LeadersBook -configuration Testing -destination 'platform=iOS Simulator,id=042F1B65-E9EF-413F-B09B-9B6E3F191ABC' -derivedDataPath /private/tmp/leaders-controls-build -resultBundlePath /private/tmp/leaders-controls-full-native -collect-test-diagnostics never CODE_SIGNING_ALLOWED=NO test
+
+xcodebuild -project LeadersBook.xcodeproj -scheme LeadersBook -configuration Release -destination 'generic/platform=iOS' -derivedDataPath /private/tmp/leaders-controls-release -archivePath /private/tmp/leaders-controls-release.xcarchive CODE_SIGNING_ALLOWED=NO archive
+
+Earlier positive-export failures used result paths /private/tmp/leaders-controls-export-ui and /private/tmp/leaders-controls-export-ui2 with the same test selection as export-ui3. Read-only xcresult attachment exports diagnosed each failure. No unrelated failure was changed.

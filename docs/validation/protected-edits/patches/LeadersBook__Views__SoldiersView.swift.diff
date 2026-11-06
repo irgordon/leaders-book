@@ -1,0 +1,81 @@
+--- a/LeadersBook/Views/SoldiersView.swift
++++ b/LeadersBook/Views/SoldiersView.swift
+@@ -5,10 +5,12 @@
+     let store: LeaderStore
+     let records: BookSnapshot
+     let scorer: AFTScoring
++    let editorWindow: UUID
+     @Environment(\.horizontalSizeClass) private var sizeClass
+     @SceneStorage("selectedSoldier") private var selectedSoldier = ""
+     @State private var query = ""
+-    @State private var editor: SoldierDraft?
++    @State private var editor: SoldierEditSession?
++    @State private var editorToClose: SoldierEditSession?
+     @State private var deleting: Soldier?
+     @State private var trainingSoldier: Soldier?
+     @State private var measuringSoldier: Soldier?
+@@ -18,6 +20,10 @@
+     @ScaledMetric private var rankWidth = 28
+     @ScaledMetric private var rankHeight = 36
+ 
++    private func openEditor(_ soldier: SoldierDraft) {
++        do { let edit = try store.beginSoldierEdit(soldier, window: editorWindow); editorToClose = edit; editor = edit }
++        catch { store.operationFailure = AppFailure("Open Soldier Editor", underlying: error) }
++    }
+     private var selection: Binding<UUID?> {
+         Binding(get: { UUID(uuidString: selectedSoldier) }, set: { selectedSoldier = $0?.uuidString ?? "" })
+     }
+@@ -57,7 +63,7 @@
+                     } description: {
+                         Text("Add a soldier to keep unit details, training, and fitness results together.")
+                     } actions: {
+-                        Button("Add Soldier", systemImage: "plus") { editor = SoldierDraft() }.buttonStyle(LBActionButtonStyle())
++                        Button("Add Soldier", systemImage: "plus") { openEditor(SoldierDraft()) }.buttonStyle(LBActionButtonStyle())
+                             .buttonStyle(LBPrimaryButtonStyle())
+                     }
+                 } else if soldiers.isEmpty {
+@@ -68,7 +74,7 @@
+             .navigationTitle("Soldiers")
+             .toolbar {
+                 ToolbarItem(placement: .primaryAction) {
+-                    Button("Add Soldier", systemImage: "plus") { editor = SoldierDraft() }
++                    Button("Add Soldier", systemImage: "plus") { openEditor(SoldierDraft()) }
+                 }
+             }
+         } detail: {
+@@ -76,7 +82,7 @@
+                 if let id = selection.wrappedValue,
+                    let soldier = records.soldiers.first(where: { $0.id == id }) {
+                     SoldierDetailView(soldier: soldier, store: store, records: records, scorer: scorer,
+-                                      onEdit: { editor = SoldierDraft(soldier) }, onDelete: { deleting = soldier },
++                                      onEdit: { openEditor(SoldierDraft(soldier)) }, onDelete: { deleting = soldier },
+                                       addTraining: { trainingSoldier = soldier }, addMeasurements: { measuringSoldier = soldier },
+                                       preview: { attachment in
+                                           previewOperation.start("Open Certificate") {
+@@ -92,11 +98,21 @@
+                 }
+             }
+         }
+-        .sheet(item: $editor) { soldier in
+-            SoldierEditor(soldier: soldier, isNew: !records.soldiers.contains(where: { $0.id == soldier.id }), store: store) { updated, files in
+-                try await store.saveSoldier(updated, importing: files)
+-                selectedSoldier = updated.id.uuidString
+-            }
++        .sheet(item: $editor, onDismiss: {
++            guard store.isUnlocked else { return }
++            do {
++                if let closed = editorToClose { try store.discardSoldierEdit(closed) }
++            } catch RecordAccessError.locked { /* A prior presenter cannot discard a restored session. */ }
++            catch { store.operationFailure = AppFailure("Close Soldier Editor", underlying: error) }
++        }) { edit in
++            SoldierEditor(edit: edit, store: store) { updated in
++                try await store.saveSoldierEdit(updated)
++                selectedSoldier = updated.soldier.id.uuidString
++            }
++        }
++        .onAppear {
++            do { let edit = try store.restoreSoldierEdit(window: editorWindow); editorToClose = edit; editor = edit }
++            catch { store.operationFailure = AppFailure("Restore Soldier Edits", underlying: error) }
+         }
+         .sheet(item: $trainingSoldier) { soldier in
+             TrainingRecordEditor(soldier: SoldierDraft(soldier)) { try await store.saveSoldier($0, importing: $1) }

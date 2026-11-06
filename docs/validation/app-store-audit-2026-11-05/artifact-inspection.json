@@ -1,0 +1,72 @@
+{
+  "date": "2026-11-05",
+  "scope": "local source and unsigned Release archive; App Store Connect not inspected",
+  "archive_properties": {
+    "ApplicationPath": "Applications/LeadersBook.app",
+    "Architectures": [
+      "arm64"
+    ],
+    "CFBundleIdentifier": "com.leadersbook.app",
+    "CFBundleShortVersionString": "1.0",
+    "CFBundleVersion": "1",
+    "SigningIdentity": "",
+    "Team": ""
+  },
+  "binary_sha256": "add5169c4d02deaf17fd0b2d3e73016705cd151d29b23f1ddb9ec3b5bd830145",
+  "excluded_test_flags": {
+    "UITestAuthenticator": true,
+    "--authentication-test-denied": true,
+    "--authentication-test-simultaneous-errors": true,
+    "--preview-dark": true,
+    "--preview-light": true
+  },
+  "face_id_purpose": "Unlock private soldier records and attachments.",
+  "camera_purpose": "Take a soldier photo for a local leader record.",
+  "sdk": "iphoneos27.0",
+  "minimum_os": "27.0",
+  "compiled_marketing_icons": [
+    {
+      "AssetType": "Icon Image",
+      "BitsPerComponent": 8,
+      "ColorModel": "RGB",
+      "Colorspace": "srgb",
+      "Compression": "lzfse",
+      "Encoding": "ARGB",
+      "Icon Index": 1,
+      "Idiom": "phone",
+      "Name": "AppIcon",
+      "NameIdentifier": 6849,
+      "Opaque": true,
+      "PixelHeight": 1024,
+      "PixelWidth": 1024,
+      "RenditionName": "AppIcon.png",
+      "Scale": 1,
+      "SHA1Digest": "ECBFBEC9DB54439AEEF1B332C3E76D3201A769E41047DBD5FD715FB926C250B9",
+      "SizeOnDisk": 8142
+    },
+    {
+      "AssetType": "Icon Image",
+      "BitsPerComponent": 8,
+      "ColorModel": "RGB",
+      "Colorspace": "srgb",
+      "Compression": "lzfse",
+      "Encoding": "ARGB",
+      "Icon Index": 1,
+      "Idiom": "pad",
+      "Name": "AppIcon",
+      "NameIdentifier": 6849,
+      "Opaque": true,
+      "PixelHeight": 1024,
+      "PixelWidth": 1024,
+      "RenditionName": "AppIcon.png",
+      "Scale": 1,
+      "SHA1Digest": "ECBFBEC9DB54439AEEF1B332C3E76D3201A769E41047DBD5FD715FB926C250B9",
+      "SizeOnDisk": 8142
+    }
+  ],
+  "physical_ios_devices_available": false,
+  "upload_validation_performed": false,
+  "source_icon_inspection": "/Users/godzilla/Documents/ChatGPT/Army App - Leaders Book/LeadersBook/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon.png\n  hasAlpha: yes\n  pixelWidth: 1024\n  pixelHeight: 1024\n",
+  "privacy_manifest_syntax": "passed plutil -lint",
+  "medium_retrieval": "Two attempts timed out; supplied summary assessed instead"
+}

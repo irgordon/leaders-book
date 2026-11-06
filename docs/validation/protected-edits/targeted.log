@@ -1,0 +1,22 @@
+Building for debugging...
+[3 / 13] LeadersBookCore
+[6 / 16] LeadersBookCore
+[9 / 16] LeadersBookCore
+[12 / 16] LeadersBookCoreTests-product
+[14 / 18] LeadersBookCoreTests-product
+[19 / 22] LeadersBookCoreTests-product
+Build complete! (1.24 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite SoldierEditTests started.
+◇ Test windowsSaveAndDiscardIndependently() started.
+◇ Test protectedDraftRestoresWithoutDiskWritesOrStaleAccess() started.
+◇ Test restoredRevisionCannotOverwriteAnotherWindow() started.
+◇ Test failedUnlockDoesNotExposeOrLoseDraft() started.
+✔ Test failedUnlockDoesNotExposeOrLoseDraft() passed after 0.015 seconds.
+✔ Test protectedDraftRestoresWithoutDiskWritesOrStaleAccess() passed after 0.019 seconds.
+✔ Test windowsSaveAndDiscardIndependently() passed after 0.020 seconds.
+✔ Test restoredRevisionCannotOverwriteAnotherWindow() passed after 0.020 seconds.
+✔ Suite SoldierEditTests passed after 0.021 seconds.
+✔ Test run with 4 tests in 1 suite passed after 0.021 seconds.

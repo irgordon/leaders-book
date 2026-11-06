@@ -1,0 +1,18 @@
+--- a/LeadersBook/Views/SoldierEditor.swift
++++ b/LeadersBook/Views/SoldierEditor.swift
+@@ -67,12 +67,12 @@
+                     Text("Use your unit’s requirements and due dates. This is a personal checklist, not an official training system.")
+                 }.leadersBookRow()
+                 Section {
+-                    TextField("Leadership notes", text: soldierBinding.notes, axis: .vertical)
+-                        .lineLimit(4...12).accessibilityIdentifier("soldierNotes")
++                    ProtectedNotesEditor(text: soldierBinding.notes).frame(minHeight: 150)
++                    Text("To copy or share notes, save them, then use Authenticate to Export Notes in the soldier record.").font(.caption)
+                 } header: {
+                     Text("Notes")
+                 } footer: {
+-                    Text("Records stay on this device. Keep notes limited to information your organization permits you to store here.")
++                    Text("Saved records remain eligible for system backups. Keep notes limited to information your organization permits you to store here.")
+                 }.leadersBookRow()
+             }.leadersBookList()
+             .disabled(saveOperation.phase.isRunning)
