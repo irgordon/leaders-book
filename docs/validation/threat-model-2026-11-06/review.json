@@ -1,0 +1,12 @@
+{
+  "date": "2026-11-06",
+  "confirmed_deployment": "Personal devices; synthetic data pending organizational approval",
+  "source_commit": "b991ded",
+  "application_code_changed": false,
+  "tests_rerun": false,
+  "edited_files": {
+    "docs/Army App - Leaders Book-threat-model.md": "9541ab2e7437498ed960b2f6c722f81a32d2eef483ccb10e8d3c592dfe1cc700",
+    "docs/ARCHITECTURE-AUDIT.md": "c90e46941159f0e8b673ad251f2fd8b964450da8eecb6fb19c74dab0205ae5d5"
+  },
+  "added_model_lines": 83
+}
