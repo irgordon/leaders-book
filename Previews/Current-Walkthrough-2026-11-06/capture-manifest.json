@@ -1,0 +1,144 @@
+{
+  "date": "2026-11-06",
+  "source_commit": "b991ded",
+  "application_source_unchanged": true,
+  "capture": "Fresh XCTest screenshots following real navigation taps",
+  "authentication": "Testing build substitutes only OS authentication",
+  "devices": {
+    "Compact": "iPhone 18 Pro / iOS 27",
+    "Expanded": "iPad Pro 11-inch M5 / iOS 27"
+  },
+  "duo_verified": false,
+  "screenshots": [
+    {
+      "file": "Compact/01-Compact-Locked-Front.png",
+      "label": "01-Compact-Locked Front",
+      "timestamp": 1793966624.087
+    },
+    {
+      "file": "Compact/02-Compact-Front-Cover-Today.png",
+      "label": "02-Compact-Front Cover Today",
+      "timestamp": 1793966630.792
+    },
+    {
+      "file": "Compact/03-Compact-Soldiers-Roster.png",
+      "label": "03-Compact-Soldiers Roster",
+      "timestamp": 1793966633.113
+    },
+    {
+      "file": "Compact/04-Compact-Soldier-Profile.png",
+      "label": "04-Compact-Soldier Profile",
+      "timestamp": 1793966638.081
+    },
+    {
+      "file": "Compact/05-Compact-Soldier-Training.png",
+      "label": "05-Compact-Soldier Training",
+      "timestamp": 1793966642.285
+    },
+    {
+      "file": "Compact/06-Compact-Add-Training-Record.png",
+      "label": "06-Compact-Add Training Record",
+      "timestamp": 1793966644.343
+    },
+    {
+      "file": "Compact/07-Compact-AFT-Calculator.png",
+      "label": "07-Compact-AFT Calculator",
+      "timestamp": 1793966652.82
+    },
+    {
+      "file": "Compact/08-Compact-HT-WT-Calculator.png",
+      "label": "08-Compact-HT-WT Calculator",
+      "timestamp": 1793966660.408
+    },
+    {
+      "file": "Compact/09-Compact-Troop-Leading-Procedures.png",
+      "label": "09-Compact-Troop Leading Procedures",
+      "timestamp": 1793966667.404
+    },
+    {
+      "file": "Compact/10-Compact-Army-Guides.png",
+      "label": "10-Compact-Army Guides",
+      "timestamp": 1793966674.401
+    },
+    {
+      "file": "Compact/11-Compact-Army-Resources.png",
+      "label": "11-Compact-Army Resources",
+      "timestamp": 1793966681.411
+    },
+    {
+      "file": "Compact/12-Compact-Privacy-and-Data-Controls.png",
+      "label": "12-Compact-Privacy and Data Controls",
+      "timestamp": 1793966689.337
+    },
+    {
+      "file": "Compact/13-Compact-Soldier-Profile-Return.png",
+      "label": "13-Compact-Soldier Profile Return",
+      "timestamp": 1793966698.505
+    },
+    {
+      "file": "Expanded/01-Expanded-Locked-Front.png",
+      "label": "01-Expanded-Locked Front",
+      "timestamp": 1793966648.526
+    },
+    {
+      "file": "Expanded/02-Expanded-Front-Cover-Today.png",
+      "label": "02-Expanded-Front Cover Today",
+      "timestamp": 1793966655.047
+    },
+    {
+      "file": "Expanded/03-Expanded-Soldiers-Roster.png",
+      "label": "03-Expanded-Soldiers Roster",
+      "timestamp": 1793966657.092
+    },
+    {
+      "file": "Expanded/04-Expanded-Soldier-Profile.png",
+      "label": "04-Expanded-Soldier Profile",
+      "timestamp": 1793966662.093
+    },
+    {
+      "file": "Expanded/05-Expanded-Soldier-Training.png",
+      "label": "05-Expanded-Soldier Training",
+      "timestamp": 1793966664.238
+    },
+    {
+      "file": "Expanded/06-Expanded-Add-Training-Record.png",
+      "label": "06-Expanded-Add Training Record",
+      "timestamp": 1793966666.472
+    },
+    {
+      "file": "Expanded/07-Expanded-AFT-Calculator.png",
+      "label": "07-Expanded-AFT Calculator",
+      "timestamp": 1793966674.802
+    },
+    {
+      "file": "Expanded/08-Expanded-HT-WT-Calculator.png",
+      "label": "08-Expanded-HT-WT Calculator",
+      "timestamp": 1793966682.151
+    },
+    {
+      "file": "Expanded/09-Expanded-Troop-Leading-Procedures.png",
+      "label": "09-Expanded-Troop Leading Procedures",
+      "timestamp": 1793966688.841
+    },
+    {
+      "file": "Expanded/10-Expanded-Army-Guides.png",
+      "label": "10-Expanded-Army Guides",
+      "timestamp": 1793966695.485
+    },
+    {
+      "file": "Expanded/11-Expanded-Army-Resources.png",
+      "label": "11-Expanded-Army Resources",
+      "timestamp": 1793966702.253
+    },
+    {
+      "file": "Expanded/12-Expanded-Privacy-and-Data-Controls.png",
+      "label": "12-Expanded-Privacy and Data Controls",
+      "timestamp": 1793966708.463
+    },
+    {
+      "file": "Expanded/13-Expanded-Soldier-Profile-Return.png",
+      "label": "13-Expanded-Soldier Profile Return",
+      "timestamp": 1793966716.032
+    }
+  ]
+}
