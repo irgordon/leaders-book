@@ -1,0 +1,24 @@
+{
+  "date": "2026-11-07",
+  "baseline_commit": "965ca50ec8cf178356b0716693398ece1f6aa86d",
+  "guide": "Apple Style Guide, June 2026",
+  "guide_url": "https://help.apple.com/pdf/applestyleguide/en_US/apple-style-guide.pdf",
+  "editorial_rules": [
+    "Active voice",
+    "Simple sentences",
+    "Tap for touchscreen actions",
+    "Match onscreen names",
+    "Describe the view and the next action"
+  ],
+  "public_pages": [
+    "Previews/README.md",
+    "Previews/Current-Walkthrough-2026-11-06/README.md"
+  ],
+  "public_page_local_links_checked": 47,
+  "zip_screenshots": 26,
+  "gif_frames_each": 13,
+  "screenshot_pixels_unchanged": true,
+  "application_source_changed": false,
+  "technical_capture_context_retained": "original-copy.json and existing capture manifests/logs",
+  "runtime_tests_rerun": false
+}
